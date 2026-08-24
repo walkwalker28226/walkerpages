@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bill Walker — Operations, made visible</title>
+<meta name="description" content="AI-driven operations, BI, and automation for small and mid-size businesses. Real-world scenarios, not tutorials.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6F1E7;
+    --ink: #26211C;
+    --ink-soft: #56504A;
+    --clay: #C6633F;
+    --teal: #2F6E62;
+    --line: #D8CEBC;
+    --tint: #EFE3D0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* Sparkline divider — signature element */
+  .spark {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    height: 22px;
+    margin: 0 auto;
+    width: fit-content;
+  }
+  .spark span {
+    display: block;
+    width: 4px;
+    background: var(--clay);
+    border-radius: 1px;
+    opacity: 0.55;
+  }
+  .spark span:nth-child(1) { height: 40%; }
+  .spark span:nth-child(2) { height: 70%; }
+  .spark span:nth-child(3) { height: 50%; }
+  .spark span:nth-child(4) { height: 100%; background: var(--teal); opacity: 0.9; }
+  .spark span:nth-child(5) { height: 65%; }
+  .spark span:nth-child(6) { height: 85%; }
+  .spark span:nth-child(7) { height: 45%; }
+
+  header {
+    padding: 96px 0 64px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 22px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    max-width: 14ch;
+    margin: 0 auto 24px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--clay);
+  }
+
+  .lede {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    margin: 0 auto 40px;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 13px 26px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-primary:hover { box-shadow: 0 6px 18px rgba(38,33,28,0.25); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+  }
+  .btn-secondary:hover { border-color: var(--clay); color: var(--clay); }
+
+  .divider { padding: 48px 0; }
+
+  section { padding: 64px 0; }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+
+  .about p {
+    font-size: 1.05rem;
+    max-width: 62ch;
+    color: var(--ink-soft);
+  }
+  .about strong { color: var(--ink); font-weight: 600; }
+
+  .tracks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--tint);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 32px;
+  }
+
+  .card .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  .card p {
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+  }
+
+  footer {
+    padding: 56px 0 80px;
+    text-align: center;
+  }
+
+  .foot-links {
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+  }
+
+  .foot-links a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; }
+  .foot-links a:hover { text-decoration-color: var(--clay); color: var(--clay); }
+
+  .foot-note {
+    margin-top: 28px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    opacity: 0.7;
+  }
+
+  @media (max-width: 640px) {
+    .tracks { grid-template-columns: 1fr; }
+    header { padding: 64px 0 48px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">Charlotte, NC — Ops, CS &amp; AI</div>
+      <h1>Operations, made <em>visible</em>.</h1>
+      <p class="lede">I build and explain AI-driven automation for small and mid-size businesses — real-world scenarios, not straight tutorials.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#" aria-label="Subscribe on YouTube">Watch the channel</a>
+        <a class="btn btn-secondary" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="divider">
+    <div class="spark" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <section class="about">
+    <div class="wrap">
+      <div class="section-label">About</div>
+      <p>25+ years leading Customer Success, Sales, and Support operations — including 21 years at <strong>Microsoft</strong>, plus <strong>Tanium</strong>, <strong>EY</strong>, and currently <strong>Cyera</strong>, where I head Customer Success Operations &amp; Support. I've spent a career building operations functions from scratch, and now I show other business owners how to do the same with AI.</p>
+    </div>
+  </section>
+
+  <section class="tracks-section">
+    <div class="wrap">
+      <div class="section-label">What I make</div>
+      <div class="tracks">
+        <div class="card">
+          <div class="tag">The Channel</div>
+          <h3>AI for real businesses</h3>
+          <p>Practical automation walkthroughs built around actual small and mid-size business problems — not toy demos. If you run a business and want AI to do real work, this is for you.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Consulting</div>
+          <h3>Ops leadership, on demand</h3>
+          <p>Hands-on Customer Success, Sales, and Support operations consulting for PE-backed and growth-stage companies — built by someone who's stood up these functions from zero more than once.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="spark" aria-hidden="true" style="margin-bottom: 40px;">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="wrap">
+      <div class="foot-links">
+        <a href="#">YouTube</a>
+        <a href="#">LinkedIn</a>
+        <a href="mailto:hello@example.com">Email</a>
+      </div>
+      <div class="foot-note">Bill Walker · Charlotte, NC</div>
+    </div>
+  </footer>
+
+</body>
+</html>
