@@ -3,24 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Walker Ops — Operations, made visible</title>
+<title>WalkerOps — Operations, made visible</title>
 <meta name="description" content="AI-driven operations, BI, and automation for small and mid-size businesses. Real-world scenarios, not tutorials.">
+<link rel="icon" type="image/svg+xml" href="walkerops-favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Fraunces:opsz,wght@9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #F6F1E7;
-    --ink: #26211C;
-    --ink-soft: #56504A;
-    --clay: #C6633F;
-    --teal: #2F6E62;
-    --line: #D8CEBC;
-    --tint: #EFE3D0;
+    --paper: #FAF9F7;
+    --ink: #3F3D3A;
+    --ink-soft: #6F6B66;
+    --clay: #D2703A;
+    --clay-tint: #F6E3D6;
+    --line: #E4DFD8;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -39,32 +38,16 @@
     padding: 0 28px;
   }
 
-  /* Sparkline divider — signature element */
-  .spark {
+  /* Hero logo */
+  .hero-logo {
     display: flex;
-    align-items: flex-end;
-    gap: 5px;
-    height: 22px;
-    margin: 0 auto;
-    width: fit-content;
+    justify-content: center;
+    margin-bottom: 36px;
   }
-  .spark span {
-    display: block;
-    width: 4px;
-    background: var(--clay);
-    border-radius: 1px;
-    opacity: 0.55;
-  }
-  .spark span:nth-child(1) { height: 40%; }
-  .spark span:nth-child(2) { height: 70%; }
-  .spark span:nth-child(3) { height: 50%; }
-  .spark span:nth-child(4) { height: 100%; background: var(--teal); opacity: 0.9; }
-  .spark span:nth-child(5) { height: 65%; }
-  .spark span:nth-child(6) { height: 85%; }
-  .spark span:nth-child(7) { height: 45%; }
+  .hero-logo svg { width: 132px; height: auto; }
 
   header {
-    padding: 96px 0 64px;
+    padding: 88px 0 60px;
     text-align: center;
   }
 
@@ -73,7 +56,7 @@
     font-size: 13px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--teal);
+    color: var(--clay);
     margin-bottom: 22px;
   }
 
@@ -118,13 +101,13 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .btn:hover { transform: translateY(-1px); }
-  .btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+  .btn:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
 
   .btn-primary {
     background: var(--ink);
     color: var(--paper);
   }
-  .btn-primary:hover { box-shadow: 0 6px 18px rgba(38,33,28,0.25); }
+  .btn-primary:hover { box-shadow: 0 6px 18px rgba(63,61,58,0.25); }
 
   .btn-secondary {
     background: transparent;
@@ -133,9 +116,15 @@
   }
   .btn-secondary:hover { border-color: var(--clay); color: var(--clay); }
 
-  .divider { padding: 48px 0; }
+  /* Mark divider */
+  .divider {
+    display: flex;
+    justify-content: center;
+    padding: 44px 0;
+  }
+  .divider svg { width: 34px; height: 34px; opacity: 0.85; }
 
-  section { padding: 64px 0; }
+  section { padding: 60px 0; }
 
   .section-label {
     font-family: 'IBM Plex Mono', monospace;
@@ -160,7 +149,7 @@
   }
 
   .card {
-    background: var(--tint);
+    background: var(--clay-tint);
     border: 1px solid var(--line);
     border-radius: 8px;
     padding: 32px;
@@ -169,7 +158,7 @@
   .card .tag {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
-    color: var(--teal);
+    color: var(--clay);
     letter-spacing: 0.05em;
     text-transform: uppercase;
     margin-bottom: 14px;
@@ -188,9 +177,23 @@
   }
 
   footer {
-    padding: 56px 0 80px;
+    padding: 52px 0 76px;
     text-align: center;
   }
+
+  .foot-mark {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .foot-mark svg { width: 30px; height: 30px; }
+
+  .foot-wordmark {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+  .foot-wordmark svg { height: 22px; width: auto; }
 
   .foot-links {
     display: flex;
@@ -208,12 +211,13 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     color: var(--ink-soft);
-    opacity: 0.7;
+    opacity: 0.75;
   }
 
   @media (max-width: 640px) {
     .tracks { grid-template-columns: 1fr; }
-    header { padding: 64px 0 48px; }
+    header { padding: 60px 0 44px; }
+    .hero-logo svg { width: 104px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -226,6 +230,27 @@
 
   <header>
     <div class="wrap">
+
+      <!-- Hero logo: stacked lockup -->
+      <div class="hero-logo">
+        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(77 0)">
+            <rect x="0" y="0" width="20" height="20" fill="#3F3D3A"></rect>
+            <rect x="23" y="0" width="20" height="20" fill="#3F3D3A"></rect>
+            <rect x="46" y="0" width="20" height="20" fill="#3F3D3A"></rect>
+            <rect x="0" y="23" width="20" height="20" fill="#3F3D3A"></rect>
+            <rect x="23" y="23" width="20" height="20" fill="#D2703A"></rect>
+            <rect x="46" y="23" width="20" height="20" fill="#D2703A"></rect>
+            <rect x="0" y="46" width="20" height="20" fill="#3F3D3A"></rect>
+            <rect x="23" y="46" width="20" height="20" fill="#D2703A"></rect>
+            <rect x="46" y="46" width="20" height="20" fill="#D2703A"></rect>
+          </g>
+          <g transform="translate(0 116)">
+            <text x="110" y="0" text-anchor="middle" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="-1.2" fill="#3F3D3A">WalkerOps</text>
+          </g>
+        </svg>
+      </div>
+
       <div class="eyebrow">Charlotte, NC — Ops, CS &amp; AI</div>
       <h1>Operations, made <em>visible</em>.</h1>
       <p class="lede">I build and explain AI-driven automation for small and mid-size businesses — real-world scenarios, not straight tutorials.</p>
@@ -236,16 +261,24 @@
     </div>
   </header>
 
-  <div class="divider">
-    <div class="spark" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="20" height="20" fill="#3F3D3A"></rect>
+      <rect x="23" y="0" width="20" height="20" fill="#3F3D3A"></rect>
+      <rect x="46" y="0" width="20" height="20" fill="#3F3D3A"></rect>
+      <rect x="0" y="23" width="20" height="20" fill="#3F3D3A"></rect>
+      <rect x="23" y="23" width="20" height="20" fill="#D2703A"></rect>
+      <rect x="46" y="23" width="20" height="20" fill="#D2703A"></rect>
+      <rect x="0" y="46" width="20" height="20" fill="#3F3D3A"></rect>
+      <rect x="23" y="46" width="20" height="20" fill="#D2703A"></rect>
+      <rect x="46" y="46" width="20" height="20" fill="#D2703A"></rect>
+    </svg>
   </div>
 
   <section class="about">
     <div class="wrap">
       <div class="section-label">About</div>
-      <p>25+ years leading Customer Success, Sales, and Support operations — including 21 years at <strong>Microsoft</strong>, plus <strong>Tanium</strong>, <strong>EY</strong>, and currently <strong>Cyera</strong>, where I head Customer Success Operations &amp; Support. I've spent a career building operations functions from scratch, and now I show other business owners how to do the same with AI.</p>
+      <p>25+ years leading Customer Success, Sales, and Support operations — including 21 years at <strong>Microsoft</strong>, plus <strong>Tanium</strong>, <strong>EY</strong>, and currently <strong>Cyera</strong>, where I head Customer Success Operations & Support. I've spent a career building operations functions from scratch, and now I show other business owners how to do the same with AI.</p>
     </div>
   </section>
 
@@ -268,8 +301,18 @@
   </section>
 
   <footer id="contact">
-    <div class="spark" aria-hidden="true" style="margin-bottom: 40px;">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    <div class="foot-mark" aria-hidden="true">
+      <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="20" height="20" fill="#3F3D3A"></rect>
+        <rect x="23" y="0" width="20" height="20" fill="#3F3D3A"></rect>
+        <rect x="46" y="0" width="20" height="20" fill="#3F3D3A"></rect>
+        <rect x="0" y="23" width="20" height="20" fill="#3F3D3A"></rect>
+        <rect x="23" y="23" width="20" height="20" fill="#D2703A"></rect>
+        <rect x="46" y="23" width="20" height="20" fill="#D2703A"></rect>
+        <rect x="0" y="46" width="20" height="20" fill="#3F3D3A"></rect>
+        <rect x="23" y="46" width="20" height="20" fill="#D2703A"></rect>
+        <rect x="46" y="46" width="20" height="20" fill="#D2703A"></rect>
+      </svg>
     </div>
     <div class="wrap">
       <div class="foot-links">
@@ -277,7 +320,7 @@
         <a href="https://www.linkedin.com/in/bill-walker/">LinkedIn</a>
         <a href="mailto:billwalker@outlook.com">Email</a>
       </div>
-      <div class="foot-note">Bill Walker · Charlotte, NC</div>
+      <div class="foot-note">WalkerOps · Charlotte, NC</div>
     </div>
   </footer>
 
