@@ -6,6 +6,59 @@
 <title>WalkerOps — Operations, made visible</title>
 <meta name="description" content="AI-driven operations, BI, and automation for small and mid-size businesses. Real-world scenarios, not tutorials.">
 <link rel="icon" type="image/svg+xml" href="walkerops-favicon.svg">
+<link rel="canonical" href="https://walkerops.com/">
+<meta name="theme-color" content="#3F3D3A">
+
+<!-- Open Graph tags — control the preview card when this link is shared on -->
+<!-- LinkedIn, Slack, iMessage, etc. -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walkerops.com/">
+<meta property="og:site_name" content="WalkerOps">
+<meta property="og:title" content="WalkerOps — Operations, made visible.">
+<meta property="og:description" content="AI-driven operations, BI, and automation for small and mid-size businesses. Real-world scenarios, not tutorials.">
+<meta property="og:image" content="https://walkerops.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter/X Card tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WalkerOps — Operations, made visible.">
+<meta name="twitter:description" content="AI-driven operations, BI, and automation for small and mid-size businesses. Real-world scenarios, not tutorials.">
+<meta name="twitter:image" content="https://walkerops.com/og-image.png">
+
+<!-- JSON-LD structured data — helps search engines connect "Bill Walker" / -->
+<!-- "WalkerOps" / Charlotte as one entity. Current employer intentionally -->
+<!-- left out since that's the one line on the page likely to go stale first -->
+<!-- — update this alongside the About section if that copy changes. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Bill Walker",
+  "alternateName": "WalkerOps",
+  "url": "https://walkerops.com",
+  "image": "https://walkerops.com/og-image.png",
+  "description": "AI-driven operations, BI, and automation for small and mid-size businesses.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Charlotte",
+    "addressRegion": "NC",
+    "addressCountry": "US"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/bill-walker/",
+    "https://www.youtube.com/@WalkerOps"
+  ],
+  "knowsAbout": [
+    "Operations Leadership",
+    "Customer Success Operations",
+    "AI Automation for Small Business",
+    "Business Intelligence"
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Fraunces:opsz,wght@9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -18,10 +71,8 @@
     --clay-tint: #F6E3D6;
     --line: #E4DFD8;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-
   body {
     background: var(--paper);
     color: var(--ink);
@@ -29,15 +80,12 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-
   a { color: inherit; }
-
   .wrap {
     max-width: 880px;
     margin: 0 auto;
     padding: 0 28px;
   }
-
   /* Hero logo */
   .hero-logo {
     display: flex;
@@ -45,12 +93,10 @@
     margin-bottom: 36px;
   }
   .hero-logo svg { width: 132px; height: auto; }
-
   header {
     padding: 88px 0 60px;
     text-align: center;
   }
-
   .eyebrow {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
@@ -59,7 +105,6 @@
     color: var(--clay);
     margin-bottom: 22px;
   }
-
   h1 {
     font-family: 'Fraunces', serif;
     font-optical-sizing: auto;
@@ -70,26 +115,22 @@
     max-width: 14ch;
     margin: 0 auto 24px;
   }
-
   h1 em {
     font-style: italic;
     color: var(--clay);
   }
-
   .lede {
     font-size: 1.15rem;
     color: var(--ink-soft);
     max-width: 46ch;
     margin: 0 auto 40px;
   }
-
   .cta-row {
     display: flex;
     gap: 14px;
     justify-content: center;
     flex-wrap: wrap;
   }
-
   .btn {
     display: inline-block;
     padding: 13px 26px;
@@ -102,20 +143,17 @@
   }
   .btn:hover { transform: translateY(-1px); }
   .btn:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
-
   .btn-primary {
     background: var(--ink);
     color: var(--paper);
   }
   .btn-primary:hover { box-shadow: 0 6px 18px rgba(63,61,58,0.25); }
-
   .btn-secondary {
     background: transparent;
     color: var(--ink);
     border: 1.5px solid var(--line);
   }
   .btn-secondary:hover { border-color: var(--clay); color: var(--clay); }
-
   /* Mark divider */
   .divider {
     display: flex;
@@ -123,9 +161,7 @@
     padding: 44px 0;
   }
   .divider svg { width: 34px; height: 34px; opacity: 0.85; }
-
   section { padding: 60px 0; }
-
   .section-label {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
@@ -134,27 +170,23 @@
     color: var(--ink-soft);
     margin-bottom: 18px;
   }
-
   .about p {
     font-size: 1.05rem;
     max-width: 62ch;
     color: var(--ink-soft);
   }
   .about strong { color: var(--ink); font-weight: 600; }
-
   .tracks {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
-
   .card {
     background: var(--clay-tint);
     border: 1px solid var(--line);
     border-radius: 8px;
     padding: 32px;
   }
-
   .card .tag {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
@@ -163,38 +195,32 @@
     text-transform: uppercase;
     margin-bottom: 14px;
   }
-
   .card h3 {
     font-family: 'Fraunces', serif;
     font-weight: 500;
     font-size: 1.5rem;
     margin-bottom: 12px;
   }
-
   .card p {
     color: var(--ink-soft);
     font-size: 0.98rem;
   }
-
   footer {
     padding: 52px 0 76px;
     text-align: center;
   }
-
   .foot-mark {
     display: flex;
     justify-content: center;
     margin-bottom: 28px;
   }
   .foot-mark svg { width: 30px; height: 30px; }
-
   .foot-wordmark {
     display: flex;
     justify-content: center;
     margin-bottom: 32px;
   }
   .foot-wordmark svg { height: 22px; width: auto; }
-
   .foot-links {
     display: flex;
     gap: 28px;
@@ -202,10 +228,8 @@
     flex-wrap: wrap;
     font-size: 0.95rem;
   }
-
   .foot-links a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; }
   .foot-links a:hover { text-decoration-color: var(--clay); color: var(--clay); }
-
   .foot-note {
     margin-top: 28px;
     font-family: 'IBM Plex Mono', monospace;
@@ -213,13 +237,11 @@
     color: var(--ink-soft);
     opacity: 0.75;
   }
-
   @media (max-width: 640px) {
     .tracks { grid-template-columns: 1fr; }
     header { padding: 60px 0 44px; }
     .hero-logo svg { width: 104px; }
   }
-
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .btn { transition: none; }
@@ -227,10 +249,8 @@
 </style>
 </head>
 <body>
-
   <header>
     <div class="wrap">
-
       <!-- Hero logo: stacked lockup -->
       <div class="hero-logo">
         <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg">
@@ -250,7 +270,6 @@
           </g>
         </svg>
       </div>
-
       <div class="eyebrow">Charlotte, NC — Ops, CS &amp; AI</div>
       <h1>Operations, made <em>visible</em>.</h1>
       <p class="lede">I build and explain AI-driven automation for small and mid-size businesses — real-world scenarios, not straight tutorials.</p>
@@ -260,7 +279,6 @@
       </div>
     </div>
   </header>
-
   <div class="divider" aria-hidden="true">
     <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width="20" height="20" fill="#3F3D3A"></rect>
@@ -274,14 +292,12 @@
       <rect x="46" y="46" width="20" height="20" fill="#D2703A"></rect>
     </svg>
   </div>
-
   <section class="about">
     <div class="wrap">
       <div class="section-label">About</div>
       <p>25+ years leading Customer Success, Sales, and Support operations — including 21 years at <strong>Microsoft</strong>, plus <strong>Tanium</strong>, <strong>EY</strong>, and currently <strong>Cyera</strong>, where I head Customer Success Operations & Support. I've spent a career building operations functions from scratch, and now I show other business owners how to do the same with AI.</p>
     </div>
   </section>
-
   <section class="tracks-section">
     <div class="wrap">
       <div class="section-label">What I make</div>
@@ -299,7 +315,6 @@
       </div>
     </div>
   </section>
-
   <footer id="contact">
     <div class="foot-mark" aria-hidden="true">
       <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
@@ -323,6 +338,5 @@
       <div class="foot-note">WalkerOps · Charlotte, NC</div>
     </div>
   </footer>
-
 </body>
 </html>
