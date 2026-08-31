@@ -1,0 +1,8 @@
+# WalkerOps — robots.txt
+# Place this file at the root of the repo (same level as index.html)
+# so it's served at https://walkerops.com/robots.txt
+
+User-agent: *
+Allow: /
+
+Sitemap: https://walkerops.com/sitemap.xml

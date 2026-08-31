@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  WalkerOps — sitemap.xml
+  Place this file at the root of the repo (same level as index.html)
+  so it's served at https://walkerops.com/sitemap.xml
+
+  Right now the site is one page, so there's one <url> entry below.
+  When you add more pages (e.g. a lead-magnet landing page, a
+  consulting page), add a new <url> block for each one and bump
+  <lastmod> on any page whose content changes.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://walkerops.com/</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
