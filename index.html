@@ -131,6 +131,51 @@
     justify-content: center;
     flex-wrap: wrap;
   }
+  .video-preview {
+    max-width: 620px;
+    margin: 48px auto 0;
+  }
+  .video-thumb-link {
+    display: block;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 8px 24px rgba(63,61,58,0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .video-thumb-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(63,61,58,0.14);
+  }
+  .video-thumb-link:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+  .video-thumb-link img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .video-caption {
+    margin-top: 20px;
+  }
+  .video-caption .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 8px;
+  }
+  .video-caption h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+  .video-caption p {
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    max-width: 54ch;
+    margin: 0 auto;
+  }
   .btn {
     display: inline-block;
     padding: 13px 26px;
@@ -178,7 +223,7 @@
   .about strong { color: var(--ink); font-weight: 600; }
   .tracks {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
   .card {
@@ -237,8 +282,10 @@
     color: var(--ink-soft);
     opacity: 0.75;
   }
-  @media (max-width: 640px) {
+  @media (max-width: 760px) {
     .tracks { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
     header { padding: 60px 0 44px; }
     .hero-logo svg { width: 104px; }
   }
@@ -277,6 +324,16 @@
         <a class="btn btn-primary" href="https://www.youtube.com/@WalkerOps" aria-label="Subscribe on YouTube">Watch the channel</a>
         <a class="btn btn-secondary" href="#contact">Get in touch</a>
       </div>
+      <div class="video-preview">
+        <a class="video-thumb-link" href="https://www.youtube.com/@WalkerOps" aria-label="Watch on YouTube: The Job Nobody Hired You For">
+          <img src="video-1-job-nobody-hired-you-for.jpg" alt="Thumbnail for &quot;The Job Nobody Hired You For&quot; — an org chart with Founder, Sales, and Delivery boxes filled in, and a fourth box marked with a question mark" loading="lazy" width="1280" height="720">
+        </a>
+        <div class="video-caption">
+          <div class="tag">Latest video</div>
+          <h2>The Job Nobody Hired You For</h2>
+          <p>Every small business has an org chart with three boxes: Founder, Sales, Delivery. This one's about the fourth box — the operations, systems, and reporting work nobody explicitly signed up to own, but somebody ends up doing anyway.</p>
+        </div>
+      </div>
     </div>
   </header>
   <div class="divider" aria-hidden="true">
@@ -303,14 +360,19 @@
       <div class="section-label">What I make</div>
       <div class="tracks">
         <div class="card">
-          <div class="tag">The Channel</div>
-          <h3>AI for real businesses</h3>
-          <p>Practical automation walkthroughs built around actual small and mid-size business problems — not toy demos. If you run a business and want AI to do real work, this is for you.</p>
-        </div>
-        <div class="card">
           <div class="tag">Consulting</div>
           <h3>Ops leadership, on demand</h3>
           <p>Hands-on Customer Success, Sales, and Support operations consulting for companies of any size — built by someone who's stood up these functions from zero more than once.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Operations</div>
+          <h3>The systems behind the scenes</h3>
+          <p>Designing the metrics, operating cadences, and cross-functional visibility that connect Customer Success, Sales, and Support — so nothing falls through the cracks as a business grows.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Content Creation</div>
+          <h3>AI for real businesses</h3>
+          <p>Practical automation walkthroughs built around actual small and mid-size business problems — not toy demos. If you run a business and want AI to do real work, this is for you.</p>
         </div>
       </div>
     </div>
