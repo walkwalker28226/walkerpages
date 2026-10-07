@@ -282,6 +282,33 @@
     color: var(--ink-soft);
     opacity: 0.75;
   }
+  .earlier {
+    display: flex; align-items: center; gap: 14px;
+    margin: 26px auto 0; max-width: 420px; text-align: left;
+    padding: 10px; border: 1px solid var(--line); border-radius: 8px;
+    text-decoration: none; background: #fff;
+    transition: border-color 0.15s ease;
+  }
+  .earlier:hover { border-color: var(--clay); }
+  .earlier:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+  .earlier img { width: 112px; height: auto; border-radius: 4px; flex-shrink: 0; }
+  .earlier span { font-size: 0.95rem; line-height: 1.35; min-width: 0; }
+  .earlier .tag {
+    display: block; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay); margin-bottom: 3px;
+  }
+  .call-band { padding: 20px 0 30px; }
+  .call-card {
+    background: var(--clay-tint); border-radius: 10px; padding: 36px;
+    display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap;
+  }
+  .call-card > div { flex: 1 1 380px; min-width: 0; }
+  .call-card h2 {
+    font-family: 'Fraunces', serif; font-weight: 500;
+    font-size: clamp(1.5rem, 3.4vw, 2rem); line-height: 1.15; margin-bottom: 10px; text-wrap: balance;
+  }
+  .call-card h2 em { font-style: italic; color: var(--clay); }
+  .call-card p { color: var(--ink-soft); }
   @media (max-width: 760px) {
     .tracks { grid-template-columns: 1fr; }
   }
@@ -321,18 +348,22 @@
       <h1>Operations, made <em>visible</em>.</h1>
       <p class="lede">I build and explain AI-driven automation for small and mid-size businesses — real-world scenarios, not straight tutorials.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://www.youtube.com/@WalkerOps" aria-label="Subscribe on YouTube">Watch the channel</a>
-        <a class="btn btn-secondary" href="#contact">Get in touch</a>
+        <a class="btn btn-primary" href="/call">Book a free 30-minute call</a>
+        <a class="btn btn-secondary" href="https://www.youtube.com/@WalkerOps" aria-label="Watch the WalkerOps channel on YouTube">Watch the channel</a>
       </div>
       <div class="video-preview">
-        <a class="video-thumb-link" href="https://www.youtube.com/watch?v=RIFYm9EywQA" aria-label="Watch on YouTube: The Analyst You Can't Afford to Hire">
-          <img src="https://i.ytimg.com/vi/RIFYm9EywQA/maxresdefault.jpg" alt="Thumbnail for &quot;The Analyst You Can't Afford to Hire&quot; — an AI business dashboard built in 20 minutes" loading="lazy" width="1280" height="720">
+        <a class="video-thumb-link" href="https://www.youtube.com/watch?v=gauzgAzljsA" aria-label="Watch on YouTube: The Customer Success Manager You Can't Afford to Hire">
+          <img src="https://i.ytimg.com/vi/gauzgAzljsA/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/gauzgAzljsA/hqdefault.jpg'" alt="Thumbnail for &quot;The Customer Success Manager You Can't Afford to Hire&quot;" loading="lazy" width="1280" height="720">
         </a>
         <div class="video-caption">
           <div class="tag">Latest video</div>
-          <h2>The Analyst You Can't Afford to Hire</h2>
-          <p>Every small business has the same folder: a sales export, a marketing plan, a pile of support tickets — and no analyst to turn it into a decision. I hand that folder to Claude and get back a business assessment, a live dashboard, and a quarterly-review deck in under 20 minutes. (A human still checks the numbers.)</p>
+          <h2>The Customer Success Manager You Can't Afford to Hire</h2>
+          <p>A ten-year customer worth about $300K a year walks out, and the warning signs were written down in three different places. I rewind to April 30th and have Claude comb the tickets, orders, and call notes to see if it would have caught it in time. You get the exact prompt, plus a weekly check you can run on your own customers. (The company, Ironhollow, is made up so every number on screen is one I can stand behind.)</p>
         </div>
+        <a class="earlier" href="https://www.youtube.com/watch?v=RIFYm9EywQA">
+          <img src="https://i.ytimg.com/vi/RIFYm9EywQA/mqdefault.jpg" alt="" loading="lazy" width="320" height="180">
+          <span><span class="tag">Earlier</span>The Analyst You Can't Afford to Hire</span>
+        </a>
       </div>
     </div>
   </header>
@@ -377,6 +408,18 @@
       </div>
     </div>
   </section>
+  <section class="call-band">
+    <div class="wrap">
+      <div class="call-card">
+        <div>
+          <div class="section-label">Start here</div>
+          <h2>You talk. I listen. You leave with <em>the one thing to fix first.</em></h2>
+          <p>A free 30-minute call for Charlotte business owners. No pitch, no prep, no jargon.</p>
+        </div>
+        <a class="btn btn-primary" href="/call">Book your free call</a>
+      </div>
+    </div>
+  </section>
   <footer id="contact">
     <div class="foot-mark" aria-hidden="true">
       <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
@@ -393,6 +436,7 @@
     </div>
     <div class="wrap">
       <div class="foot-links">
+        <a href="/call">Free 30-minute call</a>
         <a href="https://www.youtube.com/@WalkerOps">YouTube</a>
         <a href="https://www.linkedin.com/in/bill-walker/">LinkedIn</a>
         <a href="mailto:billwalker@outlook.com">Email</a>
