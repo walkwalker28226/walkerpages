@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free 30-Minute Call — WalkerOps</title>
+<meta name="description" content="A free 30-minute call for Charlotte business owners. You talk, I listen, and you leave with the one thing to fix first.">
+<link rel="icon" type="image/svg+xml" href="walkerops-favicon.svg">
+<link rel="canonical" href="https://walkerops.com/call">
+<meta name="theme-color" content="#3F3D3A">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walkerops.com/call">
+<meta property="og:site_name" content="WalkerOps">
+<meta property="og:title" content="Free 30-minute call: you talk, I listen, you leave with the one thing to fix first.">
+<meta property="og:description" content="For Charlotte business owners. No pitch, no prep, no jargon.">
+<meta property="og:image" content="https://walkerops.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free 30-minute call with WalkerOps">
+<meta name="twitter:description" content="You talk, I listen, you leave with the one thing to fix first.">
+<meta name="twitter:image" content="https://walkerops.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Fraunces:opsz,wght@9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Same tokens as walkerops.com (index.html) so the two pages read as one site */
+  :root {
+    --paper: #FAF9F7;
+    --ink: #3F3D3A;
+    --ink-soft: #6F6B66;
+    --clay: #D2703A;
+    --clay-tint: #F6E3D6;
+    --line: #E4DFD8;
+    --white: #FFFFFF;
+    --error: #B3402A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+
+  /* Top bar */
+  .topbar { padding: 26px 0; }
+  .topbar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand svg { width: 26px; height: 26px; }
+  .brand span { font-family: 'Archivo', Helvetica, Arial, sans-serif; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.03em; }
+  .topbar .back { font-size: 0.92rem; color: var(--ink-soft); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; }
+  .topbar .back:hover { color: var(--clay); text-decoration-color: var(--clay); }
+
+  /* Hero */
+  header { padding: 48px 0 40px; }
+  .eyebrow {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--clay);
+    border: 1.5px solid var(--clay);
+    border-radius: 999px;
+    padding: 5px 14px;
+    margin-bottom: 26px;
+  }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-size: clamp(2.3rem, 6vw, 3.9rem);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    max-width: 17ch;
+    margin-bottom: 22px;
+    text-wrap: balance;
+  }
+  h1 em { font-style: italic; color: var(--clay); }
+  .lede { font-size: 1.15rem; color: var(--ink-soft); max-width: 52ch; margin-bottom: 34px; }
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { box-shadow: 0 6px 18px rgba(63,61,58,0.25); }
+  .btn[disabled] { opacity: .6; cursor: wait; transform: none; }
+
+  section { padding: 44px 0; }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+  h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(1.6rem, 3.6vw, 2.1rem);
+    line-height: 1.15;
+    margin-bottom: 24px;
+    text-wrap: balance;
+  }
+
+  /* The 30 minutes, as a real sequence */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .step {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 26px 24px;
+    min-width: 0;
+  }
+  .step.hi { background: var(--clay-tint); }
+  .step .num {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: var(--clay); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; margin-bottom: 16px;
+  }
+  .step h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: 1.35rem; line-height: 1.2; }
+  .step .time {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-soft); margin: 6px 0 12px;
+  }
+  .step p { color: var(--ink-soft); font-size: 0.98rem; }
+
+  /* Gets / isn't */
+  .pair { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; }
+  .pair > div { background: var(--white); border: 1px solid var(--line); border-radius: 8px; padding: 26px 26px 20px; min-width: 0; }
+  .pair h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: 1.3rem; margin-bottom: 14px; }
+  ul.ticks { list-style: none; display: grid; gap: 10px; }
+  ul.ticks li { position: relative; padding-left: 20px; font-size: 0.98rem; color: var(--ink-soft); }
+  ul.ticks li strong { color: var(--ink); font-weight: 600; }
+  ul.ticks li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border-radius: 1px; background: var(--clay); }
+  ul.ticks.muted li::before { background: var(--ink); opacity: .3; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { background: var(--white); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-size: 0.95rem; }
+
+  .about p { font-size: 1.05rem; max-width: 62ch; color: var(--ink-soft); }
+  .about strong { color: var(--ink); font-weight: 600; }
+
+  /* Form */
+  .book { background: var(--white); border: 1px solid var(--line); border-radius: 10px; padding: 36px; }
+  .book .sub { color: var(--ink-soft); margin: -12px 0 26px; max-width: 56ch; }
+  form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; }
+  .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .field.full { grid-column: 1 / -1; }
+  label, legend { font-weight: 500; font-size: 0.95rem; }
+  .opt { font-weight: 400; color: var(--ink-soft); font-size: 0.88rem; }
+  input[type=text], input[type=email], input[type=tel], select, textarea {
+    font: inherit; font-size: 1rem; color: var(--ink);
+    background: var(--paper); border: 1.5px solid var(--line); border-radius: 6px;
+    padding: 11px 13px; width: 100%;
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--clay); box-shadow: 0 0 0 3px var(--clay-tint); }
+  .field.invalid input, .field.invalid textarea, .field.invalid select { border-color: var(--error); }
+  .err { color: var(--error); font-size: 0.86rem; min-height: 0; }
+  fieldset { border: 0; display: flex; flex-direction: column; gap: 8px; }
+  .radios { display: flex; flex-wrap: wrap; gap: 10px; }
+  .radios label {
+    display: flex; align-items: center; gap: 8px; font-weight: 400;
+    border: 1.5px solid var(--line); border-radius: 999px; padding: 8px 16px; cursor: pointer; background: var(--paper);
+  }
+  .radios input { accent-color: var(--clay); }
+  .radios label:has(input:checked) { border-color: var(--clay); background: var(--clay-tint); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .submit-row { grid-column: 1 / -1; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 4px; }
+  .fine { color: var(--ink-soft); font-size: 0.88rem; max-width: 46ch; }
+  .status { grid-column: 1 / -1; font-size: 0.98rem; }
+  .status.bad { color: var(--error); }
+  .thanks { text-align: left; }
+  .thanks h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: 1.8rem; margin-bottom: 10px; }
+  .thanks p { color: var(--ink-soft); max-width: 54ch; }
+  .thanks p + p { margin-top: 10px; }
+
+  footer { padding: 40px 0 70px; text-align: center; }
+  .foot-mark { display: flex; justify-content: center; margin-bottom: 22px; }
+  .foot-mark svg { width: 30px; height: 30px; }
+  .foot-links { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; font-size: 0.95rem; }
+  .foot-links a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; }
+  .foot-links a:hover { text-decoration-color: var(--clay); color: var(--clay); }
+  .foot-note { margin-top: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); opacity: .8; }
+
+  @media (max-width: 760px) {
+    .steps, .pair { grid-template-columns: 1fr; }
+    form { grid-template-columns: 1fr; }
+    .book { padding: 26px 20px; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 18px; }
+    header { padding: 28px 0 24px; }
+    section { padding: 32px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="WalkerOps home">
+      <svg viewBox="0 0 66 66" aria-hidden="true"><rect x="0" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="46" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="0" y="23" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="23" width="20" height="20" fill="#D2703A"/><rect x="46" y="23" width="20" height="20" fill="#D2703A"/><rect x="0" y="46" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="46" width="20" height="20" fill="#D2703A"/><rect x="46" y="46" width="20" height="20" fill="#D2703A"/></svg>
+      <span>WalkerOps</span>
+    </a>
+    <a class="back" href="/">walkerops.com</a>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Free · 30 minutes · No pitch</div>
+    <h1>You talk. I listen. You leave with <em>the one thing to fix first.</em></h1>
+    <p class="lede">For Charlotte business owners who are tired of tech that fights them, tools that don't talk to each other, or an AI question they haven't had time to answer.</p>
+    <a class="btn btn-primary" href="#book">Book your free call</a>
+  </div>
+</header>
+
+<section aria-labelledby="how">
+  <div class="wrap">
+    <div class="section-label">How the 30 minutes go</div>
+    <h2 id="how">Three parts. You do most of the talking.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h3>You talk</h3>
+        <div class="time">About 20 minutes</div>
+        <p>Tell me what's eating your week. The software that never quite works, the task you're still doing at 10 p.m., the AI tool your team started using without asking.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h3>I listen</h3>
+        <div class="time">And ask good questions</div>
+        <p>No slides, no jargon, no sales script. I'm listening for where your time and money quietly leak out, and which leak matters most.</p>
+      </div>
+      <div class="step hi">
+        <div class="num">3</div>
+        <h3>You get one thing</h3>
+        <div class="time">The last 5–10 minutes</div>
+        <p>The single fix that would make the biggest difference first, in plain English. Yours to keep, whether we ever work together or not.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-label="What you get">
+  <div class="wrap">
+    <div class="pair">
+      <div>
+        <h3>What you walk away with</h3>
+        <ul class="ticks">
+          <li><strong>The one thing to fix first</strong>, and why it beats everything else on the list</li>
+          <li><strong>A rough size for it:</strong> do it yourself this week, an afternoon with help, or a real project</li>
+          <li><strong>A short written recap</strong> in your inbox within one business day</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What this call isn't</h3>
+        <ul class="ticks muted">
+          <li>A sales pitch dressed up as advice</li>
+          <li>Homework. No prep, no forms beyond this one, no slides</li>
+          <li>A test of how much you know about AI or tech</li>
+          <li>A commitment to anything after the 30 minutes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="fit">
+  <div class="wrap">
+    <div class="section-label">Who it's for</div>
+    <h2 id="fit">A good fit if you…</h2>
+    <div class="chips">
+      <span class="chip">Run a law, CPA, insurance, or advisory office</span>
+      <span class="chip">Own a restaurant, shop, or trade business</span>
+      <span class="chip">Don't have an IT person (or you <em>are</em> the IT person)</span>
+      <span class="chip">Wonder if AI is worth it, or safe</span>
+      <span class="chip">Feel like the tech runs you</span>
+    </div>
+  </div>
+</section>
+
+<section class="about" aria-labelledby="who">
+  <div class="wrap">
+    <div class="section-label">Who you'll be talking to</div>
+    <h2 id="who">Hi, I'm Bill Walker.</h2>
+    <p>I've spent <strong>25+ years leading operations, customer success, and support teams</strong>: 21 of them at Microsoft, then Tanium, EY, and Cyera. The job has always been the same: find what's slowing people down and fix it in the right order. Now I do that for Charlotte small businesses, putting technology and AI to work on the parts of the business you'd rather not run yourself.</p>
+  </div>
+</section>
+
+<section id="book" aria-labelledby="book-h">
+  <div class="wrap">
+    <div class="book">
+      <div id="formView">
+        <div class="section-label">Book your free call</div>
+        <h2 id="book-h">Tell me a little, and I'll reach out to set a time.</h2>
+        <p class="sub">Takes about a minute. I'll reply personally within one business day with a few times that work.</p>
+
+        <form id="callForm" novalidate>
+          <div class="field" data-req>
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+            <div class="err" aria-live="polite"></div>
+          </div>
+          <div class="field" data-req>
+            <label for="business">Business name</label>
+            <input id="business" name="business" type="text" autocomplete="organization" required>
+            <div class="err" aria-live="polite"></div>
+          </div>
+          <div class="field" data-req>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+            <div class="err" aria-live="polite"></div>
+          </div>
+          <div class="field">
+            <label for="phone">Phone <span class="opt">(optional)</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+          <div class="field full">
+            <label for="kind">What kind of business? <span class="opt">(optional)</span></label>
+            <select id="kind" name="kind">
+              <option value="">Choose one</option>
+              <option>Professional office (law, CPA, insurance, advisory)</option>
+              <option>Restaurant or bar</option>
+              <option>Retail shop</option>
+              <option>Trades or home services</option>
+              <option>Nonprofit, school, or church</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field full" data-req>
+            <label for="headache">What's eating your week?</label>
+            <textarea id="headache" name="headache" placeholder="A sentence or two is plenty. For example: “Our scheduling, invoicing, and email don't talk to each other, and I re-type everything on Sunday nights.”" required></textarea>
+            <div class="err" aria-live="polite"></div>
+          </div>
+          <fieldset class="field full">
+            <legend>How would you like to talk?</legend>
+            <div class="radios">
+              <label><input type="radio" name="format" value="Phone" checked> Phone</label>
+              <label><input type="radio" name="format" value="Video"> Video</label>
+            </div>
+          </fieldset>
+          <div class="field full">
+            <label for="times">Best days or times <span class="opt">(optional)</span></label>
+            <input id="times" name="times" type="text" placeholder="e.g. Tuesday or Thursday mornings">
+          </div>
+          <!-- spam trap: real people never see or fill this -->
+          <div class="hp" aria-hidden="true"><label for="_gotcha">Leave this empty</label><input id="_gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
+          <div class="status" id="status" role="status" aria-live="polite"></div>
+          <div class="submit-row">
+            <button class="btn btn-primary" id="submitBtn" type="submit">Request my free call</button>
+            <p class="fine">I'll only use your details to set up this call. No mailing list, no spam.</p>
+          </div>
+        </form>
+      </div>
+
+      <div id="thanksView" class="thanks" hidden>
+        <div class="section-label">Request received</div>
+        <h3>Thanks, <span id="thanksName">friend</span>. You're on my list.</h3>
+        <p>I'll email you within one business day with a few times for our 30 minutes.</p>
+        <p>Nothing to prepare. Just come ready to talk about what's eating your week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-mark" aria-hidden="true">
+    <svg viewBox="0 0 66 66"><rect x="0" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="46" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="0" y="23" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="23" width="20" height="20" fill="#D2703A"/><rect x="46" y="23" width="20" height="20" fill="#D2703A"/><rect x="0" y="46" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="46" width="20" height="20" fill="#D2703A"/><rect x="46" y="46" width="20" height="20" fill="#D2703A"/></svg>
+  </div>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="/">Home</a>
+      <a href="https://www.youtube.com/@WalkerOps">YouTube</a>
+      <a href="https://www.linkedin.com/in/bill-walker/">LinkedIn</a>
+      <a href="mailto:billwalker@outlook.com">Email</a>
+    </div>
+    <div class="foot-note">Operations, made visible · Walker Ops, LLC · Charlotte, NC</div>
+  </div>
+</footer>
+
+<script>
+/* ---- SETUP: paste your Formspree form URL here (looks like https://formspree.io/f/abcdwxyz).
+   Until it's set, the form falls back to opening a pre-filled email to you. ---- */
+const FORM_ENDPOINT = "https://formspree.io/f/xvkzkaol";
+const FALLBACK_EMAIL = "billwalker@outlook.com";
+
+const form = document.getElementById('callForm');
+const statusEl = document.getElementById('status');
+const btn = document.getElementById('submitBtn');
+
+function setError(field, msg) {
+  field.classList.toggle('invalid', !!msg);
+  const e = field.querySelector('.err');
+  if (e) e.textContent = msg || '';
+}
+
+function validate() {
+  let firstBad = null;
+  form.querySelectorAll('.field[data-req]').forEach(f => {
+    const input = f.querySelector('input, textarea, select');
+    const v = input.value.trim();
+    let msg = '';
+    if (!v) msg = 'Please fill this in.';
+    else if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) msg = 'That email address looks off. Mind checking it?';
+    setError(f, msg);
+    if (msg && !firstBad) firstBad = input;
+  });
+  if (firstBad) firstBad.focus();
+  return !firstBad;
+}
+
+form.querySelectorAll('.field[data-req] input, .field[data-req] textarea').forEach(i =>
+  i.addEventListener('input', () => setError(i.closest('.field'), ''))
+);
+
+function showThanks(name) {
+  document.getElementById('thanksName').textContent = name.split(' ')[0] || 'friend';
+  document.getElementById('formView').hidden = true;
+  document.getElementById('thanksView').hidden = false;
+  document.getElementById('book').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+form.addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  statusEl.textContent = ''; statusEl.className = 'status';
+  if (!validate()) return;
+  const data = new FormData(form);
+  if (data.get('_gotcha')) return; // bot
+  data.append('subject', 'Free 30-min call request: ' + data.get('business'));
+
+  if (!FORM_ENDPOINT) {
+    const lines = ['name','business','email','phone','kind','format','times','headache']
+      .map(k => k.charAt(0).toUpperCase() + k.slice(1) + ': ' + (data.get(k) || '—'));
+    const href = 'mailto:' + FALLBACK_EMAIL + '?subject=' + encodeURIComponent(data.get('subject')) +
+                 '&body=' + encodeURIComponent(lines.join('\n'));
+    window.location.href = href;
+    statusEl.textContent = 'Your email app should open with everything filled in. Just hit send. If it didn\'t open, email ' + FALLBACK_EMAIL + '.';
+    return;
+  }
+
+  btn.disabled = true; btn.textContent = 'Sending…';
+  try {
+    const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+    if (!res.ok) throw new Error('bad status');
+    showThanks(String(data.get('name')));
+  } catch (e) {
+    statusEl.className = 'status bad';
+    statusEl.textContent = 'That didn\'t go through. Please try again, or email ' + FALLBACK_EMAIL + ' and I\'ll set it up from there.';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Request my free call';
+  }
+});
+</script>
+</body>
+</html>
