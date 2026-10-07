@@ -229,6 +229,25 @@
     color: var(--ink-soft);
   }
   .about strong { color: var(--ink); font-weight: 600; }
+  .about p + p { margin-top: 12px; }
+  .about h2, .who-section h2, .tracks-section h2 {
+    font-family: 'Fraunces', serif; font-weight: 500;
+    font-size: clamp(1.6rem, 3.6vw, 2.1rem); line-height: 1.15; margin-bottom: 22px; text-wrap: balance;
+  }
+  .about-grid { display: grid; grid-template-columns: 200px 1fr; gap: 36px; align-items: start; }
+  .about-grid > div { min-width: 0; }
+  .headshot { width: 200px; height: 200px; border-radius: 10px; object-fit: cover; display: block; border: 1px solid var(--line); box-shadow: 0 8px 24px rgba(63,61,58,0.10); }
+  .who { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .who-card {
+    display: block; text-decoration: none; background: #fff; border: 1px solid var(--line);
+    border-radius: 8px; padding: 28px 30px; min-width: 0;
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .who-card:hover { border-color: var(--clay); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(63,61,58,0.08); }
+  .who-card:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+  .who-card h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.45rem; margin-bottom: 8px; }
+  .who-card p { color: var(--ink-soft); font-size: 0.98rem; margin-bottom: 14px; }
+  .who-card .more { font-weight: 500; color: var(--clay); font-size: 0.95rem; }
   .tracks {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -318,7 +337,14 @@
   .call-card h2 em { font-style: italic; color: var(--clay); }
   .call-card p { color: var(--ink-soft); }
   @media (max-width: 760px) {
-    .tracks { grid-template-columns: 1fr; }
+    .tracks, .who { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 16px; }
+    .about-grid { grid-template-columns: 1fr; gap: 22px; }
+    .headshot { width: 140px; height: 140px; }
+    .card { padding: 26px 22px; }
+    .call-card { padding: 26px 22px; }
   }
   @media (max-width: 640px) {
     header { padding: 60px 0 44px; }
@@ -356,10 +382,10 @@
       <h1>I take the tech off your plate. <em>AI included.</em></h1>
       <p class="lede">Computers, email, accounts, backups and the AI tools everyone's asking about, handled by someone who explains what he's doing.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="/call">Book a free 30-minute call</a>
+        <a class="btn btn-primary" href="/call">Book a free Tech Headache Call</a>
         <a class="btn btn-secondary" href="https://www.youtube.com/@WalkerOps" aria-label="Watch the WalkerOps channel on YouTube">Watch the channel</a>
       </div>
-      <p class="cta-note">You talk, I listen, you leave with the one thing to fix first.</p>
+      <p class="cta-note">30 minutes. You talk, I listen, you leave with the one thing to fix first.</p>
       <div class="video-preview">
         <a class="video-thumb-link" href="https://www.youtube.com/watch?v=gauzgAzljsA" aria-label="Watch on YouTube: The Customer Success Manager You Can't Afford to Hire">
           <img src="https://i.ytimg.com/vi/gauzgAzljsA/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/gauzgAzljsA/hqdefault.jpg'" alt="Thumbnail for &quot;The Customer Success Manager You Can't Afford to Hire&quot;" loading="lazy" width="1280" height="720">
@@ -389,43 +415,70 @@
       <rect x="46" y="46" width="20" height="20" fill="#D2703A"></rect>
     </svg>
   </div>
-  <section class="about">
-    <div class="wrap">
-      <div class="section-label">About</div>
-      <p>25+ years leading Customer Success, Sales, and Support operations — including 21 years at <strong>Microsoft</strong>, plus <strong>Tanium</strong>, <strong>EY</strong>, and currently <strong>Cyera</strong>, where I head Customer Success Operations & Support. I've spent a career building operations functions from scratch, and now I show other business owners how to do the same with AI.</p>
-    </div>
-  </section>
   <section class="tracks-section">
     <div class="wrap">
-      <div class="section-label">What I make</div>
+      <div class="section-label">What I take off your plate</div>
+      <h2>The everyday tech, handled. AI included.</h2>
       <div class="tracks">
         <div class="card">
-          <div class="tag">Consulting</div>
-          <h3>Ops leadership, on demand</h3>
-          <p>Hands-on Customer Success, Sales, and Support operations consulting for companies of any size — built by someone who's stood up these functions from zero more than once.</p>
+          <div class="tag">Everyday tech</div>
+          <h3>Handled, not just fixed</h3>
+          <p>Computers, phones, logins, Wi-Fi, email and backups, set up properly and kept that way. People added on day one and shut off on their last day.</p>
         </div>
         <div class="card">
-          <div class="tag">Operations</div>
-          <h3>The systems behind the scenes</h3>
-          <p>Designing the metrics, operating cadences, and cross-functional visibility that connect Customer Success, Sales, and Support — so nothing falls through the cracks as a business grows.</p>
+          <div class="tag">AI</div>
+          <h3>AI with guardrails</h3>
+          <p>Put AI to work where it actually saves you hours, with a one-page policy your team will read and the right settings so your information stays yours.</p>
         </div>
         <div class="card">
-          <div class="tag">Content Creation</div>
-          <h3>AI for real businesses</h3>
-          <p>Practical automation walkthroughs built around actual small and mid-size business problems — not toy demos. If you run a business and want AI to do real work, this is for you.</p>
+          <div class="tag">Support</div>
+          <h3>Someone to call</h3>
+          <p>When something breaks or a vendor sends a quote you don't understand, you call me and get a straight answer in plain English.</p>
         </div>
       </div>
     </div>
   </section>
+  <section class="who-section">
+    <div class="wrap">
+      <div class="section-label">Who I help</div>
+      <h2>Charlotte businesses without an IT department</h2>
+      <div class="who">
+        <a class="who-card" href="/law-and-professional-offices">
+          <h3>Law &amp; professional offices</h3>
+          <p>Law firms, CPA and bookkeeping practices, insurance agencies and advisors.</p>
+          <span class="more">See how I help offices &rarr;</span>
+        </a>
+        <a class="who-card" href="/restaurants-and-shops">
+          <h3>Restaurants &amp; shops</h3>
+          <p>Restaurants, bars, coffee shops, retail, salons and trades.</p>
+          <span class="more">See how I help restaurants &amp; shops &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="about">
+    <div class="wrap">
+      <div class="about-grid">
+        <img class="headshot" src="bill-walker-headshot.jpg" alt="Bill Walker, founder of WalkerOps" width="200" height="200" loading="lazy">
+        <div>
+          <div class="section-label">About</div>
+          <h2>Hi, I'm Bill Walker.</h2>
+          <p>I've spent <strong>25+ years leading operations, customer success, and support teams</strong>: 21 of them at <strong>Microsoft</strong>, then <strong>Tanium</strong>, <strong>EY</strong>, and <strong>Cyera</strong>. The job has always been the same: find what's slowing people down and fix it in the right order.</p>
+          <p>Now I do that for Charlotte small businesses, taking the tech you'd rather not run yourself off your plate. AI included.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
   <section class="call-band">
     <div class="wrap">
       <div class="call-card">
         <div>
           <div class="section-label">Start here</div>
           <h2>You talk. I listen. You leave with <em>the one thing to fix first.</em></h2>
-          <p>A free 30-minute call for Charlotte business owners. No pitch, no prep, no jargon.</p>
+          <p>The Tech Headache Call is free and takes 30 minutes. For Charlotte business owners. No pitch, no prep, no jargon.</p>
         </div>
-        <a class="btn btn-primary" href="/call">Book your free call</a>
+        <a class="btn btn-primary" href="/call">Book a free Tech Headache Call</a>
       </div>
     </div>
   </section>
@@ -445,12 +498,14 @@
     </div>
     <div class="wrap">
       <div class="foot-links">
-        <a href="/call">Free 30-minute call</a>
+        <a href="/call">Tech Headache Call</a>
+        <a href="/law-and-professional-offices">Law &amp; professional offices</a>
+        <a href="/restaurants-and-shops">Restaurants &amp; shops</a>
         <a href="https://www.youtube.com/@WalkerOps">YouTube</a>
         <a href="https://www.linkedin.com/in/bill-walker/">LinkedIn</a>
         <a href="mailto:billwalker@outlook.com">Email</a>
       </div>
-      <div class="foot-note">WalkerOps · Charlotte, NC</div>
+      <div class="foot-note">Walker Ops, LLC · Charlotte, NC</div>
     </div>
   </footer>
 </body>

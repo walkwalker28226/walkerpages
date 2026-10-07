@@ -159,6 +159,13 @@
 
   .about p { font-size: 1.05rem; max-width: 62ch; color: var(--ink-soft); }
   .about strong { color: var(--ink); font-weight: 600; }
+  .about-grid { display: grid; grid-template-columns: 200px 1fr; gap: 36px; align-items: start; }
+  .about-grid > div { min-width: 0; }
+  .headshot { width: 200px; height: 200px; border-radius: 10px; object-fit: cover; display: block; border: 1px solid var(--line); box-shadow: 0 8px 24px rgba(63,61,58,0.10); }
+  @media (max-width: 640px) {
+    .about-grid { grid-template-columns: 1fr; gap: 22px; }
+    .headshot { width: 140px; height: 140px; }
+  }
 
   /* Form */
   .book { background: var(--white); border: 1px solid var(--line); border-radius: 10px; padding: 36px; }
@@ -307,9 +314,14 @@
 
 <section class="about" aria-labelledby="who">
   <div class="wrap">
+    <div class="about-grid">
+      <img class="headshot" src="bill-walker-headshot.jpg" alt="Bill Walker, founder of WalkerOps" width="200" height="200" loading="lazy">
+      <div>
     <div class="section-label">Who you'll be talking to</div>
     <h2 id="who">Hi, I'm Bill Walker.</h2>
     <p>I've spent <strong>25+ years leading operations, customer success, and support teams</strong>: 21 of them at Microsoft, then Tanium, EY, and Cyera. The job has always been the same: find what's slowing people down and fix it in the right order. Now I do that for Charlotte small businesses, putting technology and AI to work on the parts of the business you'd rather not run yourself.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -407,6 +419,14 @@
 <script>
 /* ---- SETUP: paste your Formspree form URL here (looks like https://formspree.io/f/abcdwxyz).
    Until it's set, the form falls back to opening a pre-filled email to you. ---- */
+/* Segment pages link here as /call?for=office or /call?for=restaurant.
+   Pre-pick the business type so you can see which page sent the booking. */
+(function () {
+  const map = { office: 'Professional office (law, CPA, insurance, advisory)', restaurant: 'Restaurant or bar', shop: 'Retail shop' };
+  const want = map[new URLSearchParams(location.search).get('for')];
+  if (want) document.getElementById('kind').value = want;
+})();
+
 const FORM_ENDPOINT = "https://formspree.io/f/xvkzkaol";
 const FALLBACK_EMAIL = "billwalker@outlook.com";
 
