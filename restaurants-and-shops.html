@@ -151,6 +151,13 @@
   .about p { font-size: 1.05rem; max-width: 62ch; color: var(--ink-soft); }
   .about p + p { margin-top: 12px; }
   .about strong { color: var(--ink); font-weight: 600; }
+  .about-grid { display: grid; grid-template-columns: 200px 1fr; gap: 36px; align-items: start; }
+  .about-grid > div { min-width: 0; }
+  .headshot { width: 200px; height: 200px; border-radius: 10px; object-fit: cover; display: block; border: 1px solid var(--line); box-shadow: 0 8px 24px rgba(63,61,58,0.10); }
+  @media (max-width: 640px) {
+    .about-grid { grid-template-columns: 1fr; gap: 22px; }
+    .headshot { width: 140px; height: 140px; }
+  }
 
   .call-card {
     background: var(--clay-tint); border-radius: 10px; padding: 36px;
@@ -292,10 +299,15 @@
 
 <section class="about" aria-labelledby="who">
   <div class="wrap">
+    <div class="about-grid">
+      <img class="headshot" src="bill-walker-headshot.jpg" alt="Bill Walker, founder of WalkerOps" width="200" height="200" loading="lazy">
+      <div>
     <div class="section-label">Who you'll be talking to</div>
     <h2 id="who">Hi, I'm Bill Walker.</h2>
     <p>I've spent <strong>25+ years leading operations, customer success, and support teams</strong>: 21 of them at Microsoft, then Tanium, EY, and Cyera. The job has always been the same: find what's slowing people down and fix it in the right order.</p>
     <p>Now I do that for Charlotte restaurants and shops. If we keep working together after the call, you'll know what it costs before anything starts. If we don't, you still keep the advice.</p>
+      </div>
+    </div>
   </div>
 </section>
 
