@@ -1,0 +1,1398 @@
+1
+00:00:03,000 --> 00:00:07,237
+En el video de hoy, quiero ayudarte a
+crear ese
+
+2
+00:00:07,237 --> 00:00:11,474
+gerente de éxito del cliente que no puedes
+darte el
+
+3
+00:00:11,474 --> 00:00:15,711
+lujo de contratar. Quiero ayudarte a
+revisar a fondo los
+
+4
+00:00:15,711 --> 00:00:19,948
+datos de tu sistema y a identificar y
+destacar las
+
+5
+00:00:19,948 --> 00:00:24,185
+cuentas que tienen problemas específicos,
+problemas que pueden ser difíciles
+
+6
+00:00:24,185 --> 00:00:27,151
+de notar si solo miras la superficie.
+
+7
+00:00:27,151 --> 00:00:31,388
+Así que abróchate el cinturón y manos a la
+obra.
+
+8
+00:00:31,388 --> 00:00:35,625
+En junio de 2026, esta empresa perdió a
+uno de
+
+9
+00:00:35,625 --> 00:00:37,744
+sus dos clientes más grandes.
+
+10
+00:00:37,744 --> 00:00:41,557
+Diez años juntos, unos trescientos mil
+dólares al año.
+
+11
+00:00:41,557 --> 00:00:45,794
+Y aquí está lo importante: el cliente les
+avisó que
+
+12
+00:00:45,794 --> 00:00:50,031
+iba a pasar. Todo estaba por escrito en
+tres lugares
+
+13
+00:00:50,031 --> 00:00:52,150
+distintos, y nadie lo juntó.
+
+14
+00:00:52,150 --> 00:00:56,387
+Así que volvamos al 30 de abril y veamos
+si
+
+15
+00:00:56,387 --> 00:01:00,200
+la IA podría haberlo detectado y ayudado a
+tiempo.
+
+16
+00:02:54,000 --> 00:02:58,333
+Quiero ayudarte a revisar a fondo los
+datos de tu
+
+17
+00:02:58,333 --> 00:03:02,667
+sistema y a identificar y destacar las
+cuentas que tienen
+
+18
+00:03:02,667 --> 00:03:07,000
+problemas específicos, problemas que
+pueden ser difíciles de notar si
+
+19
+00:03:07,000 --> 00:03:11,333
+solo miras la superficie. Así que
+abróchate el cinturón y
+
+20
+00:03:11,333 --> 00:03:15,667
+manos a la obra. En junio de 2026, esta
+empresa
+
+21
+00:03:15,667 --> 00:03:19,567
+perdió a uno de sus dos clientes más
+grandes.
+
+22
+00:03:19,567 --> 00:03:23,900
+Diez años juntos, unos trescientos mil
+dólares al año, y
+
+23
+00:03:23,900 --> 00:03:28,233
+aquí está lo importante: el cliente les
+avisó que iba
+
+24
+00:03:28,233 --> 00:03:32,567
+a pasar. Todo estaba por escrito en tres
+lugares distintos,
+
+25
+00:03:32,567 --> 00:03:36,900
+y nadie lo juntó. Así que volvamos al 30
+de
+
+26
+00:03:36,900 --> 00:03:41,233
+abril y veamos si la IA podría haberlo
+detectado y
+
+27
+00:03:41,233 --> 00:03:45,567
+ayudado a tiempo. Así funciona en las
+empresas grandes: contratan
+
+28
+00:03:45,567 --> 00:03:49,900
+a una persona o a un equipo de gerentes de
+
+29
+00:03:49,900 --> 00:03:51,200
+éxito del cliente.
+
+30
+00:03:54,000 --> 00:03:57,499
+El trabajo de estas personas es,
+básicamente, prestar atención.
+
+31
+00:03:57,499 --> 00:04:00,608
+¿Quién dejó de comunicarse? ¿Quién se está
+frustrando?
+
+32
+00:04:00,608 --> 00:04:02,941
+¿Quién está listo para comprar más?
+
+33
+00:04:02,941 --> 00:04:06,051
+En un negocio pequeño, esa persona eres
+tú.
+
+34
+00:04:06,051 --> 00:04:07,994
+Es una bandeja de entrada.
+
+35
+00:04:07,994 --> 00:04:11,882
+Es un sistema de tickets que, seamos
+sinceros, nadie lee
+
+36
+00:04:11,882 --> 00:04:15,769
+de principio a fin. Así que las cosas se
+escapan,
+
+37
+00:04:15,769 --> 00:04:18,101
+pero no porque no te importe.
+
+38
+00:04:18,101 --> 00:04:21,600
+Es porque nadie puede vigilarlo todo a la
+vez.
+
+39
+00:04:23,000 --> 00:04:26,764
+He pasado 25 años dirigiendo equipos de
+soporte y de
+
+40
+00:04:26,764 --> 00:04:30,529
+éxito del cliente en Microsoft, Tanium y
+Cyera, y los
+
+41
+00:04:30,529 --> 00:04:34,293
+clientes que se van casi siempre te dicen
+que están
+
+42
+00:04:34,293 --> 00:04:36,175
+frustrados, que algo anda mal.
+
+43
+00:04:36,175 --> 00:04:39,939
+Solo que no siempre lo dicen en un solo
+lugar.
+
+44
+00:04:39,939 --> 00:04:43,704
+Así que quédate, y te compartiré el prompt
+exacto que
+
+45
+00:04:43,704 --> 00:04:47,468
+uso para detectar dónde podrían estar
+estos problemas, y te
+
+46
+00:04:47,468 --> 00:04:51,232
+daré una tarea programada para ejecutar
+cada semana, para que
+
+47
+00:04:51,232 --> 00:04:54,996
+recibas una lista completa de tus clientes
+y de dónde
+
+48
+00:04:54,996 --> 00:04:58,761
+podrían estar los problemas. Si viste el
+video del analista,
+
+49
+00:04:58,761 --> 00:05:02,525
+ya conoces Ironhollow, una empresa de
+suministros ficticia de Charlotte
+
+50
+00:05:02,525 --> 00:05:06,289
+que creé para que cada número que muestro
+en pantalla
+
+51
+00:05:06,289 --> 00:05:08,171
+sea uno que pueda respaldar.
+
+52
+00:05:08,171 --> 00:05:11,183
+Estos son los archivos que componen todo
+Ironhollow.
+
+53
+00:05:11,183 --> 00:05:15,700
+Son archivos que creé junto con Claude:
+conjuntos de datos totalmente ficticios.
+
+54
+00:05:16,000 --> 00:05:20,667
+Clientes inventados, una empresa inventada,
+pero esta carpeta puede resultarles
+
+55
+00:05:20,667 --> 00:05:25,333
+muy familiar a muchos de ustedes:
+transacciones de ventas en
+
+56
+00:05:25,333 --> 00:05:30,000
+formato de exportación, quizás de
+Salesforce o HubSpot, con números
+
+57
+00:05:30,000 --> 00:05:34,667
+de pedido, nombre del cliente, segmento,
+ciudad, vendedor, cantidad vendida,
+
+58
+00:05:34,667 --> 00:05:38,867
+categoría, nombre del producto, todo ese
+tipo de cosas.
+
+59
+00:05:38,867 --> 00:05:43,533
+También tenemos un plan de gasto de
+marketing que muestra
+
+60
+00:05:43,533 --> 00:05:46,800
+lo que se proyecta gastar en marketing.
+
+61
+00:05:46,800 --> 00:05:51,467
+También tenemos un registro de tickets:
+todos los tickets de
+
+62
+00:05:51,467 --> 00:05:55,200
+soporte de cada cliente con sus problemas
+específicos.
+
+63
+00:05:55,200 --> 00:05:58,933
+Y por último, tenemos la planificación de
+ventas.
+
+64
+00:05:58,933 --> 00:06:03,600
+Estos son algunos de los pronósticos que
+Ironhollow espera alcanzar
+
+65
+00:06:03,600 --> 00:06:09,200
+en los próximos trimestres. Uno de estos
+cuatro clientes ya no está.
+
+66
+00:06:14,000 --> 00:06:17,594
+Uno se salvó, y el que parece más contento
+tiene
+
+67
+00:06:17,594 --> 00:06:20,468
+un problema que nadie mencionó en la
+llamada.
+
+68
+00:06:20,468 --> 00:06:24,062
+Ya llegaremos a eso. Retrocedamos en el
+tiempo al 30
+
+69
+00:06:24,062 --> 00:06:27,655
+de abril de 2026 para ver lo que podíamos
+ver
+
+70
+00:06:27,655 --> 00:06:31,249
+en ese momento exacto. Volviendo a Claude
+desktop, vamos a
+
+71
+00:06:31,249 --> 00:06:34,843
+escribir un prompt que le indica a Claude
+que actúe
+
+72
+00:06:34,843 --> 00:06:38,436
+como gerente de éxito del cliente de
+Ironhollow Supply, y
+
+73
+00:06:38,436 --> 00:06:42,030
+que la fecha de hoy es 30 de abril de
+
+74
+00:06:42,030 --> 00:06:45,623
+2026. Usando solo información de esa fecha
+o anterior, debe
+
+75
+00:06:45,623 --> 00:06:49,217
+revisar todos los tickets, las
+transacciones, etc., y decirme qué
+
+76
+00:06:49,217 --> 00:06:51,014
+clientes corren riesgo de irse.
+
+77
+00:06:51,014 --> 00:06:54,607
+Que ignore todo lo fechado después del 30
+de abril
+
+78
+00:06:54,607 --> 00:06:56,404
+y clasifique los tres principales.
+
+79
+00:06:56,404 --> 00:06:59,997
+Que me dé las señales de alerta y el
+archivo
+
+80
+00:06:59,997 --> 00:07:02,872
+y la fecha de donde salió cada una.
+
+81
+00:07:02,872 --> 00:07:06,466
+Que me diga si es un problema de producto
+o
+
+82
+00:07:06,466 --> 00:07:09,700
+de relación, y la única cosa que debería
+hacer
+
+83
+00:07:10,000 --> 00:07:14,324
+esta semana. Este es un gran prompt para
+revisar esos
+
+84
+00:07:14,324 --> 00:07:18,647
+datos a fondo y luego mostrarnos cuáles
+son las tres
+
+85
+00:07:18,647 --> 00:07:22,971
+cuentas principales en riesgo. Lo voy a
+ejecutar y nos
+
+86
+00:07:22,971 --> 00:07:24,700
+vemos del otro lado.
+
+87
+00:07:25,000 --> 00:07:29,632
+Y ya volvimos. Y de nuevo, solo una
+aclaración: todas
+
+88
+00:07:29,632 --> 00:07:33,800
+las respuestas que estamos por descubrir y
+revisar aquí
+
+89
+00:07:38,000 --> 00:07:41,012
+provienen del 30 de abril o antes.
+
+90
+00:07:41,012 --> 00:07:45,315
+Es como si fuéramos en esa máquina del
+tiempo, mirando
+
+91
+00:07:45,315 --> 00:07:49,618
+hacia atrás. Veamos lo que aparece: seis
+tickets en ocho
+
+92
+00:07:49,618 --> 00:07:53,921
+semanas. Dos de ellos críticos, y un
+cliente de diez
+
+93
+00:07:53,921 --> 00:07:58,224
+años que menciona una oferta de un
+competidor con doce
+
+94
+00:07:58,224 --> 00:08:02,527
+por ciento de descuento. Una revisión
+corporativa a fin de
+
+95
+00:08:02,527 --> 00:08:06,830
+mes. Estas alertas no estaban ocultas;
+solo estaban dispersas en
+
+96
+00:08:06,830 --> 00:08:11,133
+distintos lugares. Pero puestas lado a
+lado, se ve con
+
+97
+00:08:11,133 --> 00:08:14,145
+bastante claridad en un par de minutos.
+
+98
+00:08:14,145 --> 00:08:18,448
+De nuevo, con la ayuda de Claude para
+revisar y
+
+99
+00:08:18,448 --> 00:08:22,321
+analizar todos esos datos de todas esas
+fuentes distintas.
+
+100
+00:08:22,321 --> 00:08:26,624
+Ese fue nuestro viaje en la máquina del
+tiempo, de
+
+101
+00:08:26,624 --> 00:08:30,927
+vuelta al 30 de abril, para entender lo
+que sabíamos
+
+102
+00:08:30,927 --> 00:08:34,800
+entonces según los datos disponibles al 30
+de abril.
+
+103
+00:08:36,000 --> 00:08:40,188
+Eso nos ayuda a entender: ¿podríamos
+haberlo identificado con esos
+
+104
+00:08:40,188 --> 00:08:44,376
+datos? Ahora voy a pegar el siguiente
+prompt para regresar
+
+105
+00:08:44,376 --> 00:08:48,564
+el reloj al tiempo normal, al tiempo
+actual, por así
+
+106
+00:08:48,564 --> 00:08:52,752
+decirlo. Quiero usar todo lo que hay en la
+carpeta.
+
+107
+00:08:52,752 --> 00:08:56,940
+¿Qué pasó con Carolina Griddle House
+después de esa llamada
+
+108
+00:08:56,940 --> 00:09:01,128
+del 22 de abril? Dame una cronología
+fechada de tickets,
+
+109
+00:09:01,128 --> 00:09:05,316
+llamadas y pedidos, y dime el punto exacto
+donde se
+
+110
+00:09:05,316 --> 00:09:08,666
+vino abajo el intento de salvar la cuenta.
+
+111
+00:09:08,666 --> 00:09:12,854
+Pongámoslo en marcha. Y sí, veamos la
+cronología en sí.
+
+112
+00:09:12,854 --> 00:09:17,042
+La llamada para salvar la cuenta fue el 22
+de
+
+113
+00:09:17,042 --> 00:09:21,230
+abril. Hubo un seguimiento el 30 de abril,
+y el
+
+114
+00:09:21,230 --> 00:09:25,418
+19 de mayo. Un día muy crítico, porque una
+vez
+
+115
+00:09:25,418 --> 00:09:29,606
+más fallamos una ventana de entrega, que
+justamente había sido
+
+116
+00:09:29,606 --> 00:09:31,700
+el tema de estas conversaciones.
+
+117
+00:09:32,000 --> 00:09:36,030
+El 26 de mayo fue el último pedido que
+vimos
+
+118
+00:09:36,030 --> 00:09:40,060
+de Carolina Griddle House, y luego
+silencio, lo peor que
+
+119
+00:09:40,060 --> 00:09:44,090
+podríamos escuchar. Bien, Claude volvió
+con la respuesta; le pedí
+
+120
+00:09:44,090 --> 00:09:48,120
+que la presentara como una cronología
+fechada de tickets, llamadas
+
+121
+00:09:48,120 --> 00:09:52,150
+y pedidos, y que me dijera dónde se vino
+abajo
+
+122
+00:09:52,150 --> 00:09:56,180
+todo. Claude armó una cronología muy bien
+documentada de exactamente
+
+123
+00:09:56,180 --> 00:09:59,002
+lo que pasó el 22 de abril.
+
+124
+00:09:59,002 --> 00:10:03,032
+Ray dice que la confiabilidad de las
+entregas le importa
+
+125
+00:10:03,032 --> 00:10:07,062
+más que el precio, y que la oficina
+corporativa considerará
+
+126
+00:10:07,062 --> 00:10:10,689
+cambiar de proveedor si no se arregla la
+entrega.
+
+127
+00:10:10,689 --> 00:10:14,316
+Parece que hubo transacciones normales a
+fines de abril.
+
+128
+00:10:14,316 --> 00:10:18,346
+Luego tuvimos un problema con una nota de
+crédito que
+
+129
+00:10:18,346 --> 00:10:20,764
+no se reflejaba en la cuenta.
+
+130
+00:10:20,764 --> 00:10:25,600
+Se programó una llamada de seguimiento,
+pero parece que nunca se hizo.
+
+131
+00:10:27,000 --> 00:10:31,109
+En mayo todavía había pedidos de
+apariencia relativamente normal, y
+
+132
+00:10:31,109 --> 00:10:35,217
+luego, el 19 de mayo, por supuesto, la
+gran falla
+
+133
+00:10:35,217 --> 00:10:37,683
+crítica en la ventana de entrega.
+
+134
+00:10:37,683 --> 00:10:41,791
+Tuvimos un envío parcial con cajas
+faltantes justo después de
+
+135
+00:10:41,791 --> 00:10:45,900
+ese 19 de mayo, y luego el último pedido
+aparece
+
+136
+00:10:45,900 --> 00:10:50,009
+el 26 de mayo. Así que realmente se vino
+abajo
+
+137
+00:10:50,009 --> 00:10:54,117
+el 19. Ese es el punto en que volvimos a
+
+138
+00:10:54,117 --> 00:10:58,226
+fallar la ventana de entrega, y Ray había
+dicho exactamente
+
+139
+00:10:58,226 --> 00:11:00,280
+lo importante que eso era.
+
+140
+00:11:00,280 --> 00:11:03,157
+Es un dato en una sola conversación.
+
+141
+00:11:03,157 --> 00:11:07,265
+Pero si unimos la historia, se ve una
+serie de
+
+142
+00:11:07,265 --> 00:11:11,374
+eventos en cascada que llevó a esta
+posible pérdida del
+
+143
+00:11:11,374 --> 00:11:15,483
+cliente. Ahora podemos ver lo que
+realmente pasó con Carolina
+
+144
+00:11:15,483 --> 00:11:19,591
+Griddle House a lo largo de toda esa
+cadena de
+
+145
+00:11:19,591 --> 00:11:23,700
+eventos y, por desgracia, tenemos que
+marcarla como cuenta perdida.
+
+146
+00:11:24,000 --> 00:11:28,371
+Es uno de esos casos en que, si hubiéramos
+estado
+
+147
+00:11:28,371 --> 00:11:32,741
+buscando, si hubiéramos intentado juntar
+toda esta información, muy probablemente
+
+148
+00:11:32,741 --> 00:11:37,112
+habríamos visto esa señal y podríamos
+haber actuado a tiempo,
+
+149
+00:11:37,112 --> 00:11:41,483
+sin perder la cuenta. El siguiente prompt
+que quiero compartirles
+
+150
+00:11:41,483 --> 00:11:43,668
+es: ¿cómo lo habríamos evitado?
+
+151
+00:11:43,668 --> 00:11:48,039
+Una de las ideas es el concepto de un
+tablero
+
+152
+00:11:48,039 --> 00:11:52,409
+de salud de clientes. Es un prompt
+repetible que podemos
+
+153
+00:11:52,409 --> 00:11:56,780
+ejecutar para consultar todos los datos,
+buscar estas señales y
+
+154
+00:11:56,780 --> 00:11:58,966
+problemas, y traernos los resultados.
+
+155
+00:11:58,966 --> 00:12:03,336
+Le estamos pidiendo a Claude Cowork que
+haga esto: que
+
+156
+00:12:03,336 --> 00:12:07,707
+me entregue una página HTML con la marca y
+los
+
+157
+00:12:07,707 --> 00:12:12,078
+colores de Ironhollow, y que clasifique a
+los clientes en
+
+158
+00:12:12,078 --> 00:12:14,700
+saludable, en observación o en riesgo.
+
+159
+00:12:15,000 --> 00:12:19,113
+Que use la cantidad y la gravedad de los
+tickets,
+
+160
+00:12:19,113 --> 00:12:23,226
+la tendencia de pedidos mensuales y todo
+lo dicho en
+
+161
+00:12:23,226 --> 00:12:25,282
+las transcripciones de las llamadas.
+
+162
+00:12:25,282 --> 00:12:29,395
+Y para cualquier cuenta que quede en
+observación o en
+
+163
+00:12:29,395 --> 00:12:33,508
+riesgo, que nos dé un próximo paso y quién
+debería
+
+164
+00:12:33,508 --> 00:12:37,620
+encargarse. Y que ponga a Carolina Griddle
+House arriba como
+
+165
+00:12:37,620 --> 00:12:40,499
+perdida, con una lección de una línea.
+
+166
+00:12:40,499 --> 00:12:44,612
+Y también que me dé las citas detrás de
+cada
+
+167
+00:12:44,612 --> 00:12:47,902
+alerta y de todo lo que esté usando.
+
+168
+00:12:47,902 --> 00:12:52,015
+Esto va a revisar todos esos datos y
+volver con
+
+169
+00:12:52,015 --> 00:12:54,071
+un informe limpio y claro.
+
+170
+00:12:54,071 --> 00:12:58,184
+Lo voy a enviar y nos vemos del otro lado
+
+171
+00:12:58,184 --> 00:13:02,297
+para ver qué obtenemos. Veamos, está
+guardado como archivo HTML.
+
+172
+00:13:02,297 --> 00:13:06,410
+Vamos a abrirlo. Y Claude volvió con un
+tablero de
+
+173
+00:13:06,410 --> 00:13:09,700
+salud de clientes con la marca de
+Ironhollow.
+
+174
+00:13:10,000 --> 00:13:14,136
+Hay muchísima información muy valiosa en
+este tablero.
+
+175
+00:13:14,136 --> 00:13:17,755
+Pero quiero señalar un par de cosas.
+
+176
+00:13:17,755 --> 00:13:22,925
+Primero, la historia de Carolina Griddle
+House aparece destacada arriba
+
+177
+00:13:22,925 --> 00:13:28,095
+de todo. Es el cliente perdido del
+momento, y deja
+
+178
+00:13:28,095 --> 00:13:33,265
+una lección muy buena para el negocio:
+cerrar los tickets
+
+179
+00:13:33,265 --> 00:13:37,918
+rápido no es lo mismo que resolver el
+problema.
+
+180
+00:13:37,918 --> 00:13:43,088
+Esa es, en realidad, una de las lecciones
+principales de
+
+181
+00:13:43,088 --> 00:13:46,190
+la pérdida de Carolina Griddle House.
+
+182
+00:13:46,190 --> 00:13:50,326
+Un par de cosas más en este archivo.
+
+183
+00:13:50,326 --> 00:13:55,496
+Veamos, Charlotte Metal Works es otra
+cuenta con problemas de
+
+184
+00:13:55,496 --> 00:14:01,700
+entrega parecidos. Esta definitivamente sobresale
+en mi tablero como algo a vigilar.
+
+185
+00:14:02,000 --> 00:14:06,974
+Tenemos algunas de las mismas frases que
+en la otra
+
+186
+00:14:06,974 --> 00:14:11,947
+situación: "Mientras esto no se vuelva la
+norma, estamos bien".
+
+187
+00:14:11,947 --> 00:14:16,921
+Aunque desde entonces hemos tenido más
+problemas de envío, así
+
+188
+00:14:16,921 --> 00:14:21,397
+que claramente es una cuenta que tenemos
+que vigilar.
+
+189
+00:14:21,397 --> 00:14:26,371
+Otra interesante es el distrito escolar
+del condado de Cabarrus.
+
+190
+00:14:26,371 --> 00:14:31,345
+Ya están anticipando que habrá una
+comparación de precios cuando
+
+191
+00:14:31,345 --> 00:14:35,324
+venza la licitación más adelante en el
+verano.
+
+192
+00:14:35,324 --> 00:14:40,297
+Es un panorama general muy bueno de todas
+las cuentas,
+
+193
+00:14:40,297 --> 00:14:45,271
+con información muy valiosa para decidir
+qué cuentas necesitan más
+
+194
+00:14:45,271 --> 00:14:49,250
+atención y cuáles están listas para pedir
+más.
+
+195
+00:14:49,250 --> 00:14:54,224
+Al principio del video hablamos del
+cliente contento que podría
+
+196
+00:14:54,224 --> 00:14:58,700
+tener un problema que nadie había señalado
+todavía. Quería
+
+197
+00:14:59,000 --> 00:15:03,421
+volver a ese tema y pasar por un prompt
+más
+
+198
+00:15:03,421 --> 00:15:05,631
+para revisar esa cuenta específica.
+
+199
+00:15:05,631 --> 00:15:10,052
+Se trata de Lake Norman Senior Living, una
+cuenta en
+
+200
+00:15:10,052 --> 00:15:12,704
+crecimiento, pero que definitivamente
+deberíamos vigilar.
+
+201
+00:15:12,704 --> 00:15:17,125
+Volvamos a Claude desktop y voy a pegar
+este siguiente
+
+202
+00:15:17,125 --> 00:15:21,545
+prompt. Parece que es nuestro cliente más
+contento, pero antes
+
+203
+00:15:21,545 --> 00:15:25,966
+de enviar el precio por volumen combinado
+para su nueva
+
+204
+00:15:25,966 --> 00:15:30,387
+comunidad, revisemos los tickets de
+soporte y los pedidos en
+
+205
+00:15:30,387 --> 00:15:34,807
+busca de cualquier cosa que se deba
+resolver antes de
+
+206
+00:15:34,807 --> 00:15:39,228
+esa llamada. Buscando, por ejemplo, el
+aumento de pedidos, y
+
+207
+00:15:39,228 --> 00:15:43,648
+luego redactaremos un correo breve y
+cálido para Denise que
+
+208
+00:15:43,648 --> 00:15:48,069
+haga avanzar la apertura de Mooresville y
+se haga cargo
+
+209
+00:15:48,069 --> 00:15:50,279
+directamente de cualquier problema
+pendiente.
+
+210
+00:15:50,279 --> 00:15:54,700
+Lo voy a enviar y nos vemos del otro lado.
+
+211
+00:15:55,000 --> 00:15:58,356
+Bien, Claude volvió, así que echemos un
+vistazo.
+
+212
+00:15:58,356 --> 00:16:00,454
+Aquí está la respuesta completa.
+
+213
+00:16:00,454 --> 00:16:03,810
+Revisamos sus tickets y dieciocho meses de
+pedidos.
+
+214
+00:16:03,810 --> 00:16:08,005
+Es un cliente contento, pero hay cuatro
+cosas que Priya
+
+215
+00:16:08,005 --> 00:16:10,942
+debería resolver antes de enviar los
+precios.
+
+216
+00:16:10,942 --> 00:16:14,718
+Veamos: número uno, los pedidos de
+desinfectante se detuvieron.
+
+217
+00:16:14,718 --> 00:16:18,913
+Los precios están atrasados, llegó una
+entrega equivocada una semana
+
+218
+00:16:18,913 --> 00:16:23,109
+después de la llamada, y todavía hay una
+duda pendiente
+
+219
+00:16:23,109 --> 00:16:27,304
+sobre las fregadoras IH-450. Así que
+claramente todavía hay problemas
+
+220
+00:16:27,304 --> 00:16:31,499
+debajo de la superficie, aunque quizás
+hayan estado pidiendo más.
+
+221
+00:16:31,499 --> 00:16:35,695
+Y solo con los números, podría parecer que
+la cuenta
+
+222
+00:16:35,695 --> 00:16:39,890
+está creciendo y saludable. Así que sí,
+ese es un
+
+223
+00:16:39,890 --> 00:16:44,085
+caso interesante. Tuvimos dos quejas de
+producto que nunca salieron
+
+224
+00:16:44,085 --> 00:16:48,700
+a la luz y un ticket crítico de entrega en
+agosto.
+
+225
+00:16:49,000 --> 00:16:53,228
+Es exactamente el mismo patrón que vimos
+con Carolina Griddle
+
+226
+00:16:53,228 --> 00:16:57,457
+House. Aquí es donde la IA, y Claude en
+este
+
+227
+00:16:57,457 --> 00:17:01,685
+caso, con la forma en que estructuramos
+estos prompts, realmente
+
+228
+00:17:01,685 --> 00:17:05,913
+nos puede ayudar, porque va a separar lo
+que parece
+
+229
+00:17:05,913 --> 00:17:10,142
+una historia de crecimiento y va a
+descubrir algunos de
+
+230
+00:17:10,142 --> 00:17:14,370
+esos problemas ocultos que son difíciles
+de ver cuando todo
+
+231
+00:17:14,370 --> 00:17:18,598
+llega al mismo lugar. Volviendo a uno de
+los conceptos
+
+232
+00:17:18,598 --> 00:17:22,827
+que vimos en un video anterior, las tareas
+programadas: eso
+
+233
+00:17:22,827 --> 00:17:27,055
+es lo que realmente puede marcar la
+diferencia en algo
+
+234
+00:17:27,055 --> 00:17:31,283
+como este tablero de salud, que se genere
+automáticamente cada
+
+235
+00:17:31,283 --> 00:17:35,512
+semana, para que siempre estés buscando
+las últimas novedades sobre
+
+236
+00:17:35,512 --> 00:17:38,049
+lo que pasa con tus clientes.
+
+237
+00:17:38,049 --> 00:17:42,700
+Ironhollow, obviamente, es solo un entorno
+de prueba, por así decirlo.
+
+238
+00:17:43,000 --> 00:17:46,150
+Los datos ahí no cambian, pero al crear
+esto como
+
+239
+00:17:46,150 --> 00:17:49,300
+una tarea programada, te vas a adelantar a
+esos cambios,
+
+240
+00:17:49,300 --> 00:17:52,450
+porque el sistema, Claude en este caso, te
+va a
+
+241
+00:17:52,450 --> 00:17:55,600
+ayudar a revisar esos archivos con
+regularidad y a señalar
+
+242
+00:17:55,600 --> 00:17:58,750
+las cuentas con problemas, donde quizás
+los síntomas están ocultos
+
+243
+00:17:58,750 --> 00:18:00,325
+justo debajo de la superficie.
+
+244
+00:18:00,325 --> 00:18:03,475
+Así que vamos a pedir que cada lunes a las
+
+245
+00:18:03,475 --> 00:18:06,625
+7:30 ejecute esta revisión de salud de
+nuestras cuentas, que
+
+246
+00:18:06,625 --> 00:18:09,775
+marque a cualquier cliente con un ticket
+crítico, tres o
+
+247
+00:18:09,775 --> 00:18:12,925
+más tickets en los últimos treinta días, o
+un mes
+
+248
+00:18:12,925 --> 00:18:16,075
+en que los pedidos cayeron más de la
+mitad, y
+
+249
+00:18:16,075 --> 00:18:19,225
+además, y creo que esto es muy importante,
+cualquier arreglo
+
+250
+00:18:19,225 --> 00:18:22,375
+que prometimos en una llamada y que
+todavía no tiene
+
+251
+00:18:22,375 --> 00:18:25,525
+seguimiento registrado. Que me dé los tres
+clientes principales a
+
+252
+00:18:25,525 --> 00:18:28,045
+los que llamar esta semana y por qué.
+
+253
+00:18:28,045 --> 00:18:31,195
+Lo vamos a poner en marcha y nos vemos del
+
+254
+00:18:31,195 --> 00:18:34,345
+otro lado. Pero creo que es muy, muy
+importante descubrir
+
+255
+00:18:34,345 --> 00:18:37,495
+cómo adelantarnos a las promesas que se
+hacen, para asegurarnos
+
+256
+00:18:37,495 --> 00:18:39,700
+de que sean promesas que se cumplen.
+
+257
+00:18:40,000 --> 00:18:42,544
+Y nos vemos del otro lado.
+
+258
+00:18:42,544 --> 00:18:46,784
+Bien, Claude nos muestra un aviso pidiendo
+permiso para configurar
+
+259
+00:18:46,784 --> 00:18:51,025
+estas tareas programadas. Es lo mismo que
+vimos en el
+
+260
+00:18:51,025 --> 00:18:55,265
+video anterior. Voy a hacer clic en
+programar y dejarlo
+
+261
+00:18:55,265 --> 00:18:59,505
+establecido para las 7:30 todos los lunes
+por la mañana,
+
+262
+00:18:59,505 --> 00:19:01,626
+para que ejecute este informe.
+
+263
+00:19:01,626 --> 00:19:05,866
+Y Claude nos confirma que programó una
+tarea para los
+
+264
+00:19:05,866 --> 00:19:10,106
+lunes. Parece que a las 7:17 a.m., porque
+muchas tareas
+
+265
+00:19:10,106 --> 00:19:14,347
+programadas empiezan en punto o a la media
+hora y
+
+266
+00:19:14,347 --> 00:19:18,587
+pueden retrasarse. Lo va a guardar en una
+nueva carpeta
+
+267
+00:19:18,587 --> 00:19:22,827
+de revisiones de salud dentro de mi
+carpeta de Ironhollow.
+
+268
+00:19:22,827 --> 00:19:27,067
+Creo que la gran conclusión es que, al
+configurar esto
+
+269
+00:19:27,067 --> 00:19:31,308
+como una tarea programada recurrente, vas
+a estar sacando a
+
+270
+00:19:31,308 --> 00:19:34,700
+la luz constantemente información que
+podría esconder problemas.
+
+271
+00:19:35,000 --> 00:19:38,755
+Nadie puede hacer esto solo, y por eso las
+grandes
+
+272
+00:19:38,755 --> 00:19:42,510
+empresas tienen equipos grandes de
+gerentes de éxito del cliente
+
+273
+00:19:42,510 --> 00:19:46,266
+vigilando cada cuenta. Pero en un negocio
+pequeño, eres tú
+
+274
+00:19:46,266 --> 00:19:48,519
+quien administra y vigila todo esto.
+
+275
+00:19:48,519 --> 00:19:52,274
+Todos necesitamos un poco de ayuda, y
+Claude puede darla
+
+276
+00:19:52,274 --> 00:19:56,029
+configurando la tarea programada y
+revisando con frecuencia esos archivos
+
+277
+00:19:56,029 --> 00:19:59,785
+para encontrar esos problemas antes de que
+se conviertan en
+
+278
+00:19:59,785 --> 00:20:03,540
+cuentas perdidas. En este video hablamos
+de alertas dispersas, oportunidades
+
+279
+00:20:03,540 --> 00:20:07,295
+silenciosas y promesas incumplidas. Ahora
+quiero ser muy, muy sincero:
+
+280
+00:20:07,295 --> 00:20:09,548
+la IA no salva al cliente.
+
+281
+00:20:09,548 --> 00:20:13,303
+Lo salvas tú. Pero con todo lo demás que
+pasa
+
+282
+00:20:13,303 --> 00:20:17,059
+en el mundo de quien tiene un negocio
+pequeño, la
+
+283
+00:20:17,059 --> 00:20:20,814
+IA sin duda puede ayudarte a marcar una
+gran diferencia,
+
+284
+00:20:20,814 --> 00:20:24,569
+vigilando estas cosas con regularidad y
+sacando siempre a la
+
+285
+00:20:24,569 --> 00:20:28,700
+luz esos problemas ocultos que existen
+justo debajo de la superficie.
+
+286
+00:20:29,000 --> 00:20:32,283
+Espero que este video te haya sido útil.
+
+287
+00:20:32,283 --> 00:20:36,388
+Si es así, suscríbete y dale me gusta, y
+seguiremos
+
+288
+00:20:36,388 --> 00:20:40,081
+haciendo este tipo de videos aquí en
+Walker Ops.
+
+289
+00:20:40,081 --> 00:20:44,185
+También cuéntame en los comentarios qué
+otros desafíos ocultos estás
+
+290
+00:20:44,185 --> 00:20:48,700
+enfrentando. Nos encantaría analizarlos y
+tratarlos aquí mismo en Walker Ops.

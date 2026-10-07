@@ -1,0 +1,1592 @@
+1
+00:00:03,000 --> 00:00:07,000
+In today's video, I want to help you
+create that
+
+2
+00:00:07,000 --> 00:00:10,600
+customer success manager that you can't
+afford to hire.
+
+3
+00:00:10,600 --> 00:00:14,600
+I want to help you be able to go comb
+
+4
+00:00:14,600 --> 00:00:18,600
+through data in your system, and be able
+to identify
+
+5
+00:00:18,600 --> 00:00:22,600
+and highlight accounts where there are
+specific issues where it
+
+6
+00:00:22,600 --> 00:00:26,600
+might be hard to tell if you look at it
+
+7
+00:00:26,600 --> 00:00:30,600
+just on the surface. So strap in, buckle
+up, let's
+
+8
+00:00:30,600 --> 00:00:33,000
+get building. In June of 2026.
+
+9
+00:00:33,000 --> 00:00:36,600
+This company lost one of its two biggest
+customers.
+
+10
+00:00:36,600 --> 00:00:40,600
+Ten years together, about three hundred
+thousand dollars a year.
+
+11
+00:00:40,600 --> 00:00:44,600
+And here's the thing: the customer told
+them it was
+
+12
+00:00:44,600 --> 00:00:48,600
+going to happen. It was all written down
+in three
+
+13
+00:00:48,600 --> 00:00:51,800
+different places, and nobody put it all
+together.
+
+14
+00:00:51,800 --> 00:00:55,800
+So let's go back to April 30th and find
+out
+
+15
+00:00:55,800 --> 00:00:59,800
+if AI could have caught and helped this
+situation in
+
+16
+00:00:59,800 --> 00:01:00,200
+time.
+
+17
+00:02:54,000 --> 00:02:58,000
+I want to help you be able to go comb
+
+18
+00:02:58,000 --> 00:03:02,000
+through data in your system, and be able
+to identify
+
+19
+00:03:02,000 --> 00:03:06,000
+and highlight accounts where there are
+specific issues where it
+
+20
+00:03:06,000 --> 00:03:10,000
+might be hard to tell if you look at it
+
+21
+00:03:10,000 --> 00:03:14,000
+just on the surface. So strap in, buckle
+up, let's
+
+22
+00:03:14,000 --> 00:03:18,000
+get building. In June of 2026, this
+company lost one
+
+23
+00:03:18,000 --> 00:03:20,000
+of its two biggest customers.
+
+24
+00:03:20,000 --> 00:03:24,000
+Ten years together, about three hundred
+thousand dollars a year,
+
+25
+00:03:24,000 --> 00:03:28,000
+and here's the thing: the customer told
+them it was
+
+26
+00:03:28,000 --> 00:03:32,000
+going to happen. It was all written down
+in three
+
+27
+00:03:32,000 --> 00:03:35,200
+different places, and nobody put it all
+together.
+
+28
+00:03:35,200 --> 00:03:39,200
+So let's go back to April 30th and find
+out
+
+29
+00:03:39,200 --> 00:03:43,200
+if AI could have caught and helped this
+situation in
+
+30
+00:03:43,200 --> 00:03:47,200
+time. Here's how this works at the large
+companies: they
+
+31
+00:03:47,200 --> 00:03:51,200
+hire a person or a team of customer
+success managers.
+
+32
+00:03:54,000 --> 00:03:58,000
+The entire job of these people is to
+effectively pay
+
+33
+00:03:58,000 --> 00:04:00,800
+attention. Who's gone quiet? Who's getting
+frustrated?
+
+34
+00:04:00,800 --> 00:04:02,800
+Who's ready to buy more?
+
+35
+00:04:02,800 --> 00:04:06,400
+Now, in a small business, that person is
+you.
+
+36
+00:04:06,400 --> 00:04:10,400
+It's an inbox. It's a ticketing system
+that, let's be
+
+37
+00:04:10,400 --> 00:04:13,600
+honest, nobody ever reads from start to
+finish.
+
+38
+00:04:13,600 --> 00:04:17,600
+So things slip, but it's not because you
+don't care.
+
+39
+00:04:17,600 --> 00:04:21,600
+It's because nobody can watch all of it at
+once.
+
+40
+00:04:23,000 --> 00:04:26,610
+So I've spent 25 years running support and
+success teams
+
+41
+00:04:26,610 --> 00:04:30,219
+at Microsoft, Tanium, and Cyera, and it's
+the customers who
+
+42
+00:04:30,219 --> 00:04:33,829
+leave almost always tell you that they're
+frustrated that something's
+
+43
+00:04:33,829 --> 00:04:37,438
+wrong. They just don't always necessarily
+do it in one
+
+44
+00:04:37,438 --> 00:04:41,048
+single consistent place. So stick around,
+and I'll share the
+
+45
+00:04:41,048 --> 00:04:44,658
+exact prompt I use. To detect where these
+problems might
+
+46
+00:04:44,658 --> 00:04:48,267
+be, and I'll give you a scheduled task to
+run
+
+47
+00:04:48,267 --> 00:04:51,877
+weekly, so you get a full list of your
+customers
+
+48
+00:04:51,877 --> 00:04:54,042
+and where the problems might be.
+
+49
+00:04:54,042 --> 00:04:57,652
+Now, if you saw the analyst video, you've
+met Ironhollow,
+
+50
+00:04:57,652 --> 00:05:01,262
+a fictitious Charlotte supply company that
+I built, so that
+
+51
+00:05:01,262 --> 00:05:04,871
+every number I present on screen is one
+that I
+
+52
+00:05:04,871 --> 00:05:08,481
+can stand behind. These are the files that
+really make
+
+53
+00:05:08,481 --> 00:05:12,090
+up all of Ironhollow. These are the files
+that I
+
+54
+00:05:12,090 --> 00:05:15,700
+worked with Claude to build, again,
+totally fictitious data sets.
+
+55
+00:05:16,000 --> 00:05:20,000
+Completely made up customers, completely
+made up company, but this
+
+56
+00:05:20,000 --> 00:05:24,000
+folder might look really familiar to a lot
+of you,
+
+57
+00:05:24,000 --> 00:05:28,000
+where you might have sales transactions,
+you know, in just
+
+58
+00:05:28,000 --> 00:05:32,000
+sort of an export format, coming maybe
+from Salesforce or
+
+59
+00:05:32,000 --> 00:05:36,000
+HubSpot, with order IDs, customer name,
+segment, city, sales rep,
+
+60
+00:05:36,000 --> 00:05:40,000
+quantity sold, category, product name, all
+those kinds of things.
+
+61
+00:05:40,000 --> 00:05:43,600
+We also have a marketing spend plan that
+shows.
+
+62
+00:05:43,600 --> 00:05:47,600
+What is projected to be spent from a
+marketing perspective.
+
+63
+00:05:47,600 --> 00:05:51,600
+We also have a log file of tickets, so
+these
+
+64
+00:05:51,600 --> 00:05:55,600
+are all support tickets for individual
+customers with specific issues.
+
+65
+00:05:55,600 --> 00:05:58,400
+And then finally, we have sales planning.
+
+66
+00:05:58,400 --> 00:06:02,400
+So these are some of the forecasts that
+Ironhollow expects
+
+67
+00:06:02,400 --> 00:06:06,400
+to hit as we go through the future
+quarters here.
+
+68
+00:06:06,400 --> 00:06:09,200
+One of these four customers is gone.
+
+69
+00:06:14,000 --> 00:06:17,713
+One got saved, and the one that looks the
+happiest
+
+70
+00:06:17,713 --> 00:06:19,570
+has a problem nobody mentioned.
+
+71
+00:06:19,570 --> 00:06:21,798
+On the call, we'll get there.
+
+72
+00:06:21,798 --> 00:06:25,511
+Let's rewind time and go back to April
+30th of
+
+73
+00:06:25,511 --> 00:06:29,225
+2026 to see what we were able to see at
+
+74
+00:06:29,225 --> 00:06:31,081
+that specific point in time.
+
+75
+00:06:31,081 --> 00:06:34,795
+So flipping back into Claude desktop,
+we're going to go
+
+76
+00:06:34,795 --> 00:06:38,508
+ahead and enter a prompt here that
+instructs Claude to
+
+77
+00:06:38,508 --> 00:06:42,221
+act as Ironhollow Supply's customer
+success manager, and that today's
+
+78
+00:06:42,221 --> 00:06:44,078
+date is April 30th, 2026.
+
+79
+00:06:44,078 --> 00:06:47,791
+So, using only information on or before
+that date, go
+
+80
+00:06:47,791 --> 00:06:51,505
+through all the tickets, the transactions,
+etc., and tell me
+
+81
+00:06:51,505 --> 00:06:54,104
+which customers are at risk of leaving.
+
+82
+00:06:54,104 --> 00:06:57,817
+Ignore anything dated after April 30th and
+rank the top
+
+83
+00:06:57,817 --> 00:07:01,531
+three. Give me warning signs and the
+filing date each
+
+84
+00:07:01,531 --> 00:07:05,244
+one came from. Tell me if it's a product
+problem
+
+85
+00:07:05,244 --> 00:07:08,957
+or relationship problem, and give me the
+one thing I
+
+86
+00:07:08,957 --> 00:07:09,700
+should do.
+
+87
+00:07:10,000 --> 00:07:13,196
+This week, so this is a great prompt again
+to
+
+88
+00:07:13,196 --> 00:07:16,391
+go comb through that data and then come
+back and
+
+89
+00:07:16,391 --> 00:07:19,587
+show us what are the top three accounts
+that are
+
+90
+00:07:19,587 --> 00:07:22,783
+at risk. I'll go and run this and then
+we'll
+
+91
+00:07:22,783 --> 00:07:24,700
+come back on the other side.
+
+92
+00:07:25,000 --> 00:07:29,000
+And we're back. And again, just a note
+here: really
+
+93
+00:07:29,000 --> 00:07:33,000
+all the answers we're getting ready to
+uncover and go
+
+94
+00:07:33,000 --> 00:07:33,800
+through here.
+
+95
+00:07:38,000 --> 00:07:41,200
+Really, all stem from April 30th or
+before.
+
+96
+00:07:41,200 --> 00:07:45,200
+So again, we are kind of going in that
+time
+
+97
+00:07:45,200 --> 00:07:49,200
+machine, looking backwards here. Now, as
+it lands, let's see,
+
+98
+00:07:49,200 --> 00:07:51,200
+six tickets in eight weeks.
+
+99
+00:07:51,200 --> 00:07:55,200
+Two of them critical, and a ten-year
+customer naming a
+
+100
+00:07:55,200 --> 00:07:59,200
+competitor's twelve percent offer. A
+corporate review at the end
+
+101
+00:07:59,200 --> 00:08:03,200
+of the month. So again, these warnings
+weren't hidden; they
+
+102
+00:08:03,200 --> 00:08:05,600
+just were scattered across different
+places.
+
+103
+00:08:05,600 --> 00:08:09,600
+But put side by side, it's pretty obvious
+in a
+
+104
+00:08:09,600 --> 00:08:13,600
+couple of minutes of just sort of looking
+through this.
+
+105
+00:08:13,600 --> 00:08:17,600
+Again, leveraging Claude's help to be able
+to go through
+
+106
+00:08:17,600 --> 00:08:21,600
+and parse through all of that data across
+all those
+
+107
+00:08:21,600 --> 00:08:25,600
+different sources. So that was our trip on
+the time
+
+108
+00:08:25,600 --> 00:08:29,600
+machine to go backwards, back to April
+30th, and understand
+
+109
+00:08:29,600 --> 00:08:33,600
+what we knew then based on the data that
+was
+
+110
+00:08:33,600 --> 00:08:34,800
+available on April.
+
+111
+00:08:36,000 --> 00:08:38,856
+30th. So that's going to help us
+understand.
+
+112
+00:08:38,856 --> 00:08:41,713
+Could we have identified this given that
+data?
+
+113
+00:08:41,713 --> 00:08:45,283
+So what I'm going to do here is I'm going
+
+114
+00:08:45,283 --> 00:08:48,854
+to go ahead and paste in our next prompt
+to
+
+115
+00:08:48,854 --> 00:08:52,424
+go and move the clock back to normal time
+or
+
+116
+00:08:52,424 --> 00:08:54,210
+current time, if you will.
+
+117
+00:08:54,210 --> 00:08:57,423
+And I want to use everything in the
+folder.
+
+118
+00:08:57,423 --> 00:09:00,994
+What happened to Carolina Griddle House
+after that April 22nd
+
+119
+00:09:00,994 --> 00:09:04,564
+call? Give me a dated timeline of tickets,
+calls, and
+
+120
+00:09:04,564 --> 00:09:08,135
+orders, and tell me the exact point where
+the save
+
+121
+00:09:08,135 --> 00:09:11,705
+attempt. Broke down, so we'll go ahead and
+get that
+
+122
+00:09:11,705 --> 00:09:15,276
+rolling here. And yeah, let's go back and
+take a
+
+123
+00:09:15,276 --> 00:09:17,061
+look at the timeline itself.
+
+124
+00:09:17,061 --> 00:09:20,274
+So the actual save call was on April 22nd.
+
+125
+00:09:20,274 --> 00:09:23,845
+We had a follow up on April 30th, May
+19th.
+
+126
+00:09:23,845 --> 00:09:27,415
+Very critical day because once again we
+missed a delivery
+
+127
+00:09:27,415 --> 00:09:30,986
+window that had been the subject of some
+of these
+
+128
+00:09:30,986 --> 00:09:31,700
+actual conversations.
+
+129
+00:09:32,000 --> 00:09:36,000
+May 26th was the last order that we saw
+from
+
+130
+00:09:36,000 --> 00:09:40,000
+Carolina Griddle House, and then
+silence—the worst thing we can
+
+131
+00:09:40,000 --> 00:09:44,000
+hear possibly. Okay, so Claude is back
+with the answer,
+
+132
+00:09:44,000 --> 00:09:48,000
+and again, I requested it lay it out as a
+
+133
+00:09:48,000 --> 00:09:52,000
+dated timeline of tickets, calls, orders,
+and tell me where
+
+134
+00:09:52,000 --> 00:09:56,000
+this all broke down. Claude has come back
+with a
+
+135
+00:09:56,000 --> 00:10:00,000
+really good sourced. Sort of timeline of
+exactly what happened
+
+136
+00:10:00,000 --> 00:10:04,000
+on April 22nd. Ray talking about the
+delivery reliability being
+
+137
+00:10:04,000 --> 00:10:08,000
+more important to him than price, and that
+corporate will
+
+138
+00:10:08,000 --> 00:10:10,400
+consider switching if delivery isn't
+fixed.
+
+139
+00:10:10,400 --> 00:10:13,600
+Looks like some normal transactions later
+in April.
+
+140
+00:10:13,600 --> 00:10:17,600
+Then we had an issue with a credit memo
+not
+
+141
+00:10:17,600 --> 00:10:21,600
+reflected on the account. Follow up call
+was scheduled, but
+
+142
+00:10:21,600 --> 00:10:25,600
+it doesn't. It looks like it didn't happen
+at all.
+
+143
+00:10:27,000 --> 00:10:30,805
+Looks like in May we still had relatively
+normal-looking orders,
+
+144
+00:10:30,805 --> 00:10:34,611
+and then on May 19th, of course, the big
+critical
+
+145
+00:10:34,611 --> 00:10:36,513
+miss of the delivery window.
+
+146
+00:10:36,513 --> 00:10:40,319
+We had a partial shipment with a missing
+case count
+
+147
+00:10:40,319 --> 00:10:44,124
+right after that May 19th date, and then
+the very
+
+148
+00:10:44,124 --> 00:10:47,549
+last order ever shows up on May the 26th.
+
+149
+00:10:47,549 --> 00:10:50,593
+So it really broke down on the 19th.
+
+150
+00:10:50,593 --> 00:10:54,018
+That's the point where we missed the
+delivery window.
+
+151
+00:10:54,018 --> 00:10:57,823
+Yet again, and Ray had talked about
+exactly how important
+
+152
+00:10:57,823 --> 00:11:01,629
+that is. So again, it's one data point in
+one
+
+153
+00:11:01,629 --> 00:11:05,434
+conversation. But if we tie the story
+together, you can
+
+154
+00:11:05,434 --> 00:11:09,240
+see that there has been a cascading series
+of events
+
+155
+00:11:09,240 --> 00:11:11,903
+that has led to this potential churn.
+
+156
+00:11:11,903 --> 00:11:15,709
+So we can now see really what happened to
+Carolina
+
+157
+00:11:15,709 --> 00:11:19,514
+Griddle House all the way through that
+chain of events,
+
+158
+00:11:19,514 --> 00:11:23,319
+and unfortunately, we have to mark them as
+a lost
+
+159
+00:11:23,319 --> 00:11:23,700
+account.
+
+160
+00:11:24,000 --> 00:11:27,674
+Again, it's one of those deals where, had
+we been
+
+161
+00:11:27,674 --> 00:11:31,348
+searching, had we been trying to put
+together all of
+
+162
+00:11:31,348 --> 00:11:35,022
+this information, very likely we would
+have seen that signal
+
+163
+00:11:35,022 --> 00:11:38,696
+and been able to act accordingly in time,
+and not
+
+164
+00:11:38,696 --> 00:11:42,370
+lost the account. So the next prompt I
+want to
+
+165
+00:11:42,370 --> 00:11:46,043
+share with you guys is, how would we have
+avoided
+
+166
+00:11:46,043 --> 00:11:49,717
+this, right? And one of the ideas there is
+this
+
+167
+00:11:49,717 --> 00:11:51,922
+concept of a customer health board.
+
+168
+00:11:51,922 --> 00:11:55,596
+That is a repeatable prompt here that we
+can run
+
+169
+00:11:55,596 --> 00:11:59,270
+to go out and query all the data, go look
+
+170
+00:11:59,270 --> 00:12:02,943
+for these signals for these problems, and
+then bring that
+
+171
+00:12:02,943 --> 00:12:06,617
+back to us. So again, we're asking Claude
+Cowork to
+
+172
+00:12:06,617 --> 00:12:10,291
+go do this, bring me an HTML page in
+Ironhollow's
+
+173
+00:12:10,291 --> 00:12:13,965
+branding and colors, sort the customers
+into healthy, watch, or
+
+174
+00:12:13,965 --> 00:12:14,700
+at risk.
+
+175
+00:12:15,000 --> 00:12:18,747
+Use ticket count and severity, the trend
+in monthly orders,
+
+176
+00:12:18,747 --> 00:12:21,369
+and anything said on the call transcripts.
+
+177
+00:12:21,369 --> 00:12:25,116
+And then for any account that comes back
+as a
+
+178
+00:12:25,116 --> 00:12:28,862
+watch or an at-risk account, give us one
+next step
+
+179
+00:12:28,862 --> 00:12:30,736
+and who should own that.
+
+180
+00:12:30,736 --> 00:12:34,482
+And then also put Carolina Griddle House
+at the top
+
+181
+00:12:34,482 --> 00:12:36,730
+as lost with a one-line lesson.
+
+182
+00:12:36,730 --> 00:12:40,477
+So, and also give me your citations behind
+every flag
+
+183
+00:12:40,477 --> 00:12:42,350
+and everything that you're pulling.
+
+184
+00:12:42,350 --> 00:12:46,097
+So. Again, this is going to go out and
+look
+
+185
+00:12:46,097 --> 00:12:49,843
+through all that data, come back with a
+nice, clean
+
+186
+00:12:49,843 --> 00:12:53,590
+report for us. I'll go ahead and submit
+this, and
+
+187
+00:12:53,590 --> 00:12:57,336
+we'll come back on the other side to take
+a
+
+188
+00:12:57,336 --> 00:12:59,584
+look at what we get back.
+
+189
+00:12:59,584 --> 00:13:03,331
+And let's see, it is saved as an HTML
+file.
+
+190
+00:13:03,331 --> 00:13:06,328
+Let's go ahead and get that pulled up.
+
+191
+00:13:06,328 --> 00:13:09,700
+And Claude is back with an Ironhollow
+branded customer.
+
+192
+00:13:10,000 --> 00:13:13,667
+Health board. Now, lots and lots of very
+rich information
+
+193
+00:13:13,667 --> 00:13:17,333
+on this overall board. But a couple of
+things I
+
+194
+00:13:17,333 --> 00:13:21,000
+want to call out. First of all, is that
+the
+
+195
+00:13:21,000 --> 00:13:24,667
+Carolina Griddle House story here is
+featured right at the
+
+196
+00:13:24,667 --> 00:13:28,333
+top. It is the lost customer of the
+current moment,
+
+197
+00:13:28,333 --> 00:13:32,000
+and provides a really nice overall lesson
+here for the
+
+198
+00:13:32,000 --> 00:13:35,667
+business. That closing the tickets quickly
+isn't the same as
+
+199
+00:13:35,667 --> 00:13:39,333
+fixing it. So. You know, really, that is
+kind of
+
+200
+00:13:39,333 --> 00:13:43,000
+one of the themes of the lessons coming
+out of
+
+201
+00:13:43,000 --> 00:13:44,833
+the Carolina Griddle House loss.
+
+202
+00:13:44,833 --> 00:13:48,500
+A couple other things to point out on this
+specific
+
+203
+00:13:48,500 --> 00:13:52,167
+file. So let's see, Charlotte Metal Works
+is another one
+
+204
+00:13:52,167 --> 00:13:55,100
+that is having similar kinds of delivery
+problems.
+
+205
+00:13:55,100 --> 00:13:58,767
+So this one definitely kind of jumps up on
+my
+
+206
+00:13:58,767 --> 00:14:01,700
+board as something to watch out for here.
+
+207
+00:14:02,000 --> 00:14:05,857
+We have some of the exact same quotes that
+we
+
+208
+00:14:05,857 --> 00:14:07,786
+had in that other situation.
+
+209
+00:14:07,786 --> 00:14:11,643
+As long as this doesn't become the norm,
+we're fine.
+
+210
+00:14:11,643 --> 00:14:15,500
+Even though we've had additional shipping
+problems since then, so
+
+211
+00:14:15,500 --> 00:14:19,357
+clearly that's one that we've got to look
+out for
+
+212
+00:14:19,357 --> 00:14:23,214
+here. Another interesting one to look at
+is the Cabarrus
+
+213
+00:14:23,214 --> 00:14:27,071
+County School Districts. They are already
+sort of promising that
+
+214
+00:14:27,071 --> 00:14:29,771
+there's going to be a pricing comparison.
+
+215
+00:14:29,771 --> 00:14:33,629
+When the RFP is due later in the summer,
+so
+
+216
+00:14:33,629 --> 00:14:37,486
+again, a really good overall sort of
+composite of all
+
+217
+00:14:37,486 --> 00:14:41,343
+the different accounts, really rich
+information to dig through here
+
+218
+00:14:41,343 --> 00:14:45,200
+that can really help make decisions about
+where and which
+
+219
+00:14:45,200 --> 00:14:49,057
+accounts need more attention and which
+ones are ready to
+
+220
+00:14:49,057 --> 00:14:52,914
+order more. Earlier in this video, we
+talked about the
+
+221
+00:14:52,914 --> 00:14:56,771
+happy customer and potentially having a
+problem that nobody had
+
+222
+00:14:56,771 --> 00:14:58,700
+called out yet. I wanted.
+
+223
+00:14:59,000 --> 00:15:02,815
+Circle back to that topic, and go through
+one more
+
+224
+00:15:02,815 --> 00:15:06,630
+prompt here that we're going to put in to
+check
+
+225
+00:15:06,630 --> 00:15:10,445
+out that specific account. That would be
+Lake Norman Senior
+
+226
+00:15:10,445 --> 00:15:14,260
+Living here, which is a growing account,
+but something that
+
+227
+00:15:14,260 --> 00:15:18,075
+we should definitely watch. So let's flip
+back over to
+
+228
+00:15:18,075 --> 00:15:21,890
+Claude desktop here, and I'll go ahead and
+paste in
+
+229
+00:15:21,890 --> 00:15:23,798
+this next prompt. And again.
+
+230
+00:15:23,798 --> 00:15:27,613
+Looks like it's our happiest customer, but
+before we send
+
+231
+00:15:27,613 --> 00:15:31,428
+combined volume pricing for their newest
+community, let's make sure
+
+232
+00:15:31,428 --> 00:15:35,243
+through the support tickets and orders for
+anything that should
+
+233
+00:15:35,243 --> 00:15:38,677
+be dealt with before that kind of a call.
+
+234
+00:15:38,677 --> 00:15:42,492
+Looking for you know increased ordering,
+and then we'll draft
+
+235
+00:15:42,492 --> 00:15:46,307
+a short warm email to Denise that moves
+that Mooresville
+
+236
+00:15:46,307 --> 00:15:49,359
+setup forward and owns any open issues
+directly.
+
+237
+00:15:49,359 --> 00:15:53,174
+I'll go ahead and submit this, and we'll
+come back
+
+238
+00:15:53,174 --> 00:15:54,700
+on the other side.
+
+239
+00:15:55,000 --> 00:15:58,836
+Okay, and Claude is back, so let's take a
+look.
+
+240
+00:15:58,836 --> 00:16:01,521
+So here's the full answer on this.
+
+241
+00:16:01,521 --> 00:16:05,356
+Looks like we checked their tickets in
+eighteen months of
+
+242
+00:16:05,356 --> 00:16:09,192
+orders. They are a happy customer, but
+four things that
+
+243
+00:16:09,192 --> 00:16:12,644
+Priya should sort out before the pricing
+goes out.
+
+244
+00:16:12,644 --> 00:16:16,480
+Looks like let's see, number one, the
+disinfectant order has
+
+245
+00:16:16,480 --> 00:16:20,316
+stopped. Pricing is late, and a wrong
+delivery arrived a
+
+246
+00:16:20,316 --> 00:16:24,151
+week after the call, and there is still a
+scrubber
+
+247
+00:16:24,151 --> 00:16:27,987
+question on those IH-450s. So yeah,
+clearly there's still issues
+
+248
+00:16:27,987 --> 00:16:31,823
+here that are underneath the surface,
+despite the fact that
+
+249
+00:16:31,823 --> 00:16:34,124
+maybe they have been ordering more.
+
+250
+00:16:34,124 --> 00:16:37,960
+And just on the numbers alone, it might
+look like
+
+251
+00:16:37,960 --> 00:16:40,261
+that account is growing and healthy.
+
+252
+00:16:40,261 --> 00:16:42,946
+Um, so yeah, that's an interesting one.
+
+253
+00:16:42,946 --> 00:16:46,782
+We had two product complaints that never
+came up, and
+
+254
+00:16:46,782 --> 00:16:48,700
+an August critical delivery ticket.
+
+255
+00:16:49,000 --> 00:16:52,782
+That's really that exact same pattern that
+we saw with
+
+256
+00:16:52,782 --> 00:16:56,563
+Carolina Griddle House. So again, this is
+where AI and
+
+257
+00:16:56,563 --> 00:17:00,345
+Claude, in this case, the way that we've
+structured these
+
+258
+00:17:00,345 --> 00:17:04,127
+prompts can really, really help us because
+again, it's going
+
+259
+00:17:04,127 --> 00:17:07,908
+to separate what is what looks like a top
+line
+
+260
+00:17:07,908 --> 00:17:11,690
+growth story, and it's going to uncover
+some of those
+
+261
+00:17:11,690 --> 00:17:15,472
+hidden problems that are difficult to spot
+when everything is
+
+262
+00:17:15,472 --> 00:17:17,363
+landing in the same place.
+
+263
+00:17:17,363 --> 00:17:21,144
+Circling back to one of the concepts we
+covered in
+
+264
+00:17:21,144 --> 00:17:24,926
+a previous video here around scheduled
+tasks, that's really what
+
+265
+00:17:24,926 --> 00:17:28,708
+can make the big difference in something
+like this health
+
+266
+00:17:28,708 --> 00:17:32,489
+board, is having it auto-generated on a
+weekly basis, so
+
+267
+00:17:32,489 --> 00:17:36,271
+that you're always essentially searching
+for the latest stories to
+
+268
+00:17:36,271 --> 00:17:39,296
+come out of what's happening with your
+customers.
+
+269
+00:17:39,296 --> 00:17:42,700
+Ironhollow, obviously, just a test
+environment, if you will.
+
+270
+00:17:43,000 --> 00:17:45,662
+And so the data there is not changing, but
+again,
+
+271
+00:17:45,662 --> 00:17:48,324
+by creating this as a scheduled task,
+you're going to
+
+272
+00:17:48,324 --> 00:17:50,986
+get in front of those data changes because
+the system,
+
+273
+00:17:50,986 --> 00:17:53,648
+Claude in this case, is going to be
+helping you
+
+274
+00:17:53,648 --> 00:17:56,310
+go and inspect those files on a regular
+basis and
+
+275
+00:17:56,310 --> 00:17:58,972
+calling out any of those troubled
+accounts, where maybe the
+
+276
+00:17:58,972 --> 00:18:01,634
+symptoms of those troubles are hidden just
+beneath the surface.
+
+277
+00:18:01,634 --> 00:18:04,296
+So we're going to go ahead and ask for
+every
+
+278
+00:18:04,296 --> 00:18:06,958
+Monday at 7:30, run this customer health
+check on our
+
+279
+00:18:06,958 --> 00:18:09,620
+accounts, flag any customers with a
+critical ticket, three or
+
+280
+00:18:09,620 --> 00:18:11,483
+more tickets in the last thirty days.
+
+281
+00:18:11,483 --> 00:18:14,145
+Or a month where orders drop by more than
+half,
+
+282
+00:18:14,145 --> 00:18:16,807
+plus, and I think this is really
+important, any fix
+
+283
+00:18:16,807 --> 00:18:19,469
+that we promised on a call that has no
+follow
+
+284
+00:18:19,469 --> 00:18:22,131
+up logged yet, give me the top three
+customers to
+
+285
+00:18:22,131 --> 00:18:23,462
+call this week and why.
+
+286
+00:18:23,462 --> 00:18:26,124
+So, again, we're going to go ahead and get
+this
+
+287
+00:18:26,124 --> 00:18:28,786
+started here, and we will come back on the
+other
+
+288
+00:18:28,786 --> 00:18:31,448
+side of that. But again, I think it's
+really, really
+
+289
+00:18:31,448 --> 00:18:34,110
+important for us to try and figure out how
+do
+
+290
+00:18:34,110 --> 00:18:36,772
+we stay in front of these promises that
+are being
+
+291
+00:18:36,772 --> 00:18:39,434
+made to make sure that they're promises
+that are being
+
+292
+00:18:39,434 --> 00:18:39,700
+kept.
+
+293
+00:18:40,000 --> 00:18:42,957
+And we'll come back on the other side.
+
+294
+00:18:42,957 --> 00:18:46,653
+Okay, and we're getting a prompt back from
+Claude, just
+
+295
+00:18:46,653 --> 00:18:49,979
+a permission on again setting up these
+scheduled tasks.
+
+296
+00:18:49,979 --> 00:18:53,305
+That's also what we saw in the previous
+video.
+
+297
+00:18:53,305 --> 00:18:57,001
+I'm going to go ahead and click on
+schedule and
+
+298
+00:18:57,001 --> 00:19:00,697
+get this established for 7:30 every Monday
+morning to go
+
+299
+00:19:00,697 --> 00:19:03,284
+ahead and run this report for us.
+
+300
+00:19:03,284 --> 00:19:06,980
+And we come back with a confirmation from
+Claude in
+
+301
+00:19:06,980 --> 00:19:10,676
+this case that it has scheduled a task for
+Mondays.
+
+302
+00:19:10,676 --> 00:19:14,372
+Looks like 7:17 a.m. because a lot of
+scheduled jobs
+
+303
+00:19:14,372 --> 00:19:16,220
+start on the half hour.
+
+304
+00:19:16,220 --> 00:19:19,916
+It can get delayed. It's going to save in
+a
+
+305
+00:19:19,916 --> 00:19:22,873
+new health checks folder inside my
+Ironhollow folder.
+
+306
+00:19:22,873 --> 00:19:26,569
+I think that really the big takeaway from
+this, though,
+
+307
+00:19:26,569 --> 00:19:30,265
+is by setting this up as a recurring
+scheduled task,
+
+308
+00:19:30,265 --> 00:19:33,961
+you're going to constantly be surfacing
+information that could cause
+
+309
+00:19:33,961 --> 00:19:34,700
+hidden problems.
+
+310
+00:19:35,000 --> 00:19:38,487
+Nobody can do this all alone, and that's
+why big
+
+311
+00:19:38,487 --> 00:19:41,974
+companies have large teams of customer
+success managers watching all
+
+312
+00:19:41,974 --> 00:19:45,461
+these individual accounts. But in a small
+business where it's
+
+313
+00:19:45,461 --> 00:19:48,948
+you, you're the person who is managing and
+watching these.
+
+314
+00:19:48,948 --> 00:19:52,435
+We all need a little bit of assisted help
+here,
+
+315
+00:19:52,435 --> 00:19:55,922
+and Claude can do just that by setting up
+the
+
+316
+00:19:55,922 --> 00:19:59,409
+scheduled task and frequently looking
+through those data files to
+
+317
+00:19:59,409 --> 00:20:02,896
+surface and find those problems before
+they become lost accounts.
+
+318
+00:20:02,896 --> 00:20:05,686
+In this video, we've talked about
+scattered warnings.
+
+319
+00:20:05,686 --> 00:20:07,429
+Quiet opportunities and broken promises.
+
+320
+00:20:07,429 --> 00:20:10,568
+Now, I want to be really, really honest
+here.
+
+321
+00:20:10,568 --> 00:20:12,660
+The AI doesn't save the customer.
+
+322
+00:20:12,660 --> 00:20:16,147
+You do. But given everything else that
+goes on in
+
+323
+00:20:16,147 --> 00:20:19,634
+a small business owner's world, AI can
+certainly help you
+
+324
+00:20:19,634 --> 00:20:23,121
+make a massive difference by keeping a
+regular check on
+
+325
+00:20:23,121 --> 00:20:26,608
+these things and always surfacing these
+sort of hidden problems
+
+326
+00:20:26,608 --> 00:20:28,700
+that exist just underneath the surface.
+
+327
+00:20:29,000 --> 00:20:32,518
+So I hope this video has been helpful for
+you.
+
+328
+00:20:32,518 --> 00:20:36,036
+If so, please subscribe and like, and we
+can continue
+
+329
+00:20:36,036 --> 00:20:39,202
+building these kinds of videos here at
+Walker Ops.
+
+330
+00:20:39,202 --> 00:20:42,720
+Also, please comment and tell me about any
+other hidden
+
+331
+00:20:42,720 --> 00:20:46,238
+challenges that you're facing. We'd love
+to unpack them and
+
+332
+00:20:46,238 --> 00:20:48,700
+cover them right here on Walker Ops.
