@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tech help for Charlotte restaurants and shops — WalkerOps</title>
+<meta name="description" content="Wi-Fi, card readers, logins, backups and AI for Charlotte restaurants, bars, shops and salons. Handled and explained in plain English. Start with a free 30-minute Tech Headache Call.">
+<link rel="icon" type="image/svg+xml" href="walkerops-favicon.svg">
+<link rel="canonical" href="https://walkerops.com/restaurants-and-shops">
+<meta name="theme-color" content="#3F3D3A">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walkerops.com/restaurants-and-shops">
+<meta property="og:site_name" content="WalkerOps">
+<meta property="og:title" content="Tech help for Charlotte restaurants and shops">
+<meta property="og:description" content="Wi-Fi, card readers, logins, backups and AI, handled and explained in plain English. Start with a free 30-minute Tech Headache Call.">
+<meta property="og:image" content="https://walkerops.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tech help for Charlotte restaurants and shops">
+<meta name="twitter:description" content="Handled and explained in plain English. Start with a free 30-minute Tech Headache Call.">
+<meta name="twitter:image" content="https://walkerops.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Fraunces:opsz,wght@9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Same tokens as index.html and call.html so the pages read as one site */
+  :root {
+    --paper: #FAF9F7;
+    --ink: #3F3D3A;
+    --ink-soft: #6F6B66;
+    --clay: #D2703A;
+    --clay-tint: #F6E3D6;
+    --line: #E4DFD8;
+    --white: #FFFFFF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+
+  .topbar { padding: 26px 0; }
+  .topbar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand svg { width: 26px; height: 26px; }
+  .brand span { font-family: 'Archivo', Helvetica, Arial, sans-serif; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.03em; }
+  .topbar .back { font-size: 0.92rem; color: var(--ink-soft); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; }
+  .topbar .back:hover { color: var(--clay); text-decoration-color: var(--clay); }
+
+  header { padding: 48px 0 40px; }
+  .eyebrow {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--clay);
+    border: 1.5px solid var(--clay);
+    border-radius: 999px;
+    padding: 5px 14px;
+    margin-bottom: 26px;
+  }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-size: clamp(2.3rem, 6vw, 3.9rem);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    max-width: 18ch;
+    margin-bottom: 22px;
+    text-wrap: balance;
+  }
+  h1 em { font-style: italic; color: var(--clay); }
+  .lede { font-size: 1.15rem; color: var(--ink-soft); max-width: 54ch; margin-bottom: 34px; }
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { box-shadow: 0 6px 18px rgba(63,61,58,0.25); }
+  .cta-note { margin-top: 14px; font-size: 0.95rem; color: var(--ink-soft); }
+
+  section { padding: 44px 0; }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+  h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(1.6rem, 3.6vw, 2.1rem);
+    line-height: 1.15;
+    margin-bottom: 24px;
+    text-wrap: balance;
+  }
+
+  /* Headaches */
+  .aches { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .ache {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--clay);
+    border-radius: 6px;
+    padding: 16px 20px;
+    font-size: 1rem;
+    min-width: 0;
+  }
+
+  /* What I take off your plate */
+  .plate { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .item { background: var(--white); border: 1px solid var(--line); border-radius: 8px; padding: 24px; min-width: 0; }
+  .item.hi { background: var(--clay-tint); }
+  .item h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: 1.3rem; line-height: 1.2; margin-bottom: 8px; }
+  .item p { color: var(--ink-soft); font-size: 0.98rem; }
+
+  /* Good to know */
+  .notes { display: grid; gap: 14px; }
+  .note { display: grid; grid-template-columns: 150px 1fr; gap: 20px; padding: 20px 0; border-top: 1px solid var(--line); }
+  .note:last-child { border-bottom: 1px solid var(--line); }
+  .note .who { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--clay); padding-top: 4px; }
+  .note p { color: var(--ink-soft); }
+  .note p strong { color: var(--ink); font-weight: 600; }
+  .note a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+  .note a:hover { color: var(--clay); text-decoration-color: var(--clay); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { background: var(--white); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-size: 0.95rem; }
+
+  .about p { font-size: 1.05rem; max-width: 62ch; color: var(--ink-soft); }
+  .about p + p { margin-top: 12px; }
+  .about strong { color: var(--ink); font-weight: 600; }
+
+  .call-card {
+    background: var(--clay-tint); border-radius: 10px; padding: 36px;
+    display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap;
+  }
+  .call-card > div { flex: 1 1 380px; min-width: 0; }
+  .call-card h2 { margin-bottom: 10px; }
+  .call-card h2 em { font-style: italic; color: var(--clay); }
+  .call-card p { color: var(--ink-soft); }
+
+  footer { padding: 40px 0 70px; text-align: center; }
+  .foot-mark { display: flex; justify-content: center; margin-bottom: 22px; }
+  .foot-mark svg { width: 30px; height: 30px; }
+  .foot-links { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; font-size: 0.95rem; }
+  .foot-links a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; }
+  .foot-links a:hover { text-decoration-color: var(--clay); color: var(--clay); }
+  .foot-note { margin-top: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); opacity: .8; }
+
+  @media (max-width: 760px) {
+    .aches, .plate { grid-template-columns: 1fr; }
+    .note { grid-template-columns: 1fr; gap: 6px; }
+    .call-card { padding: 26px 22px; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 16px; }
+    header { padding: 28px 0 24px; }
+    section { padding: 32px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="WalkerOps home">
+      <svg viewBox="0 0 66 66" aria-hidden="true"><rect x="0" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="46" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="0" y="23" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="23" width="20" height="20" fill="#D2703A"/><rect x="46" y="23" width="20" height="20" fill="#D2703A"/><rect x="0" y="46" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="46" width="20" height="20" fill="#D2703A"/><rect x="46" y="46" width="20" height="20" fill="#D2703A"/></svg>
+      <span>WalkerOps</span>
+    </a>
+    <a class="back" href="/">walkerops.com</a>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Charlotte · Restaurants &amp; shops</div>
+    <h1>Tech help for Charlotte <em>restaurants and shops.</em></h1>
+    <p class="lede">You've got a business to run, not a router to babysit. When the card reader drops on a Friday night or the Wi-Fi password has been taped to the wall since 2019, I'm the person who sorts it out and explains it in plain English. AI included, when it actually saves you time.</p>
+    <a class="btn btn-primary" href="/call?for=restaurant">Book a free Tech Headache Call</a>
+    <p class="cta-note">30 minutes. You talk, I listen, you leave with the one thing to fix first.</p>
+  </div>
+</header>
+
+<section aria-labelledby="familiar">
+  <div class="wrap">
+    <div class="section-label">Sound familiar?</div>
+    <h2 id="familiar">The headaches I hear about most</h2>
+    <div class="aches">
+      <div class="ache">The card reader or register goes offline at the worst possible moment.</div>
+      <div class="ache">Guests, staff and the register all share the same Wi-Fi.</div>
+      <div class="ache">A manager who left last year still knows every password.</div>
+      <div class="ache">Scheduling, inventory and the books live in three apps that don't talk to each other.</div>
+      <div class="ache">Reviews, emails and social posts pile up until Sunday night.</div>
+      <div class="ache">The back-office computer is older than some of your staff.</div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="plate">
+  <div class="wrap">
+    <div class="section-label">What I take off your plate</div>
+    <h2 id="plate">The everyday tech, handled. AI included.</h2>
+    <div class="plate">
+      <div class="item">
+        <h3>Wi-Fi that stays up</h3>
+        <p>Guests on one network, your business on another, so a busy patio doesn't slow down the register.</p>
+      </div>
+      <div class="item">
+        <h3>Logins cleaned up</h3>
+        <p>Everyone gets their own login. Two-step sign-in on the accounts that matter. Access shut off the day someone leaves.</p>
+      </div>
+      <div class="item">
+        <h3>Register and back office</h3>
+        <p>I work with your point-of-sale company's support, not around it, and keep the back-office computer, printer and email running.</p>
+      </div>
+      <div class="item">
+        <h3>Backups for what you can't lose</h3>
+        <p>Recipes, price lists, vendor contacts and payroll records, saved somewhere safe, with a restore tried before you need one.</p>
+      </div>
+      <div class="item hi">
+        <h3>AI where it saves hours</h3>
+        <p>First drafts of review replies, menu and product descriptions, and social posts. You approve everything before it goes out.</p>
+      </div>
+      <div class="item">
+        <h3>Someone to call</h3>
+        <p>When something breaks or a vendor sends you a quote you don't understand, you call me and get a straight answer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="know">
+  <div class="wrap">
+    <div class="section-label">Good to know</div>
+    <h2 id="know">How I work with busy places</h2>
+    <div class="notes">
+      <div class="note">
+        <div class="who">Your schedule</div>
+        <p><strong>I work around your rush, not during it.</strong> Book the call for a slow afternoon. Fixes happen before open, after close, or on your slowest day.</p>
+      </div>
+      <div class="note">
+        <div class="who">No upsell</div>
+        <p>I'm not here to sell you a new register system or new hardware. <strong>Most of the time the fix is making what you already pay for work properly.</strong></p>
+      </div>
+      <div class="note">
+        <div class="who">Old computers</div>
+        <p>Microsoft ended support for Windows 10 on <a href="https://support.microsoft.com/en-US/Windows/Deployment/updates-lifecycle/windows-10-support-has-ended-on-october-14-2025">October 14, 2025</a>. <strong>If the back-office computer still runs it, that's usually near the top of the list.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="fit">
+  <div class="wrap">
+    <div class="section-label">Who it's for</div>
+    <h2 id="fit">A good fit if you run…</h2>
+    <div class="chips">
+      <span class="chip">A restaurant, bar or coffee shop</span>
+      <span class="chip">A retail shop or boutique</span>
+      <span class="chip">A salon, studio or gym</span>
+      <span class="chip">A trade or home-services business</span>
+      <span class="chip">A business where the owner is also the IT department</span>
+    </div>
+  </div>
+</section>
+
+<section class="about" aria-labelledby="who">
+  <div class="wrap">
+    <div class="section-label">Who you'll be talking to</div>
+    <h2 id="who">Hi, I'm Bill Walker.</h2>
+    <p>I've spent <strong>25+ years leading operations, customer success, and support teams</strong>: 21 of them at Microsoft, then Tanium, EY, and Cyera. The job has always been the same: find what's slowing people down and fix it in the right order.</p>
+    <p>Now I do that for Charlotte restaurants and shops. If we keep working together after the call, you'll know what it costs before anything starts. If we don't, you still keep the advice.</p>
+  </div>
+</section>
+
+<section aria-label="Book a Tech Headache Call">
+  <div class="wrap">
+    <div class="call-card">
+      <div>
+        <div class="section-label">Start here</div>
+        <h2>Tell me what's bugging you. <em>Leave with the one thing to fix first.</em></h2>
+        <p>The Tech Headache Call is free and takes 30 minutes. No pitch, no prep, no jargon.</p>
+      </div>
+      <a class="btn btn-primary" href="/call?for=restaurant">Book a free Tech Headache Call</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-mark" aria-hidden="true">
+    <svg viewBox="0 0 66 66"><rect x="0" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="46" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="0" y="23" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="23" width="20" height="20" fill="#D2703A"/><rect x="46" y="23" width="20" height="20" fill="#D2703A"/><rect x="0" y="46" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="46" width="20" height="20" fill="#D2703A"/><rect x="46" y="46" width="20" height="20" fill="#D2703A"/></svg>
+  </div>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="/">Home</a>
+      <a href="/law-and-professional-offices">Law &amp; professional offices</a>
+    </div>
+    <div class="foot-note">Walker Ops, LLC · Charlotte, NC</div>
+  </div>
+</footer>
+
+</body>
+</html>
