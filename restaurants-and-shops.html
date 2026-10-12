@@ -199,19 +199,82 @@
     html { scroll-behavior: auto; }
     .btn { transition: none; }
   }
+
+  /* ===== Site banner + nav (shared across all pages — keep in sync) ===== */
+  .sitebar { position: sticky; top: 0; z-index: 50; background: rgba(250,249,247,0.94); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .sitebar-in { max-width: 1120px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .sitebar .sb-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex-shrink: 0; }
+  .sitebar .sb-brand svg { width: 26px; height: 26px; }
+  .sitebar .sb-brand span { font-family: 'Archivo', Helvetica, Arial, sans-serif; font-weight: 800; font-size: 1.2rem; letter-spacing: -0.04em; }
+  .sb-nav { display: flex; align-items: center; gap: 26px; font-size: 0.93rem; font-weight: 500; }
+  .sb-nav a { text-decoration: none; white-space: nowrap; color: var(--ink); }
+  .sb-nav a:hover, .sb-nav a[aria-current="page"] { color: var(--clay); }
+  .sb-nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 8px; }
+  .sb-nav .sb-sep { width: 1px; height: 22px; background: var(--line); }
+  .sb-yt { display: inline-flex; align-items: center; gap: 7px; }
+  .sb-play { width: 18px; height: 13px; border-radius: 3px; background: var(--ink); display: inline-grid; place-items: center; flex-shrink: 0; }
+  .sb-play::after { content: ""; border-left: 5px solid var(--paper); border-top: 3.5px solid transparent; border-bottom: 3.5px solid transparent; margin-left: 1px; }
+  .sb-ext { font-size: 0.8em; color: var(--ink-soft); }
+  .sb-cta { display: inline-block; padding: 10px 18px; border-radius: 4px; background: var(--ink); color: var(--paper) !important; font-weight: 500; font-size: 0.9rem; text-decoration: none; white-space: nowrap; transition: box-shadow .15s ease, transform .15s ease; }
+  .sb-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(63,61,58,0.25); }
+  .sb-cta[aria-current="page"] { background: var(--clay); text-decoration: none; }
+  .sb-mobile { display: none; align-items: center; gap: 12px; }
+  .sb-toggle { background: none; border: 0; padding: 8px; margin: -8px; cursor: pointer; color: var(--ink); display: grid; gap: 4px; width: 38px; }
+  .sb-toggle i { display: block; height: 2px; background: currentColor; border-radius: 1px; }
+  .sb-menu { display: none; border-top: 1px solid var(--line); background: #fff; padding: 4px 16px 14px; }
+  .sb-menu a { display: flex; justify-content: space-between; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--line); text-decoration: none; font-weight: 500; color: var(--ink); }
+  .sb-menu a:last-child { border-bottom: 0; }
+  .sb-menu a[aria-current="page"] { color: var(--clay); }
+  .sb-menu .sb-grp { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding-top: 14px; }
+  .sitebar.open .sb-menu { display: block; }
+  .sitebar a:focus-visible, .sb-toggle:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+  @media (max-width: 1000px) {
+    .sb-nav { display: none; }
+    .sb-mobile { display: flex; }
+    .sitebar-in { padding: 12px 16px; }
+    .sb-cta { padding: 8px 12px; font-size: 0.82rem; }
+  }
+  /* Footer: consultancy links, then the channel set apart */
+  .foot-watch { margin-top: 22px; font-size: 0.92rem; color: var(--ink-soft); }
+  .foot-watch a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; }
+  .foot-watch a:hover { color: var(--clay); text-decoration-color: var(--clay); }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="wrap">
-    <a class="brand" href="/" aria-label="WalkerOps home">
-      <svg viewBox="0 0 66 66" aria-hidden="true"><rect x="0" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="46" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="0" y="23" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="23" width="20" height="20" fill="#D2703A"/><rect x="46" y="23" width="20" height="20" fill="#D2703A"/><rect x="0" y="46" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="46" width="20" height="20" fill="#D2703A"/><rect x="46" y="46" width="20" height="20" fill="#D2703A"/></svg>
-      <span>WalkerOps</span>
-    </a>
-    <a class="back" href="/">walkerops.com</a>
+<div class="sitebar" id="sitebar">
+  <div class="sitebar-in">
+    <a class="sb-brand" href="/" aria-label="WalkerOps home"><svg viewBox="0 0 66 66" aria-hidden="true"><rect x="0" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="46" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="0" y="23" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="23" width="20" height="20" fill="#D2703A"/><rect x="46" y="23" width="20" height="20" fill="#D2703A"/><rect x="0" y="46" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="46" width="20" height="20" fill="#D2703A"/><rect x="46" y="46" width="20" height="20" fill="#D2703A"/></svg><span>WalkerOps</span></a>
+    <nav class="sb-nav" aria-label="Main">
+      <a href="/law-and-professional-offices">Law &amp; Professional Offices</a>
+      <a href="/restaurants-and-shops" aria-current="page">Restaurants &amp; Shops</a>
+      <span class="sb-sep" aria-hidden="true"></span>
+      <a class="sb-yt" href="https://www.youtube.com/@WalkerOps" aria-label="YouTube channel (opens YouTube)"><span class="sb-play" aria-hidden="true"></span>YouTube Channel <span class="sb-ext" aria-hidden="true">&#8599;</span></a>
+      <a class="sb-cta" href="/call">Book a Tech Headache Call</a>
+    </nav>
+    <div class="sb-mobile">
+      <a class="sb-cta" href="/call">Book a call</a>
+      <button class="sb-toggle" type="button" aria-expanded="false" aria-controls="sb-menu" aria-label="Open menu"><i></i><i></i><i></i></button>
+    </div>
   </div>
+  <nav class="sb-menu" id="sb-menu" aria-label="Main (mobile)">
+    <a href="/call">Tech Headache Call <span aria-hidden="true">&rarr;</span></a>
+    <a href="/law-and-professional-offices">Law &amp; Professional Offices <span aria-hidden="true">&rarr;</span></a>
+    <a href="/restaurants-and-shops" aria-current="page">Restaurants &amp; Shops <span aria-hidden="true">&rarr;</span></a>
+    <span class="sb-grp">Separate from client work</span>
+    <a class="sb-yt" href="https://www.youtube.com/@WalkerOps"><span><span class="sb-play" aria-hidden="true"></span> YouTube Channel</span><span class="sb-ext" aria-hidden="true">&#8599;</span></a>
+  </nav>
 </div>
+<script>
+  (function () {
+    var bar = document.getElementById('sitebar'), btn = bar.querySelector('.sb-toggle');
+    btn.addEventListener('click', function () {
+      var open = bar.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+  })();
+</script>
 
 <header>
   <div class="wrap">
@@ -339,9 +402,13 @@
   </div>
   <div class="wrap">
     <div class="foot-links">
-      <a href="/">Home</a>
+      <a href="/call">Tech Headache Call</a>
       <a href="/law-and-professional-offices">Law &amp; professional offices</a>
+      <a href="/restaurants-and-shops">Restaurants &amp; shops</a>
+      <a href="https://www.linkedin.com/in/bill-walker/">LinkedIn</a>
+      <a href="mailto:billwalker@outlook.com">Email</a>
     </div>
+    <div class="foot-watch">Also from Bill, separate from client work: <a href="https://www.youtube.com/@WalkerOps">the WalkerOps YouTube channel &#8599;</a></div>
     <div class="foot-note">Walker Ops, LLC · Charlotte, NC</div>
   </div>
 </footer>
