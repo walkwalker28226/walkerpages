@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Podcast Ticker</title>
+<script id="tickerConfig">window.TICKER_CONFIG={"lines": "December 11 deadline and November 12 provisions\nFederal bills, extensions and repeal proposals\nGriffith's HEMP Act and other regulatory proposals\nTHCA flower, potency limits and conversions\nLatest congressional negotiations\nDOJ allegations and the businesses involved\nHemp versus marijuana classification\nAlleged licensing influence and financial transactions\nFederal enforcement and the DOJ press conference\nImplications for Virginia's July 1, 2027 launch\n350 retail license cap\nMicrobusiness opportunities\nExisting medical marijuana operators\nImpact applicants and market competition\nVirginia's cannabis industry", "label": "NEWS", "size": 60, "bottom": 0, "speed": 120, "accent": "#20751a", "bg": "#0d1526", "fg": "#ffffff"};</script>
+<style>
+  :root{
+    --h:60px;          /* bar height (60px on a 1080p canvas, about 5.5%, is news-standard) */
+    --bottom:0px;      /* gap from bottom edge */
+    --accent:#c8102e;
+    --bg:#0d1526;
+    --fg:#ffffff;
+  }
+  html,body{margin:0;height:100%;overflow:hidden;background:transparent}
+  body.editing{
+    background:#3a3f47;
+    background-image:linear-gradient(45deg,#444a53 25%,transparent 25%),linear-gradient(-45deg,#444a53 25%,transparent 25%),
+      linear-gradient(45deg,transparent 75%,#444a53 75%),linear-gradient(-45deg,transparent 75%,#444a53 75%);
+    background-size:40px 40px;background-position:0 0,0 20px,20px -20px,-20px 0;
+  }
+  #stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+  body.editing #stage{outline:2px dashed rgba(255,255,255,.35)}
+
+  #ticker{
+    position:absolute;left:0;right:0;bottom:var(--bottom);height:var(--h);
+    display:flex;font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    box-shadow:0 -2px 18px rgba(0,0,0,.35);
+  }
+  #label{
+    flex:none;position:relative;z-index:2;display:flex;align-items:center;
+    padding:0 calc(var(--h)*.45) 0 calc(var(--h)*.55);
+    background:var(--accent);color:#fff;font-weight:800;letter-spacing:.08em;
+    text-transform:uppercase;font-size:calc(var(--h)*.40);white-space:nowrap;
+  }
+  #label::after{
+    content:"";position:absolute;top:0;right:calc(var(--h)*-.35);
+    border-left:calc(var(--h)*.35) solid var(--accent);
+    border-bottom:var(--h) solid transparent;
+  }
+  #label.hidden{display:none}
+  #viewport{
+    flex:1;position:relative;overflow:hidden;display:flex;align-items:center;
+    background:var(--bg);border-top:3px solid var(--accent);box-sizing:border-box;
+  }
+  #track{display:flex;align-items:center;white-space:nowrap;will-change:transform}
+  .set{display:flex;align-items:center;flex:none}
+  .item{color:var(--fg);font-weight:600;font-size:calc(var(--h)*.47);line-height:1}
+  .sep{
+    flex:none;display:inline-block;width:calc(var(--h)*.16);height:calc(var(--h)*.16);
+    background:var(--accent);transform:rotate(45deg);margin:0 calc(var(--h)*.6);
+  }
+
+  /* ---------- Editor panel ---------- */
+  #panel{
+    position:fixed;top:16px;right:16px;width:420px;max-height:calc(100% - 32px);overflow:auto;
+    background:#fff;color:#1b1f24;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.4);
+    font:14px/1.4 "Segoe UI",Arial,sans-serif;padding:18px 20px;box-sizing:border-box;z-index:10;
+  }
+  #panel.hidden{display:none}
+  #panel h1{font-size:18px;margin:0 0 4px}
+  #panel p.sub{margin:0 0 14px;color:#5b6470;font-size:13px}
+  #panel label{display:block;font-weight:600;margin:12px 0 4px}
+  #panel textarea{width:100%;height:300px;box-sizing:border-box;font:13px/1.5 Consolas,monospace;
+    padding:8px;border:1px solid #c9ced6;border-radius:6px;resize:vertical;white-space:pre;overflow-x:auto}
+  #panel input[type=text],#panel select{width:100%;box-sizing:border-box;padding:7px 8px;border:1px solid #c9ced6;border-radius:6px;font:inherit}
+  #panel .row{display:flex;gap:12px}
+  #panel .row>div{flex:1}
+  #panel input[type=range]{width:100%}
+  #panel input[type=color]{width:100%;height:34px;border:1px solid #c9ced6;border-radius:6px;padding:2px;background:#fff}
+  #count{font-weight:400;color:#5b6470;float:right}
+  #count.over{color:#c8102e}
+  #panel .btns{display:flex;gap:8px;margin-top:16px}
+  #panel button{flex:1;padding:9px 10px;border:0;border-radius:6px;font:600 14px "Segoe UI",Arial,sans-serif;cursor:pointer}
+  #copyBtn{background:#1d4ed8;color:#fff}
+  #hideBtn{background:#e5e7eb;color:#1b1f24}
+  #linkOut{display:none;margin-top:10px;width:100%;box-sizing:border-box;font:12px Consolas,monospace;padding:6px;border:1px solid #c9ced6;border-radius:6px}
+  #msg{margin-top:8px;font-size:13px;color:#15803d;min-height:18px}
+  #panel .tip{margin-top:12px;font-size:12px;color:#5b6470;border-top:1px solid #e5e7eb;padding-top:10px}
+  kbd{background:#eef0f3;border:1px solid #c9ced6;border-radius:4px;padding:0 5px;font-size:12px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="ticker">
+    <div id="label">On Air</div>
+    <div id="viewport"><div id="track"></div></div>
+  </div>
+</div>
+
+<div id="panel">
+  <h1>Podcast Ticker</h1>
+  <p class="sub">Type one sentence per line. The preview updates as you type.</p>
+
+  <label for="lines">Sentences <span id="count">0 / 25</span></label>
+  <textarea id="lines" spellcheck="true"></textarea>
+
+  <label for="labelText">Label box (leave blank to hide)</label>
+  <input type="text" id="labelText">
+
+  <div class="row">
+    <div>
+      <label for="size">Bar size</label>
+      <select id="size">
+        <option value="50">Compact</option>
+        <option value="60">Standard</option>
+        <option value="72">Large</option>
+      </select>
+    </div>
+    <div>
+      <label for="bottom">Lift from bottom</label>
+      <select id="bottom">
+        <option value="0">Flush to edge</option>
+        <option value="27">Small gap</option>
+        <option value="54">TV-safe margin</option>
+      </select>
+    </div>
+  </div>
+
+  <label for="speed">Scroll speed <span id="speedVal" style="font-weight:400;color:#5b6470"></span></label>
+  <input type="range" id="speed" min="40" max="260" step="10">
+
+  <div class="row">
+    <div><label for="accent">Accent</label><input type="color" id="accent"></div>
+    <div><label for="bg">Bar</label><input type="color" id="bg"></div>
+    <div><label for="fg">Text</label><input type="color" id="fg"></div>
+  </div>
+
+  <div class="btns">
+    <button id="copyBtn">Download file for OBS</button>
+    <button id="hideBtn">Hide panel</button>
+  </div>
+  <input type="text" id="linkOut" readonly>
+  <div id="msg"></div>
+
+  <div class="tip">
+    Press <kbd>E</kbd> to show or hide this panel. The downloaded file has your sentences and settings built in. In OBS, tick "Local file" and pick it.
+  </div>
+</div>
+
+<script>
+(function(){
+  var DEFAULTS = {
+    lines: [
+      "Welcome to the show, and thanks for tuning in",
+      "New episodes every week, wherever you get your podcasts",
+      "Got a question for the guests? Drop it in the chat",
+      "Like, subscribe, and share with a friend who needs to hear this",
+      "Join the conversation online"
+    ].join("\n"),
+    label: "On Air",
+    size: 60,
+    bottom: 0,
+    speed: 120,
+    accent: "#c8102e",
+    bg: "#0d1526",
+    fg: "#ffffff"
+  };
+  var STORE_KEY = "podcastTicker.v1";
+  var cfg = Object.assign({}, DEFAULTS);
+
+  // ---- encode / decode for the OBS link ----
+  function encode(o){
+    var bytes = new TextEncoder().encode(JSON.stringify(o)), bin = "";
+    bytes.forEach(function(b){ bin += String.fromCharCode(b); });
+    return btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+  }
+  function decode(s){
+    s = s.replace(/-/g,"+").replace(/_/g,"/");
+    while (s.length % 4) s += "=";
+    var bin = atob(s), bytes = new Uint8Array(bin.length);
+    for (var i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }
+
+  var ORIGINAL = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+  var fromLink = false;
+  if (window.TICKER_CONFIG) { cfg = Object.assign({}, DEFAULTS, window.TICKER_CONFIG); fromLink = true; }
+  var m = location.hash.match(/[#&]c=([^&]+)/);
+  if (m) {
+    try { cfg = Object.assign({}, DEFAULTS, decode(m[1])); fromLink = true; } catch(e) {}
+  }
+  if (!fromLink) {
+    try { var saved = localStorage.getItem(STORE_KEY); if (saved) cfg = Object.assign({}, DEFAULTS, JSON.parse(saved)); } catch(e) {}
+  }
+
+  // ---- elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var stage=$("stage"), track=$("track"), viewport=$("viewport"), label=$("label"), panel=$("panel");
+  var root = document.documentElement;
+
+  // ---- scale the 1920x1080 stage to whatever window it is in ----
+  function fit(){
+    var s = Math.min(innerWidth/1920, innerHeight/1080);
+    stage.style.transform = "scale(" + s + ")";
+  }
+  addEventListener("resize", function(){ fit(); rebuild(); });
+
+  // ---- build the scrolling track ----
+  var setWidth = 0, pos = 0;
+  function sentences(){
+    return cfg.lines.split(/\r?\n/).map(function(s){ return s.trim(); }).filter(Boolean);
+  }
+  function makeSet(list){
+    var set = document.createElement("div"); set.className = "set";
+    list.forEach(function(t){
+      var it = document.createElement("span"); it.className = "item"; it.textContent = t;
+      var sp = document.createElement("span"); sp.className = "sep";
+      set.appendChild(it); set.appendChild(sp);
+    });
+    return set;
+  }
+  function rebuild(){
+    var list = sentences();
+    track.innerHTML = "";
+    if (!list.length) { setWidth = 0; return; }
+    var first = makeSet(list);
+    track.appendChild(first);
+    setWidth = first.getBoundingClientRect().width / (stage.getBoundingClientRect().width/1920 || 1);
+    var vw = viewport.offsetWidth;
+    var copies = Math.max(2, Math.ceil(vw / Math.max(setWidth,1)) + 1);
+    for (var i=1;i<copies;i++) track.appendChild(makeSet(list));
+    if (setWidth > 0) pos = pos % setWidth;
+  }
+
+  // ---- animation ----
+  var last = performance.now();
+  function frame(now){
+    var dt = Math.min(0.1, (now - last)/1000); last = now;
+    if (setWidth > 0) {
+      pos -= cfg.speed * dt;
+      if (pos <= -setWidth) pos += setWidth;
+      track.style.transform = "translate3d(" + pos.toFixed(2) + "px,0,0)";
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // ---- apply settings ----
+  function apply(){
+    root.style.setProperty("--h", cfg.size + "px");
+    root.style.setProperty("--bottom", cfg.bottom + "px");
+    root.style.setProperty("--accent", cfg.accent);
+    root.style.setProperty("--bg", cfg.bg);
+    root.style.setProperty("--fg", cfg.fg);
+    label.textContent = cfg.label;
+    label.classList.toggle("hidden", !cfg.label.trim());
+    rebuild();
+  }
+
+  // ---- editor wiring ----
+  var f = { lines:$("lines"), label:$("labelText"), size:$("size"), bottom:$("bottom"),
+            speed:$("speed"), accent:$("accent"), bg:$("bg"), fg:$("fg") };
+  function fillForm(){
+    f.lines.value = cfg.lines; f.label.value = cfg.label;
+    f.size.value = String(cfg.size); f.bottom.value = String(cfg.bottom);
+    f.speed.value = cfg.speed; f.accent.value = cfg.accent; f.bg.value = cfg.bg; f.fg.value = cfg.fg;
+    updateMeta();
+  }
+  function updateMeta(){
+    var n = sentences().length, c = $("count");
+    c.textContent = n + " / 25"; c.classList.toggle("over", n > 25);
+    $("speedVal").textContent = cfg.speed < 90 ? "(relaxed)" : cfg.speed > 170 ? "(fast)" : "(news pace)";
+  }
+  function readForm(){
+    cfg.lines = f.lines.value; cfg.label = f.label.value;
+    cfg.size = +f.size.value; cfg.bottom = +f.bottom.value; cfg.speed = +f.speed.value;
+    cfg.accent = f.accent.value; cfg.bg = f.bg.value; cfg.fg = f.fg.value;
+    updateMeta(); apply();
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(cfg)); } catch(e) {}
+    $("linkOut").style.display = "none"; $("msg").textContent = "";
+  }
+  Object.keys(f).forEach(function(k){ f[k].addEventListener("input", readForm); });
+
+  function setEditing(on){
+    panel.classList.toggle("hidden", !on);
+    document.body.classList.toggle("editing", on);
+  }
+  $("hideBtn").addEventListener("click", function(){ setEditing(false); });
+  addEventListener("keydown", function(e){
+    if (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT") return;
+    if (e.key === "e" || e.key === "E") setEditing(panel.classList.contains("hidden"));
+  });
+
+  $("copyBtn").addEventListener("click", function(){
+    var json = JSON.stringify(cfg).replace(/</g,"\\u003c");
+    var html = ORIGINAL.replace(/<script id="tickerConfig">[\s\S]*?<\/script>/,
+      function(){ return '<script id="tickerConfig">window.TICKER_CONFIG=' + json + ';<\/script>'; });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([html], {type:"text/html"}));
+    a.download = "podcast-ticker-obs.html";
+    document.body.appendChild(a); a.click(); a.remove();
+    $("msg").textContent = "Saved as podcast-ticker-obs.html in your Downloads folder.";
+  });
+
+  addEventListener("hashchange", function(){ location.reload(); });
+
+  // ---- start ----
+  fit(); fillForm(); setEditing(!fromLink && !window.obsstudio);
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function(){
+    apply(); requestAnimationFrame(frame);
+  });
+})();
+</script>
+</body>
+</html>

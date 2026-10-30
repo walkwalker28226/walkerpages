@@ -4,5 +4,6 @@
 
 User-agent: *
 Allow: /
+Disallow: /podcast-ticker/
 
 Sitemap: https://walkerops.com/sitemap.xml
