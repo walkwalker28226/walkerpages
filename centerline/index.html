@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EVF6DYLR8P"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-EVF6DYLR8P');
+</script>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="../walkerops-favicon.svg">
+<meta name="theme-color" content="#3F3D3A">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hydraulic Tank Sizer — WalkerOps prototype for Centerline Distribution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* WalkerOps brand: cream ground, charcoal ink, terracotta used only for answers and key numbers */
+  --cream: #FAF9F7;
+  --paper: #FFFFFF;
+  --ink: #3F3D3A;
+  --muted: #7A766F;
+  --line: #E4E0D9;
+  --accent: #D2703A;
+  --accent-tint: #F8E4D8;
+  --warn: #9A4A1E;
+  --display: Archivo, Helvetica, Arial, sans-serif;
+  --body: Arial, Helvetica, sans-serif;
+  /* Layout: inputs on the left, the answer on the right; one column on phones */
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body { background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand svg { width: 26px; height: 26px; display: block; }
+.brand span { font-family: var(--display); font-weight: 800; font-size: 13px; letter-spacing: 0.18em; }
+.label-right { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+
+.intro { padding: 28px 0 24px; max-width: 720px; }
+.eyebrow { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 5vw, 44px); letter-spacing: -0.035em; line-height: 1.05; margin: 0 0 14px; text-wrap: balance; }
+.intro p { margin: 0; color: var(--muted); max-width: 62ch; }
+
+.grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 20px; align-items: start; padding-bottom: 28px; }
+@media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 22px; }
+.card h2 { font-family: var(--display); font-weight: 800; font-size: 18px; letter-spacing: -0.01em; margin: 0 0 4px; }
+.card .sub { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+.step { display: grid; gap: 12px; padding: 18px 0; border-top: 1px solid var(--line); }
+.step:first-of-type { border-top: 0; padding-top: 4px; }
+.step-title { display: flex; align-items: baseline; gap: 10px; font-weight: 700; }
+.step-num { font-family: var(--display); font-weight: 800; color: var(--accent); font-size: 14px; }
+
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; padding: 3px; gap: 3px; background: var(--cream); flex-wrap: wrap; }
+.seg button { font: inherit; font-size: 14px; border: 0; background: transparent; color: var(--ink); padding: 7px 12px; border-radius: 6px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
+label.f { display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
+input[type="number"] { font: inherit; font-size: 17px; color: var(--ink); width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); font-variant-numeric: tabular-nums; }
+input[type="number"]:focus, .seg button:focus-visible, .choice:focus-within, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.hint { font-size: 13px; color: var(--muted); margin: 0; }
+.calc-line { font-size: 14px; background: var(--cream); border-radius: 7px; padding: 9px 12px; font-variant-numeric: tabular-nums; }
+.calc-line b { color: var(--ink); }
+
+.choices { display: grid; gap: 8px; }
+.choice { display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; cursor: pointer; }
+.choice input { margin-top: 4px; accent-color: var(--ink); }
+.choice strong { display: block; font-size: 15px; }
+.choice span { font-size: 13px; color: var(--muted); }
+.choice:has(input:checked) { border-color: var(--ink); background: var(--cream); }
+
+/* Answer column */
+.answer { display: grid; gap: 16px; }
+.system { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 4px 2px 0; }
+.system .k { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.system .v { font-family: var(--display); font-weight: 800; font-size: 22px; font-variant-numeric: tabular-nums; }
+.result { border-radius: 10px; padding: 22px; background: var(--paper); border: 1px solid var(--line); display: grid; gap: 12px; }
+.result.lead { background: var(--accent-tint); border-color: transparent; }
+.result .tag { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.big { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5vw, 46px); letter-spacing: -0.03em; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+.big small { font-size: 0.42em; letter-spacing: 0; color: var(--ink); font-weight: 700; margin-left: 6px; }
+.result p { margin: 0; }
+.lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.lines li { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid rgba(63,61,58,0.12); font-variant-numeric: tabular-nums; }
+.lines li:first-child { border-top: 0; }
+.lines .qty { font-weight: 700; }
+.lines .price { color: var(--muted); white-space: nowrap; }
+.total { display: flex; justify-content: space-between; font-weight: 700; padding-top: 4px; font-variant-numeric: tabular-nums; }
+.note { font-size: 13px; color: var(--muted); }
+.caution { font-size: 13px; color: var(--warn); }
+.pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); letter-spacing: 0.02em; }
+
+.btn { font: inherit; font-weight: 700; font-size: 15px; border: 0; border-radius: 8px; padding: 11px 16px; background: var(--ink); color: var(--cream); cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.mock-note { font-size: 12px; color: var(--muted); }
+
+/* Meeting talking points */
+.next { border-top: 1px solid var(--line); padding: 28px 0 8px; }
+.next h2 { font-family: var(--display); font-weight: 800; font-size: 22px; letter-spacing: -0.02em; margin: 0 0 14px; }
+.ideas { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.idea { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+.idea h3 { font-size: 15px; margin: 0 0 6px; }
+.idea p { margin: 0; font-size: 14px; color: var(--muted); }
+
+footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 24px 0 36px; font-size: 12px; color: var(--muted); }
+footer .tag { letter-spacing: 0.2em; text-transform: uppercase; }
+footer p { margin: 0; max-width: 70ch; }
+
+@media (prefers-reduced-motion: no-preference) { .big { transition: color .2s; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/" aria-label="WalkerOps home" style="color:inherit;text-decoration:none">
+      <svg viewBox="0 0 66 66" aria-hidden="true"><rect x="0" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="46" y="0" width="20" height="20" fill="#3F3D3A"/><rect x="0" y="23" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="23" width="20" height="20" fill="#D2703A"/><rect x="46" y="23" width="20" height="20" fill="#D2703A"/><rect x="0" y="46" width="20" height="20" fill="#3F3D3A"/><rect x="23" y="46" width="20" height="20" fill="#D2703A"/><rect x="46" y="46" width="20" height="20" fill="#D2703A"/></svg>
+      <span>WALKEROPS</span>
+    </a>
+    <div class="label-right">Prototype for Centerline Distribution</div>
+  </header>
+
+  <section class="intro">
+    <p class="eyebrow">Dry Hydraulics &middot; Hydraulic Oil Fix</p>
+    <h1>What size do I need for my tank?</h1>
+    <p>Tell us how much hydraulic oil your machine holds and how it looks today. We'll tell you how much Oil Fix to pour in and which water absorber fits, so you only buy what you need.</p>
+  </section>
+
+  <div class="grid">
+    <form class="card" id="form" novalidate>
+      <div class="step">
+        <div class="step-title"><span class="step-num">01</span>How much oil does your system hold?</div>
+        <div class="seg" role="group" aria-label="How to enter capacity">
+          <button type="button" id="m-gal" aria-pressed="true">I know the gallons</button>
+          <button type="button" id="m-rect" aria-pressed="false">Square tank</button>
+          <button type="button" id="m-round" aria-pressed="false">Round tank</button>
+        </div>
+
+        <div id="p-gal" class="fields">
+          <label class="f" for="gal">Tank (gallons)<input type="number" id="gal" min="0" step="0.5" value="20" inputmode="decimal"></label>
+        </div>
+        <div id="p-rect" class="fields" hidden>
+          <label class="f" for="rl">Length (in)<input type="number" id="rl" min="0" step="0.5" value="24" inputmode="decimal"></label>
+          <label class="f" for="rw">Width (in)<input type="number" id="rw" min="0" step="0.5" value="12" inputmode="decimal"></label>
+          <label class="f" for="rh">Height (in)<input type="number" id="rh" min="0" step="0.5" value="16" inputmode="decimal"></label>
+        </div>
+        <div id="p-round" class="fields" hidden>
+          <label class="f" for="cd">Diameter (in)<input type="number" id="cd" min="0" step="0.5" value="14" inputmode="decimal"></label>
+          <label class="f" for="cl">Length (in)<input type="number" id="cl" min="0" step="0.5" value="30" inputmode="decimal"></label>
+        </div>
+        <div class="calc-line" id="tank-line" hidden></div>
+
+        <div class="fields">
+          <label class="f" for="extra">Plus hoses, pumps &amp; cylinders (gallons)<input type="number" id="extra" min="0" step="0.5" value="0" inputmode="decimal"></label>
+        </div>
+        <p class="hint">The Oil Fix label doses on the whole system, not just the tank. Your owner's manual usually lists total hydraulic capacity. If it does, enter that number above and leave this at 0.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">02</span>How does the oil look?</div>
+        <div class="choices" role="radiogroup" aria-label="Oil condition">
+          <label class="choice" for="c-milky"><input type="radio" name="cond" id="c-milky" value="milky" checked><div><strong>Milky or cloudy</strong><span>Water has gotten in. Drain, refill with fresh oil, then treat.</span></div></label>
+          <label class="choice" for="c-clear"><input type="radio" name="cond" id="c-clear" value="clear"><div><strong>Clear, and I want to keep it that way</strong><span>Routine protection for clean oil.</span></div></label>
+        </div>
+      </div>
+    </form>
+
+    <div class="answer" aria-live="polite">
+      <div class="system">
+        <span class="k">Your system</span>
+        <span class="v" id="sys">20 gallons</span>
+      </div>
+
+      <section class="result lead">
+        <p class="tag">Hydraulic Oil Fix &amp; Stabilizer</p>
+        <div class="big" id="oz">76<small>oz to add</small></div>
+        <p id="oz-why">That's 3% of your system, the label's dose for milky oil after a drain and refill.</p>
+        <ul class="lines" id="oz-buy"></ul>
+        <p class="caution" id="oz-warn">Never let Oil Fix go over 3% of total system capacity.</p>
+      </section>
+
+      <section class="result">
+        <p class="tag">Dry Hydraulics Water Absorber</p>
+        <ul class="lines" id="abs-buy"></ul>
+        <div class="total"><span>Absorbers total</span><span id="abs-total">$33.95</span></div>
+        <p class="note">Drop it in the tank and tether it to the fill cap. Swap it about every 30 days in heavy use or high humidity, or about every 120 days with occasional use.</p>
+        <div class="row">
+          <button type="button" class="btn" id="cart">Add to cart</button>
+          <button type="button" class="btn ghost" id="remind">Remind me when to swap</button>
+        </div>
+        <p class="mock-note" id="mock-msg">Prototype: these buttons aren't connected to the store yet.</p>
+      </section>
+    </div>
+  </div>
+
+  <section class="next" aria-labelledby="next-h">
+    <h2 id="next-h">Where this could go next</h2>
+    <div class="ideas">
+      <div class="idea"><h3>Live on the product pages</h3><p>The same sizer sits next to every Oil Fix and absorber listing, so a buyer gets the answer without picking up the phone.</p></div>
+      <div class="idea"><h3>Swap reminders that sell</h3><p>Absorbers wear out on a schedule. A reminder email at the right time turns one order into a repeat customer.</p></div>
+      <div class="idea"><h3>Ask in plain English</h3><p>"I've got a 2015 backhoe with milky fluid." An AI helper reads the question and fills in the sizer for them.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="tag">Operations, made visible</span>
+    <p>Demo by WalkerOps. Oil Fix dosing follows the Mechanic In A Bottle label (1% for routine care, 3% for milky oil, 3% maximum). Absorber sizing follows Dry Hydraulics ratings (7" Micro Dry about 5 gal, 12" up to 20 gal, 36" up to 60 gal). Prices are from centerlinedistribution.com, October 2026. Always follow the product label.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var CU_IN_PER_GAL = 231;
+  var OZ_PER_GAL = 128;
+  // Absorbers Centerline lists today: rated gallons and price
+  var ABSORBERS = [
+    { name: '36" Water Absorber', gal: 60, price: 85.00 },
+    { name: '12" Water Absorber', gal: 20, price: 33.95 },
+    { name: '7" Micro Dry', gal: 5, price: 10.95 }
+  ];
+  var BOTTLES = [ { name: 'Gallon jug (128 oz)', oz: 128 }, { name: '24 oz bottle', oz: 24 } ];
+
+  var mode = 'gal';
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat($(id).value); return isFinite(v) && v > 0 ? v : 0; };
+  var fmtGal = function (g) { return (Math.round(g * 10) / 10).toLocaleString('en-US') + (g === 1 ? ' gallon' : ' gallons'); };
+  var money = function (n) { return '$' + n.toFixed(2); };
+
+  function tankGallons() {
+    if (mode === 'gal') return num('gal');
+    if (mode === 'rect') return num('rl') * num('rw') * num('rh') / CU_IN_PER_GAL;
+    var r = num('cd') / 2;
+    return Math.PI * r * r * num('cl') / CU_IN_PER_GAL;
+  }
+
+  // Cheapest mix of absorbers whose ratings cover the system (ties: fewer pieces)
+  function pickAbsorbers(gal) {
+    if (gal <= 0) return [];
+    var units = Math.ceil(gal / 5);
+    var best = [{ cost: 0, pieces: 0, from: -1, item: -1 }];
+    for (var u = 1; u <= units; u++) {
+      best[u] = null;
+      for (var i = 0; i < ABSORBERS.length; i++) {
+        var a = ABSORBERS[i], prev = Math.max(0, u - a.gal / 5), p = best[prev];
+        if (!p) continue;
+        var c = p.cost + a.price, n = p.pieces + 1;
+        if (!best[u] || c < best[u].cost - 1e-9 || (Math.abs(c - best[u].cost) < 1e-9 && n < best[u].pieces)) {
+          best[u] = { cost: c, pieces: n, from: prev, item: i };
+        }
+      }
+    }
+    var counts = ABSORBERS.map(function () { return 0; });
+    for (var k = units; k > 0; k = best[k].from) counts[best[k].item]++;
+    return ABSORBERS.map(function (a, i) { return { a: a, n: counts[i] }; }).filter(function (x) { return x.n > 0; });
+  }
+
+  // Fewest ounces bought that still cover the dose (ties: fewer containers)
+  function pickBottles(oz) {
+    if (oz <= 0) return [];
+    var best = null, maxJugs = Math.ceil(oz / 128);
+    for (var j = 0; j <= maxJugs; j++) {
+      var rest = Math.max(0, oz - j * 128), b = Math.ceil(rest / 24), total = j * 128 + b * 24, n = j + b;
+      if (!best || total < best.total || (total === best.total && n < best.n)) best = { j: j, b: b, total: total, n: n };
+    }
+    var out = [];
+    if (best.j) out.push({ name: BOTTLES[0].name, n: best.j });
+    if (best.b) out.push({ name: BOTTLES[1].name, n: best.b });
+    out.total = best.total;
+    return out;
+  }
+
+  function li(qty, name, right) {
+    return '<li><span><span class="qty">' + qty + ' &times;</span> ' + name + '</span><span class="price">' + right + '</span></li>';
+  }
+
+  function render() {
+    var tank = tankGallons();
+    var line = $('tank-line');
+    if (mode === 'gal') { line.hidden = true; }
+    else {
+      line.hidden = false;
+      line.innerHTML = 'Your tank holds about <b>' + fmtGal(tank) + '</b> when full (cubic inches &divide; 231).';
+    }
+    var sys = tank + num('extra');
+    $('sys').textContent = fmtGal(sys);
+
+    var milky = $('c-milky').checked;
+    var pct = milky ? 0.03 : 0.01;
+    var oz = Math.floor(sys * OZ_PER_GAL * pct);
+    if (sys > 0 && oz < 1) oz = 1;
+    $('oz').innerHTML = oz.toLocaleString('en-US') + '<small>oz to add</small>';
+    $('oz-why').textContent = milky
+      ? "That's 3% of your system, the label's dose for milky oil after a drain and refill."
+      : "That's 1% of your system, the label's dose for keeping clean oil clean.";
+    var bottles = pickBottles(oz);
+    $('oz-buy').innerHTML = bottles.map(function (b) { return li(b.n, b.name, ''); }).join('') +
+      (bottles.length ? '<li><span class="note">Leftover for next time</span><span class="price">' + (bottles.total - oz) + ' oz</span></li>' : '');
+
+    var abs = pickAbsorbers(sys), total = 0;
+    $('abs-buy').innerHTML = abs.length ? abs.map(function (x) {
+      total += x.n * x.a.price;
+      return li(x.n, x.a.name + ' <span class="note">(up to ' + x.a.gal + ' gal each)</span>', money(x.n * x.a.price));
+    }).join('') : '<li><span class="note">Enter your capacity to see a recommendation.</span></li>';
+    $('abs-total').textContent = money(total);
+  }
+
+  function setMode(m) {
+    mode = m;
+    ['gal', 'rect', 'round'].forEach(function (k) {
+      $('m-' + k).setAttribute('aria-pressed', String(k === m));
+      $('p-' + k).hidden = k !== m;
+    });
+    render();
+  }
+  $('m-gal').addEventListener('click', function () { setMode('gal'); });
+  $('m-rect').addEventListener('click', function () { setMode('rect'); });
+  $('m-round').addEventListener('click', function () { setMode('round'); });
+  $('form').addEventListener('input', render);
+  $('form').addEventListener('change', render);
+  $('form').addEventListener('submit', function (e) { e.preventDefault(); });
+  $('cart').addEventListener('click', function () { $('mock-msg').textContent = 'Prototype: in the live version this adds the items above to the Centerline cart.'; });
+  $('remind').addEventListener('click', function () { $('mock-msg').textContent = 'Prototype: in the live version the buyer leaves an email and gets a swap reminder on schedule.'; });
+
+  window.__sizer = { pickAbsorbers: pickAbsorbers, pickBottles: pickBottles };
+  render();
+})();
+</script>
+</body>
+</html>
