@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VCL Podcast – On-Air Board</title>
+<style>
+  @font-face { font-family: Newsreader; font-weight: 500; font-style: normal; src: url(fonts/newsreader-latin-500-normal.woff2) format('woff2'); }
+  @font-face { font-family: Newsreader; font-weight: 500; font-style: italic; src: url(fonts/newsreader-latin-500-italic.woff2) format('woff2'); }
+  @font-face { font-family: "Instrument Sans"; font-weight: 400; src: url(fonts/instrument-sans-latin-400-normal.woff2) format('woff2'); }
+  @font-face { font-family: "Instrument Sans"; font-weight: 600; src: url(fonts/instrument-sans-latin-600-normal.woff2) format('woff2'); }
+  @font-face { font-family: "Instrument Sans"; font-weight: 700; src: url(fonts/instrument-sans-latin-700-normal.woff2) format('woff2'); }
+
+  :root {
+    --evergreen:#173B2F; --ink:#16201B; --brass:#C8963E; --sage:#DCE5DC; --limestone:#F2EFE6;
+    --gold-light:#DDBF86; --gold-dark:#8A6424; --footer:#0F2A21; --soft-on-green:#D5DDD7;
+    --muted:#55605A; --body:#2E3833; --hair:#DDD8CA; --card:#FBFAF6;
+    --serif: Newsreader, Georgia, serif;
+    --sans: "Instrument Sans", Arial, sans-serif;
+  }
+  /* Light theme (default) */
+  body { --bg:var(--limestone); --head-eyebrow:var(--evergreen); --head-name:var(--ink);
+         --seg:var(--muted); --rule:var(--hair); --card-bg:var(--card); --card-line:var(--hair);
+         --title:var(--evergreen); --text:var(--body); --marker:var(--evergreen); --strong:var(--ink);
+         --foot-bg:var(--evergreen); --foot-text:var(--soft-on-green); --foot-accent:var(--gold-light);
+         --frame:var(--brass); --caption:var(--muted); }
+  body.dark { --bg:var(--evergreen); --head-eyebrow:var(--gold-light); --head-name:var(--limestone);
+         --seg:var(--soft-on-green); --rule:rgba(242,239,230,.18); --card-bg:rgba(15,42,33,.55); --card-line:rgba(242,239,230,.14);
+         --title:var(--limestone); --text:var(--soft-on-green); --marker:var(--brass); --strong:var(--limestone);
+         --foot-bg:var(--footer); --foot-text:var(--soft-on-green); --foot-accent:var(--gold-light);
+         --frame:var(--brass); --caption:var(--soft-on-green); }
+
+  html, body { margin:0; padding:0; }
+  body { width:1920px; height:1080px; overflow:hidden; background:transparent; color:var(--text);
+         font-family:var(--sans); position:relative; -webkit-font-smoothing:antialiased; }
+  /* Background lives on its own layer: OBS's default browser-source CSS forces <body> transparent. */
+  #canvas { position:absolute; inset:0; background:var(--bg); }
+  body.transparent-bg #canvas { display:none; }
+
+  header { position:absolute; left:80px; right:80px; top:44px; height:96px;
+           display:flex; align-items:center; justify-content:space-between;
+           border-bottom:1px solid var(--rule); padding-bottom:20px; }
+  .brand { display:flex; align-items:center; gap:22px; }
+  .brand img { height:84px; width:auto; display:none; }
+  .brand img.on { display:block; }
+  .eyebrow { font:600 19px/1 var(--sans); letter-spacing:.34em; text-transform:uppercase; color:var(--head-eyebrow); margin-bottom:10px; }
+  .name { font:500 50px/1 var(--serif); letter-spacing:-.01em; color:var(--head-name); }
+  .segment { font:600 20px/1 var(--sans); letter-spacing:.22em; text-transform:uppercase; color:var(--seg);
+             text-align:right; max-width:760px; }
+
+  main { position:absolute; left:80px; right:80px; top:184px; bottom:104px; }
+  body.layout-left main { right:calc(1920px * .42); }
+
+  .board { position:absolute; inset:0; display:flex; gap:56px; align-items:stretch;
+           opacity:0; transform:translateY(14px); transition:opacity .45s ease, transform .45s ease; }
+  .board.show { opacity:1; transform:none; }
+
+  .card { flex:1 1 0; min-width:0; background:var(--card-bg); border:1px solid var(--card-line); border-radius:10px;
+          padding:56px 64px; box-sizing:border-box; display:flex; flex-direction:column; overflow:hidden; }
+  .card.empty { display:none; }
+  .title { font:500 64px/1.08 var(--serif); letter-spacing:-.015em; color:var(--title); margin:0 0 30px; }
+  .title:empty { display:none; }
+  .title::after { content:""; display:block; width:72px; height:3px; background:var(--brass); margin-top:26px; }
+  .body { flex:1; min-height:0; overflow:hidden; font-size:44px; line-height:1.3; }
+  .body p { margin:0 0 .55em; }
+  .body ul, .body ol { margin:0 0 .55em; padding:0; list-style:none; }
+  .body li { position:relative; padding-left:1.15em; margin:0 0 .5em; }
+  .body ul > li::before { content:""; position:absolute; left:.1em; top:.52em; width:.32em; height:.32em;
+                          background:var(--marker); transform:rotate(45deg); }
+  .body ol { counter-reset:n; }
+  .body ol > li { counter-increment:n; padding-left:1.6em; }
+  .body ol > li::before { content:counter(n, decimal-leading-zero); position:absolute; left:0; top:.08em;
+                          font:500 .82em/1.3 var(--serif); color:var(--marker); }
+  .body li.sub { margin-left:1.2em; font-size:.84em; }
+  .body strong { color:var(--strong); font-weight:700; }
+  .body em { font-family:var(--serif); font-style:italic; }
+
+  .media { flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .media.empty { display:none; }
+  .frame { flex:1; min-height:0; width:100%; display:flex; align-items:center; justify-content:center; }
+  .frame img { max-width:100%; max-height:100%; display:block; box-sizing:border-box;
+               border:2px solid var(--frame); border-radius:10px; background:var(--card); }
+  /* Arched frame: crops to a portrait shape so the top is a true semicircle (best for headshots). */
+  .frame.arch img { height:100%; width:auto; aspect-ratio:4/5; object-fit:cover; border-radius:9999px 9999px 10px 10px; }
+  .caption { font:400 26px/1.3 var(--sans); color:var(--caption); margin-top:18px; text-align:center; max-width:90%; }
+  .caption:empty { display:none; }
+  .board.image-only .media { flex:1 1 auto; }
+
+  /* Firm phone number, top left above the show name. Gold: darker on the light theme so it stays readable. */
+  .phone { position:absolute; left:80px; top:14px; font:600 22px/1 var(--sans); letter-spacing:.12em;
+           color:var(--gold-dark); white-space:nowrap; }
+  body.dark .phone { color:var(--gold-light); }
+
+  footer { position:absolute; left:0; right:0; bottom:0; height:64px; background:var(--foot-bg);
+           display:flex; align-items:center; justify-content:space-between; padding:0 80px; box-sizing:border-box;
+           font:400 19px/1 var(--sans); color:var(--foot-text); }
+  footer .firm b { font-weight:600; color:var(--limestone); }
+  footer .disc { font-style:normal; opacity:.85; }
+  footer .disc.off { display:none; }
+  footer .dot { color:var(--foot-accent); padding:0 .5em; }
+
+</style>
+</head>
+<body>
+  <div id="canvas"></div>
+  <div class="phone" id="phone">(540) 920-1700</div>
+  <header>
+    <div class="brand">
+      <img id="logo" alt="">
+      <div>
+        <div class="eyebrow">Virginia</div>
+        <div class="name">Cannabis Lawyers Podcast</div>
+      </div>
+    </div>
+    <div class="segment" id="segment"></div>
+  </header>
+
+  <main>
+    <div class="board" id="board">
+      <section class="card" id="card">
+        <h1 class="title" id="title"></h1>
+        <div class="body" id="body"></div>
+      </section>
+      <section class="media empty" id="media">
+        <div class="frame" id="frame"><img id="photo" alt=""></div>
+        <div class="caption" id="caption"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="firm"><b>Virginia Cannabis Lawyers, PLLC</b><span class="dot">·</span>Roanoke, VA</div>
+    <div class="disc" id="disc">General information only, not legal advice. Watching does not create an attorney-client relationship.</div>
+  </footer>
+
+<script src="config.js" onerror="window.VCL_CONFIG={}"></script>
+<script src="obsws.js"></script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const params = new URLSearchParams(location.search);
+  const isPreview = params.has('preview');
+  if (isPreview) document.body.classList.add('preview');
+
+  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*(?!\s)(.+?)\*/g,'$1<em>$2</em>');
+
+  // Turn pasted text into bullets/paragraphs.
+  //  "- ", "* ", "• ", "– " => bullet     "1. " or "1) " => numbered     indented bullet => sub-bullet
+  function render(text) {
+    const out = []; let list = null;
+    const close = () => { if (list) { out.push(`</${list}>`); list = null; } };
+    (text || '').replace(/\r/g,'').split('\n').forEach(raw => {
+      const line = raw.replace(/\s+$/,'');
+      if (!line.trim()) { close(); return; }
+      let m;
+      if ((m = line.match(/^(\s*)[-*•–·▪◦]\s+(.*)$/))) {
+        if (list !== 'ul') { close(); out.push('<ul>'); list = 'ul'; }
+        out.push(`<li${m[1].length >= 2 ? ' class="sub"' : ''}>${inline(m[2])}</li>`);
+      } else if ((m = line.match(/^(\s*)\d+[.)]\s+(.*)$/))) {
+        if (list !== 'ol') { close(); out.push('<ol>'); list = 'ol'; }
+        out.push(`<li${m[1].length >= 2 ? ' class="sub"' : ''}>${inline(m[2])}</li>`);
+      } else {
+        close(); out.push(`<p>${inline(line.trim())}</p>`);
+      }
+    });
+    close();
+    return out.join('');
+  }
+
+  // Shrink text until it fits the card.
+  function fit() {
+    const b = $('body');
+    let size = 46;
+    b.style.fontSize = size + 'px';
+    while (size > 18 && b.scrollHeight > b.clientHeight + 1) { size -= 2; b.style.fontSize = size + 'px'; }
+    const t = $('title');
+    let ts = 64; t.style.fontSize = ts + 'px';
+    while (ts > 40 && t.scrollHeight > 230) { ts -= 4; t.style.fontSize = ts + 'px'; }
+  }
+
+  let current = {};
+  let swapTimer = null;
+  function apply(s, instant) {
+    current = s;
+    const cls = document.body.classList;
+    cls.toggle('dark', s.theme === 'dark');
+    cls.toggle('layout-left', s.layout === 'left');
+    // The shared background (Backgrounds blade) shows through when it's switched on for the Board scene.
+    cls.toggle('transparent-bg', !!s.sharedBg || params.has('transparent'));
+    $('segment').textContent = s.segment || '';
+    $('disc').classList.toggle('off', s.disclaimer === false);
+    const logo = $('logo');
+    if (s.logo) { logo.src = s.logo; logo.classList.add('on'); } else { logo.removeAttribute('src'); logo.classList.remove('on'); }
+
+    const board = $('board');
+    const fill = () => {
+      const hasText = !!((s.title || '').trim() || (s.body || '').trim());
+      const hasImg = !!s.image;
+      $('title').textContent = s.title || '';
+      $('body').innerHTML = render(s.body);
+      $('card').classList.toggle('empty', !hasText);
+      $('media').classList.toggle('empty', !hasImg);
+      board.classList.toggle('image-only', hasImg && !hasText);
+      $('frame').classList.toggle('arch', s.frame === 'arch');
+      if (hasImg) $('photo').src = s.image; else $('photo').removeAttribute('src');
+      $('caption').textContent = s.caption || '';
+      fit();
+      board.classList.toggle('show', s.visible !== false && (hasText || hasImg));
+    };
+    clearTimeout(swapTimer);
+    if (instant || !board.classList.contains('show')) fill();
+    else { board.classList.remove('show'); swapTimer = setTimeout(fill, 380); }
+  }
+  window.vclApply = apply;
+
+  // Preview mode: the control panel drives this page directly.
+  if (isPreview) {
+    window.addEventListener('message', e => { if (e.data && e.data.vclPreview) apply(e.data.state, true); });
+    window.parent && window.parent.postMessage({ vclPreviewReady: 'board' }, '*');
+    return;
+  }
+
+  if (params.has('demo')) {
+    apply({ segment: 'Episode 12 · Licensing', title: 'Before you sign a lease',
+      body: '- Confirm local **zoning** allows your use\n- Check setback distances from schools\n  - Measure property line to property line\n- Ask about the permitting timeline\n\nPlan for review time before opening day.',
+      theme: params.get('demo') === 'dark' ? 'dark' : 'light', layout: params.get('layout') || 'full', visible: true }, true);
+    return;
+  }
+
+
+  const remembered = vclMemory.get('board');
+  if (remembered) apply(remembered, true);
+
+  const cfg = window.VCL_CONFIG || {};
+  const link = new ObsLink({
+    port: +(params.get('port') || cfg.port || 4455),
+    password: params.get('password') ?? cfg.password ?? '',
+    onMessage: msg => {
+      if (msg.type === 'state' && msg.target === 'board') { apply(msg.state); vclMemory.set('board', msg.state); }
+    },
+    // Connection problems are shown in the console, never on air.
+    onStatus: s => { if (s === 'connected') link.send({ type: 'hello', target: 'board' }); }
+  });
+  link.connect();
+})();
+</script>
+</body>
+</html>
