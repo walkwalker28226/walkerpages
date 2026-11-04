@@ -22,6 +22,7 @@
   body.dragging, body.dragging * { user-select:none; }
   body.dragging iframe { pointer-events:none; }
   button { font-family:inherit; }
+  [hidden] { display:none !important; }
 
   /* top bar */
   .top { flex:none; display:flex; align-items:center; gap:16px; padding:10px 20px; background:var(--evergreen); color:var(--limestone); }
@@ -36,7 +37,7 @@
   .status.bad i { background:#E58A73; animation:none; }
   @keyframes blink { 50% { opacity:.3; } }
 
-  /* main split: camera (optional) | board */
+  /* main split: camera (optional) | sections */
   .wrap { flex:1; min-height:0; display:grid; grid-template-columns:1fr; }
   .wrap.has-cam { grid-template-columns: var(--camW, 36%) 10px 1fr; }
   #cam { display:none; min-height:0; background:#111; }
@@ -47,42 +48,58 @@
   #split::after { content:""; position:absolute; left:4px; top:50%; width:2px; height:48px; margin-top:-24px; background:var(--hair); border-radius:2px; }
   #split:hover::after { background:var(--brass); }
 
-  /* board pane */
-  #pane { min-height:0; min-width:0; container-type:inline-size; overflow:hidden; }
-  .board { height:100%; display:grid; grid-template-columns:1fr; grid-template-rows:auto auto 1fr; gap:12px; padding:16px 18px 16px; }
-  @container (min-width: 640px) {
-    .board { grid-template-columns:minmax(0, 1fr) 240px; grid-template-rows:auto 1fr; column-gap:14px; }
-    .stagewrap { grid-column:1; grid-row:1; }
-    .nav { grid-column:1; grid-row:2; align-self:start; }
-    .list { grid-column:2; grid-row:1 / span 2; }
-    .row { padding:7px 12px; font-size:13px; } .seg, .list h3 { padding-left:12px; padding-right:12px; }
-  }
-  @container (min-width: 980px) {
-    .board { grid-template-columns:minmax(0, 1fr) 340px; grid-template-rows:auto 1fr; column-gap:18px; }
-    .row { padding:8px 16px; font-size:14px; } .seg, .list h3 { padding-left:16px; padding-right:16px; }
-    .stagewrap { grid-column:1; grid-row:1; }
-    .nav { grid-column:1; grid-row:2; align-self:start; }
-    .list { grid-column:2; grid-row:1 / span 2; }
-  }
+  /* collapsible sections ("blades") */
+  #pane { min-height:0; min-width:0; display:flex; flex-direction:column; gap:10px; padding:12px 14px; overflow:hidden; }
+  .sec { flex:none; display:flex; flex-direction:column; min-height:0; background:#fff; border:1px solid var(--hair); border-radius:10px; overflow:hidden; }
+  .sec.open { flex:1 1 0; }
+  #sec-board.open { flex-grow:1.35; }
+  .shead { flex:none; display:flex; align-items:center; gap:10px; width:100%; padding:10px 14px; border:0; background:#fff; cursor:pointer;
+           text-align:left; color:var(--ink); }
+  .sec.open .shead { border-bottom:1px solid var(--hair); }
+  .shead:hover { background:#F8F6F0; }
+  .chev { font-size:11px; color:var(--muted); width:12px; transition:transform .15s; }
+  .sec.open .chev { transform:rotate(90deg); }
+  .shead b { font:700 12px/1 var(--sans); letter-spacing:.2em; text-transform:uppercase; color:var(--evergreen); }
+  .ssum { flex:1; min-width:0; font-size:13px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .sbody { flex:1; min-height:0; container-type:inline-size; background:var(--limestone); }
+  .sec:not(.open) .sbody { display:none; }
+  .hlink { font:600 12.5px/1 var(--sans); color:var(--evergreen); text-decoration:none; border:1px solid var(--hair); border-radius:6px;
+           padding:6px 9px; background:#fff; white-space:nowrap; }
+  .hlink:hover { border-color:var(--evergreen); }
 
-  .stagewrap { position:relative; }
-  .stage { position:relative; width:100%; aspect-ratio:16/9; background:var(--card); border:1px solid var(--hair); border-radius:10px;
-           overflow:hidden; box-shadow:0 1px 2px rgba(22,32,27,.06), 0 8px 24px rgba(22,32,27,.07); }
-  .stage iframe { position:absolute; left:0; top:0; width:1920px; height:1080px; border:0; transform-origin:0 0; pointer-events:none; }
-  .stage.live { border-color:var(--live); box-shadow:0 0 0 2px var(--live), 0 8px 24px rgba(22,32,27,.08); }
-  .badge { display:flex; align-items:center; gap:8px; min-height:26px; margin-bottom:8px; font:600 13px/1.2 var(--sans); color:var(--muted); }
-  .badge .what { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .tag { font:700 11px/1 var(--sans); letter-spacing:.14em; text-transform:uppercase; padding:6px 9px; border-radius:4px;
-         background:var(--evergreen); color:var(--limestone); }
+         background:var(--evergreen); color:var(--limestone); white-space:nowrap; }
   .tag.live { background:var(--live); color:#fff; }
   .tag.live::before { content:""; display:inline-block; width:7px; height:7px; border-radius:50%; background:#fff; margin-right:6px;
                       vertical-align:1px; animation:blink 1.2s infinite; }
   .tag.next { background:var(--brass); color:var(--ink); }
   .tag.dim { background:#8C928E; }
+  .shead .tag { font-size:10px; padding:5px 7px; }
+
+  /* board section */
+  .board { height:100%; display:grid; grid-template-columns:1fr; grid-template-rows:minmax(150px, 1fr) auto minmax(120px, 34%); gap:10px; padding:12px 14px; }
+  @container (min-width: 640px) {
+    .board { grid-template-columns:minmax(0, 1fr) 240px; grid-template-rows:minmax(0, 1fr) auto; column-gap:14px; }
+    .stagewrap { grid-column:1; grid-row:1; }
+    .nav { grid-column:1; grid-row:2; }
+    .list { grid-column:2; grid-row:1 / span 2; }
+    .row { padding:7px 12px; font-size:13px; } .seg, .list h3 { padding-left:12px; padding-right:12px; }
+  }
+  @container (min-width: 980px) {
+    .board { grid-template-columns:minmax(0, 1fr) 320px; column-gap:18px; }
+    .row { padding:8px 16px; font-size:14px; } .seg, .list h3 { padding-left:16px; padding-right:16px; }
+  }
+  .stagewrap { min-height:0; display:flex; flex-direction:column; }
+  .badge { flex:none; display:flex; align-items:center; gap:8px; min-height:26px; margin-bottom:8px; font:600 13px/1.2 var(--sans); color:var(--muted); }
+  .badge .what { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .stagebox { flex:1; min-height:0; position:relative; }
+  .stage { position:relative; background:var(--card); border:1px solid var(--hair); border-radius:10px; overflow:hidden;
+           box-shadow:0 1px 2px rgba(22,32,27,.06), 0 8px 24px rgba(22,32,27,.07); }
+  .stage iframe { position:absolute; left:0; top:0; width:1920px; height:1080px; border:0; transform-origin:0 0; pointer-events:none; }
+  .stage.live { border-color:var(--live); box-shadow:0 0 0 2px var(--live), 0 8px 24px rgba(22,32,27,.08); }
   .empty { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
            text-align:center; padding:24px; color:var(--muted); background:var(--card); z-index:3; }
-  .empty b { font:500 26px/1.2 var(--serif); color:var(--evergreen); }
-  .empty[hidden] { display:none; }
+  .empty b { font:500 24px/1.2 var(--serif); color:var(--evergreen); }
 
   .nav { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
   .btn { border:1px solid var(--hair); background:#fff; color:var(--ink); border-radius:6px; padding:8px 12px; font:600 13px/1 var(--sans);
@@ -93,9 +110,7 @@
   .pos { font:600 13px/1 var(--sans); color:var(--muted); min-width:90px; text-align:center; }
   .follow { margin-left:auto; display:flex; align-items:center; gap:7px; font-size:13px; color:var(--muted); cursor:pointer; user-select:none; }
   .follow input { accent-color:var(--evergreen); width:16px; height:16px; }
-  .hint { font-size:12.5px; color:var(--muted); width:100%; }
 
-  /* rundown list */
   .list { min-height:0; overflow-y:auto; background:#fff; border:1px solid var(--hair); border-radius:10px; padding:6px 0 10px; }
   .list h3 { margin:0; padding:12px 16px 8px; font:700 11px/1 var(--sans); letter-spacing:.2em; text-transform:uppercase; color:var(--evergreen);
              position:sticky; top:-6px; background:#fff; z-index:1; }
@@ -111,6 +126,22 @@
   .row .tag { font-size:9.5px; padding:4px 6px; }
   .list .none { padding:10px 16px; color:var(--muted); font-size:13px; }
 
+  /* web section */
+  .web { height:100%; display:grid; grid-template-columns:1fr; grid-template-rows:minmax(150px, 1fr) minmax(110px, 34%); gap:10px; padding:12px 14px; }
+  @container (min-width: 640px) { .web { grid-template-columns:minmax(0, 1fr) 240px; grid-template-rows:1fr; column-gap:14px; } }
+  @container (min-width: 980px) { .web { grid-template-columns:minmax(0, 1fr) 320px; column-gap:18px; } }
+  .webstage { position:relative; min-height:0; background:#fff; border:1px solid var(--hair); border-radius:10px; overflow:hidden; }
+  .webstage img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:top center; background:#fff; }
+  .webstage .note { position:absolute; left:10px; bottom:10px; font:600 11px/1 var(--sans); padding:6px 8px; border-radius:4px;
+                    background:rgba(22,32,27,.72); color:#fff; z-index:2; }
+  .webside { min-height:0; overflow-y:auto; background:#fff; border:1px solid var(--hair); border-radius:10px; padding:6px 0 10px; }
+  .webside h3 { margin:0; padding:12px 16px 8px; font:700 11px/1 var(--sans); letter-spacing:.2em; text-transform:uppercase; color:var(--evergreen); }
+  .wrow { display:block; padding:8px 16px; text-decoration:none; color:var(--ink); border-left:3px solid transparent; }
+  .wrow:hover { background:#F6F4EE; }
+  .wrow b { display:block; font:600 13.5px/1.3 var(--sans); }
+  .wrow small { display:block; font-size:12px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .wrow.cur { background:#EEF2EC; border-left-color:var(--evergreen); }
+
   .foot { flex:none; display:flex; justify-content:space-between; gap:12px; padding:7px 20px; background:var(--footer); color:#C9D3CC;
           font:400 12px/1.2 var(--sans); }
   .foot b { color:var(--gold-light); font-weight:600; }
@@ -119,6 +150,7 @@
     .wrap.has-cam { grid-template-columns:1fr; grid-template-rows:45vh 1fr; }
     .wrap.has-cam #split { display:none; }
     .top .what { display:none; }
+    #pane { overflow-y:auto; } .sec.open { flex:none; height:70vh; }
   }
 </style>
 </head>
@@ -135,25 +167,56 @@
   <div class="wrap" id="wrap">
     <section id="cam"></section>
     <div id="split" title="Drag to resize"></div>
-    <section id="pane">
-      <div class="board">
-        <div class="stagewrap">
-          <div class="badge" id="badge"></div>
-          <div class="stage" id="stage">
-            <iframe id="screen" src="display.html?preview=1" title="Board preview" tabindex="-1"></iframe>
-            <div class="empty" id="empty"><b>Waiting for the studio</b><span id="emptyText">The board shows up here as soon as the studio console is open.</span></div>
+    <div id="pane">
+
+      <section class="sec open" id="sec-board" data-sec="board">
+        <div class="shead" role="button" tabindex="0" title="Show or hide the board">
+          <span class="chev">▶</span><b>Board</b><span class="ssum" id="sum-board"></span><span class="tag live" id="air-board" hidden>On screen</span>
+        </div>
+        <div class="sbody">
+          <div class="board">
+            <div class="stagewrap">
+              <div class="badge" id="badge"></div>
+              <div class="stagebox" id="stagebox">
+                <div class="stage" id="stage">
+                  <iframe id="screen" src="display.html?preview=1" title="Board preview" tabindex="-1"></iframe>
+                  <div class="empty" id="empty"><b>Waiting for the studio</b><span id="emptyText">The board shows up here as soon as the studio console is open.</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="nav">
+              <button class="btn" id="prev" title="Previous slide (↑ or ←)">◀ Previous</button>
+              <span class="pos" id="pos">–</span>
+              <button class="btn" id="next" title="Next slide (↓ or →)">Next ▶</button>
+              <button class="btn primary" id="toLive" hidden>Back to what's on air</button>
+              <label class="follow"><input type="checkbox" id="follow" checked> Follow what's on air</label>
+            </div>
+            <div class="list" id="list"><h3>Rundown</h3><div class="none">No slides yet.</div></div>
           </div>
         </div>
-        <div class="nav">
-          <button class="btn" id="prev" title="Previous slide (↑ or ←)">◀ Previous</button>
-          <span class="pos" id="pos">–</span>
-          <button class="btn" id="next" title="Next slide (↓ or →)">Next ▶</button>
-          <button class="btn primary" id="toLive" hidden>Back to what's on air</button>
-          <label class="follow"><input type="checkbox" id="follow" checked> Follow what's on air</label>
+      </section>
+
+      <section class="sec open" id="sec-web" data-sec="web">
+        <div class="shead" role="button" tabindex="0" title="Show or hide the web page">
+          <span class="chev">▶</span><b>Web page</b><span class="ssum" id="sum-web"></span><span class="tag live" id="air-web" hidden>On screen</span>
+          <a class="hlink" id="webOpen" target="_blank" rel="noopener noreferrer" hidden title="Open the page in a new tab so you can read it yourself">Open page ↗</a>
         </div>
-        <div class="list" id="list"><h3>Rundown</h3><div class="none">No slides yet.</div></div>
-      </div>
-    </section>
+        <div class="sbody">
+          <div class="web">
+            <div class="webstage">
+              <img id="webShot" alt="The web page the studio is showing" hidden>
+              <span class="note" id="webNote" hidden>Live view from the studio</span>
+              <div class="empty" id="webEmpty"><b>No web page yet</b><span id="webEmptyText">When the studio puts a news story or document up, you'll see it here.</span></div>
+            </div>
+            <div class="webside">
+              <h3>Pages from this show</h3>
+              <div id="webRecent"><div class="list none" style="border:0">None yet.</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </div>
 
   <div class="foot"><span><b>Look only.</b> Nothing you click here changes the show.</span><span>Studio by WalkerOps</span></div>
@@ -164,6 +227,8 @@
   const $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search);
   const KEY = (params.get('k') || '').replace(/[^A-Za-z0-9]/g, '');
+  const mem = { get(k, d) { try { const v = localStorage.getItem('vclGuest.' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+                set(k, v) { try { localStorage.setItem('vclGuest.' + k, JSON.stringify(v)); } catch {} } };
 
   // ---------- camera: the guest's own VDO Ninja link, embedded on the left ----------
   (function camera() {
@@ -175,31 +240,52 @@
     f.src = u.toString(); f.title = 'Your camera';
     f.allow = 'camera; microphone; autoplay; fullscreen; display-capture; speaker-selection; clipboard-write; picture-in-picture';
     $('cam').appendChild(f); $('wrap').classList.add('has-cam');
-    let camW = 36; try { camW = +localStorage.getItem('vclGuest.camW') || 36; } catch {}
-    const setW = w => { camW = Math.max(25, Math.min(70, w)); $('wrap').style.setProperty('--camW', camW + '%'); fitScreen(); };
+    let camW = +mem.get('camW', 36) || 36;
+    const setW = w => { camW = Math.max(25, Math.min(70, w)); $('wrap').style.setProperty('--camW', camW + '%'); };
     setW(camW);
     $('split').addEventListener('pointerdown', e => {
       e.preventDefault(); $('split').setPointerCapture(e.pointerId); document.body.classList.add('dragging');
       const r = $('wrap').getBoundingClientRect();
       const move = ev => setW((ev.clientX - r.left) / r.width * 100);
       const up = () => { $('split').removeEventListener('pointermove', move); $('split').removeEventListener('pointerup', up);
-                         document.body.classList.remove('dragging'); try { localStorage.setItem('vclGuest.camW', camW); } catch {} };
+                         document.body.classList.remove('dragging'); mem.set('camW', camW); };
       $('split').addEventListener('pointermove', move); $('split').addEventListener('pointerup', up);
     });
   })();
 
-  // ---------- scale the 1920 × 1080 board into its box ----------
-  function fitScreen() {
-    const st = $('stage'), w = st.clientWidth;
-    if (w) $('screen').style.transform = `scale(${w / 1920})`;
+  // ---------- collapsible sections ----------
+  const secOpen = Object.assign({ board: true, web: true }, mem.get('open', {}));
+  function applySecs() {
+    document.querySelectorAll('.sec').forEach(s => s.classList.toggle('open', !!secOpen[s.dataset.sec]));
+    setTimeout(fitScreen, 0);
   }
-  new ResizeObserver(fitScreen).observe($('stage'));
+  document.querySelectorAll('.sec .shead').forEach(h => h.addEventListener('click', e => {
+    if (e.target.closest('a')) return;                       // the "Open page" link
+    const n = h.parentElement.dataset.sec; secOpen[n] = !secOpen[n]; mem.set('open', secOpen); applySecs();
+    if (n === 'web') tellWeb();
+  }));
+  document.querySelectorAll('.sec .shead').forEach(h => h.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target === h) { e.preventDefault(); h.click(); }
+  }));
+  applySecs();
+
+  // ---------- fit the 1920 × 1080 board into whatever room it has ----------
+  function fitScreen() {
+    const box = $('stagebox'), st = $('stage');
+    const bw = box.clientWidth, bh = box.clientHeight;
+    if (!bw || !bh) return;
+    const w = Math.floor(Math.min(bw, bh * 16 / 9));
+    st.style.width = w + 'px'; st.style.height = Math.floor(w * 9 / 16) + 'px';
+    $('screen').style.transform = `scale(${w / 1920})`;
+  }
+  new ResizeObserver(fitScreen).observe($('stagebox'));
   addEventListener('resize', fitScreen);
 
   // ---------- what the studio has told us ----------
-  let show = null;               // { slides, live, liveIdx, visible, logo }
+  let show = null;               // { slides, live, liveIdx, visible, logo, web, boardLive }
   const images = {};             // hash -> data URL
   const parts = {};              // hash -> [chunks]
+  let shot = { id: null, parts: [] };
   let sel = -1;                  // selected row: slide index, or -1 for "the live board" when it isn't in the rundown
   let follow = true;
   let screenReady = false, pendingScreen = null;
@@ -221,6 +307,9 @@
 
   const titleOf = s => (s.title || s.caption || (s.body || '').split('\n').find(l => l.trim()) || 'Photo').replace(/\*\*/g, '').replace(/^\s*[-*•]\s+/, '');
   const segOf = s => (s.segment || '').trim();
+  const site = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return u || ''; } };
+  const pathOf = u => { try { const x = new URL(u); return (x.pathname + x.search).replace(/\/$/, '') || '/'; } catch { return ''; } };
+  const safeHref = u => { try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.toString() : null; } catch { return null; } };
 
   function render() {
     const slides = show ? show.slides : [];
@@ -230,10 +319,7 @@
 
     // list
     const list = $('list'); list.innerHTML = '<h3>Rundown</h3>';
-    if (liveOff) {
-      const r = row('★', titleOf(show.live), -1);
-      list.appendChild(r);
-    }
+    if (liveOff) list.appendChild(row('★', titleOf(show.live), -1));
     if (!slides.length) { const d = document.createElement('div'); d.className = 'none'; d.textContent = show ? 'No slides in the rundown yet.' : 'No slides yet.'; list.appendChild(d); }
     let lastSeg = null;
     slides.forEach((s, i) => {
@@ -275,7 +361,8 @@
       else if (sel >= 0 && liveIdx >= 0 && sel === liveIdx + 1) tag('next', 'Up next');
       else tag('', 'Preview');
       const w = document.createElement('span'); w.className = 'what';
-      w.textContent = isLive ? (hidden ? 'The board is hidden, so viewers don’t see it right now' : 'This is what viewers see right now') : (sel >= 0 && liveIdx >= 0 && sel === liveIdx + 1 ? 'Coming up after the slide on air' : 'Only you see this. It isn’t on air');
+      w.textContent = isLive ? (hidden ? 'The board is hidden, so viewers don’t see it right now' : 'This is what’s on the board right now')
+                    : (sel >= 0 && liveIdx >= 0 && sel === liveIdx + 1 ? 'Coming up after the slide on air' : 'Only you see this. It isn’t on air');
       badge.appendChild(w);
     }
     $('pos').textContent = sel >= 0 && count ? `Slide ${sel + 1} of ${count}` : (sel === -1 && liveOff ? 'Live board' : '–');
@@ -285,6 +372,39 @@
     $('toLive').hidden = follow || liveTarget === null || liveTarget === sel;
     $('follow').checked = follow;
     const selEl = list.querySelector('.row.sel'); if (selEl) selEl.scrollIntoView({ block: 'nearest' });
+
+    // board section header
+    const onAirTitle = show && show.live ? titleOf(show.live) : '';
+    $('sum-board').textContent = !show ? '' : hidden ? 'Board hidden' : onAirTitle ? 'On air: ' + onAirTitle : `${count} slide${count === 1 ? '' : 's'} in the rundown`;
+    $('air-board').hidden = !(show && show.boardLive && !hidden);
+
+    renderWeb();
+    fitScreen();
+  }
+
+  function renderWeb() {
+    const w = show && show.web || {};
+    const url = safeHref(w.url);
+    $('sum-web').textContent = url ? site(url) : (show ? 'Nothing up yet' : '');
+    $('air-web').hidden = !(url && w.live);
+    const open = $('webOpen'); open.hidden = !url; if (url) open.href = url;
+    const haveShot = !!$('webShot').getAttribute('src');
+    $('webShot').hidden = !haveShot; $('webNote').hidden = !haveShot;
+    $('webEmpty').hidden = haveShot;
+    if (!haveShot) {
+      $('webEmpty').querySelector('b').textContent = url ? site(url) : 'No web page yet';
+      $('webEmptyText').textContent = url ? (show && show.connected === false ? 'Waiting for the studio.' : 'Loading a live view of the page from the studio…')
+                                          : 'When the studio puts a news story or document up, you’ll see it here.';
+    }
+    const box = $('webRecent'); box.innerHTML = '';
+    const recent = (w.recent || []).map(safeHref).filter(Boolean);
+    if (!recent.length) { const d = document.createElement('div'); d.className = 'list none'; d.style.border = '0'; d.textContent = 'None yet.'; box.appendChild(d); }
+    recent.forEach(u => {
+      const a = document.createElement('a'); a.className = 'wrow' + (u === url ? ' cur' : ''); a.href = u; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.title = 'Open in a new tab: ' + u;
+      a.innerHTML = '<b></b><small></small>'; a.children[0].textContent = site(u) + (u === url ? '  ·  showing now' : ''); a.children[1].textContent = pathOf(u);
+      box.appendChild(a);
+    });
   }
 
   function choose(i, byHand) {
@@ -306,6 +426,7 @@
   $('follow').onchange = () => { follow = $('follow').checked; if (follow) snapToLive(); render(); };
   addEventListener('keydown', e => {
     if (e.target.closest && e.target.closest('input, textarea')) return;
+    if (!secOpen.board) return;
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); $('next').click(); }
     if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); $('prev').click(); }
   });
@@ -320,23 +441,28 @@
   const ROOM = 'vclboard' + KEY, STUDIO = 'studio' + KEY.slice(0, 10);
   let studioUuid = null;
   const sdk = new VDONinjaSDK({ salt: 'vdo.ninja', password: KEY, debug: false });
+  // Ask for live pictures of the web page only while that section is open, to save everyone's bandwidth.
+  function tellWeb() { if (studioUuid) try { sdk.sendData({ vclb: 1, t: 'web', on: !!secOpen.web }, studioUuid); } catch {} }
 
   let lastHeard = 0;
   function onData(d, uuid) {
     if (!d || d.vclb !== 1) return;
+    const fresh = studioUuid !== uuid;
     studioUuid = uuid; lastHeard = Date.now();
+    if (fresh) tellWeb();
     if (d.t === 'beat') { if (!show) sdk.sendData({ vclb: 1, t: 'hello' }, uuid); else status('ok', 'Connected to the studio'); return; }
     if (d.t === 'state') {
       const prevLive = show ? show.liveIdx : null, prevLiveObj = show ? JSON.stringify(show.live) : null;
+      const prevUrl = show && show.web ? show.web.url : null;
       show = { slides: d.slides || [], live: d.live || null, liveIdx: typeof d.liveIdx === 'number' ? d.liveIdx : -1,
-               visible: d.visible !== false, logo: d.logo || null };
-      // fetch any pictures we don't have yet
+               visible: d.visible !== false, logo: d.logo || null, web: d.web || null, boardLive: !!d.boardLive };
+      if (prevUrl !== null && show.web && show.web.url !== prevUrl) $('webShot').removeAttribute('src');   // new page: drop the old picture
       const want = new Set();
       show.slides.forEach(s => { if (s.img && !images[s.img]) want.add(s.img); });
       if (show.live && show.live.img && !images[show.live.img]) want.add(show.live.img);
       if (show.logo && !images[show.logo]) want.add(show.logo);
       if (want.size) sdk.sendData({ vclb: 1, t: 'need', h: [...want] }, uuid);
-      if (follow && (show.liveIdx !== prevLive || JSON.stringify(show.live) !== prevLiveObj || sel === null)) snapToLive();
+      if (follow && (show.liveIdx !== prevLive || JSON.stringify(show.live) !== prevLiveObj)) snapToLive();
       if (sel >= show.slides.length) sel = show.slides.length - 1;
       if (sel === -1 && !(show.live && show.liveIdx < 0)) snapToLive();
       status('ok', 'Connected to the studio');
@@ -345,10 +471,15 @@
       (parts[d.h] = parts[d.h] || [])[d.i] = d.d;
       const p = parts[d.h];
       if (p.filter(x => x != null).length === d.n) { images[d.h] = p.join(''); delete parts[d.h]; render(); }
+    } else if (d.t === 'shot') {
+      if (d.none) { $('webShot').removeAttribute('src'); renderWeb(); return; }
+      if (shot.id !== d.id) shot = { id: d.id, parts: [] };
+      shot.parts[d.i] = d.d;
+      if (shot.parts.filter(x => x != null).length === d.n) { $('webShot').src = shot.parts.join(''); shot = { id: null, parts: [] }; renderWeb(); }
     }
   }
   sdk.addEventListener('dataReceived', e => onData(e.detail.data, e.detail.uuid));
-  sdk.addEventListener('dataChannelOpen', e => { sdk.sendData({ vclb: 1, t: 'hello' }, e.detail.uuid); });
+  sdk.addEventListener('dataChannelOpen', e => { sdk.sendData({ vclb: 1, t: 'hello' }, e.detail.uuid); sdk.sendData({ vclb: 1, t: 'web', on: !!secOpen.web }, e.detail.uuid); });
   const lost = e => { if (e.detail && e.detail.uuid === studioUuid) { studioUuid = null; status('', 'The studio console is offline. Waiting for it…'); } };
   sdk.addEventListener('dataChannelClose', lost);
   sdk.addEventListener('peerDisconnected', lost);
@@ -375,10 +506,9 @@
       status('bad', 'Can’t connect. Check your internet, then reload.');
     }
   })();
-  // If the studio isn't open yet, keep looking quietly until it is.
   setInterval(() => {
-    // The studio sends a heartbeat every few seconds. If it stops, the console was closed or lost its connection.
-    if (studioUuid && Date.now() - lastHeard > 15000) { studioUuid = null; status('', 'The studio console is offline. Waiting for it…'); }
+    // The studio sends a heartbeat every few seconds (less often if its window is minimized). If it stops, the console was closed or lost its connection.
+    if (studioUuid && Date.now() - lastHeard > 75000) { studioUuid = null; status('', 'The studio console is offline. Waiting for it…'); }
     if (!studioUuid && sdk.state && sdk.state.connected) tryView();
   }, 4000);
 
