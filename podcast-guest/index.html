@@ -149,6 +149,39 @@
   .wrow.cur { background:#E9E9E4; border-left-color:var(--evergreen); }
 
   .wnone { padding:4px 16px; color:var(--muted); font-size:13px; }
+  /* suggest a slide */
+  .sugbtn { font:700 12px/1 var(--mono); letter-spacing:1px; color:var(--ink); background:var(--volt); border:1px solid var(--night);
+            padding:6px 9px; cursor:pointer; white-space:nowrap; }
+  .sugbtn:hover { filter:brightness(.95); }
+  .modal { position:fixed; inset:0; z-index:50; background:rgba(14,15,12,.55); display:flex; align-items:center; justify-content:center; padding:20px; }
+  .mbox { width:min(1100px, 100%); max-height:100%; overflow:auto; background:#fff; border:1px solid var(--night); display:grid;
+          grid-template-columns:minmax(0, 380px) minmax(0, 1fr); gap:20px; padding:20px 22px; }
+  .mbox h2 { grid-column:1 / -1; margin:0; font:900 22px/1.1 var(--display); font-stretch:125%; text-transform:uppercase; }
+  .mbox h2 + p { grid-column:1 / -1; margin:-12px 0 0; color:var(--muted); font-size:13.5px; }
+  .mform label { display:block; font:700 11px/1 var(--mono); letter-spacing:1px; text-transform:uppercase; margin:12px 0 5px; }
+  .mform label span { font:400 12px/1 var(--sans); letter-spacing:0; text-transform:none; color:var(--muted); margin-left:6px; }
+  .mform input[type=text], .mform textarea { width:100%; font:14px/1.35 var(--sans); padding:8px 10px; border:1px solid var(--hair); background:#fff; color:var(--ink); }
+  .mform textarea { min-height:120px; resize:vertical; }
+  .mform input:focus, .mform textarea:focus { outline:2px solid var(--live); outline-offset:-1px; }
+  .drop { border:1.5px dashed var(--hair); padding:12px; text-align:center; font-size:13px; color:var(--muted); cursor:pointer; display:flex; gap:10px; align-items:center; justify-content:center; }
+  .drop.over { border-color:var(--live); background:#F4F2FD; }
+  .drop img { max-height:54px; max-width:96px; border:1px solid var(--hair); }
+  .lnk { border:0; background:none; color:var(--muted); text-decoration:underline; cursor:pointer; font-size:12.5px; padding:4px 0; }
+  .mside { min-width:0; display:flex; flex-direction:column; gap:10px; }
+  .mside .cap { font:700 11px/1 var(--mono); letter-spacing:1px; text-transform:uppercase; }
+  .sgstage { position:relative; width:100%; aspect-ratio:16/9; border:1px solid var(--hair); overflow:hidden; background:var(--card); }
+  .sgstage iframe { position:absolute; left:0; top:0; width:1920px; height:1080px; border:0; transform-origin:0 0; pointer-events:none; }
+  .mbtns { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:14px; }
+  .sgmsg { font-size:13px; color:var(--live); min-height:18px; margin-top:8px; }
+  .sgmsg.good { color:#2D6B1F; font-weight:600; }
+  .mine { list-style:none; margin:0; padding:0; font-size:13px; }
+  .mine li { display:flex; justify-content:space-between; gap:10px; padding:6px 0; border-top:1px solid var(--hair); }
+  .mine li span { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .mine li em { font-style:normal; color:var(--muted); white-space:nowrap; }
+  .mine li.added em { color:#2D6B1F; font-weight:600; } .mine li.new em { color:var(--live); }
+  .row .by { display:block; font:500 11px/1.2 var(--mono); color:var(--live); margin-top:2px; }
+  @media (max-width: 820px) { .mbox { grid-template-columns:1fr; } }
+
   .foot { flex:none; display:flex; justify-content:space-between; gap:12px; padding:7px 20px; background:var(--footer); color:#A3A39C;
           font:400 12px/1.2 var(--sans); }
   .foot b { color:var(--gold-light); font-weight:600; }
@@ -182,6 +215,7 @@
       <section class="sec open" id="sec-board" data-sec="board">
         <div class="shead" role="button" tabindex="0" title="Show or hide the board">
           <span class="chev">▶</span><b>Board</b><span class="ssum" id="sum-board"></span><span class="tag live" id="air-board" hidden>On screen</span>
+          <button class="sugbtn" id="sugOpen" type="button" title="Send the producer a slide idea. It goes on the board only if they add it.">+ Suggest a slide</button>
         </div>
         <div class="sbody">
           <div class="board">
@@ -229,7 +263,33 @@
     </div>
   </div>
 
-  <div class="foot"><span><b>Look only.</b> Nothing you click here changes the show.</span><span>Studio by WalkerOps</span></div>
+  <div class="foot"><span><b>Look only.</b> Nothing you click here changes the show. Slides you suggest go to the producer first.</span><span>Studio by WalkerOps</span></div>
+
+  <div class="modal" id="sugModal" hidden role="dialog" aria-modal="true" aria-labelledby="sg-h">
+    <div class="mbox">
+      <h2 id="sg-h">Suggest a slide</h2>
+      <p>The producer sees it first and decides whether to add it to the rundown. Nothing goes on air from here.</p>
+      <div class="mform">
+        <label for="sg-name">Your name</label><input type="text" id="sg-name" maxlength="40" autocomplete="name">
+        <label for="sg-seg">Segment <span>pick one or type a new one</span></label><input type="text" id="sg-seg" list="sg-segs" maxlength="120" autocomplete="off"><datalist id="sg-segs"></datalist>
+        <label for="sg-title">Title</label><input type="text" id="sg-title" maxlength="200" autocomplete="off">
+        <label for="sg-body">Text <span>start a line with - for a bullet; **bold** works</span></label><textarea id="sg-body" maxlength="4000" placeholder="- First point&#10;- Second point&#10;  - A sub-point"></textarea>
+        <label>Picture or screenshot <span>optional</span></label>
+        <div class="drop" id="sg-drop"><img id="sg-thumb" alt="" hidden><span id="sg-dropText">Drop a picture or screenshot, click to choose, or press Ctrl+V</span></div>
+        <input type="file" id="sg-file" accept="image/*" hidden>
+        <button class="lnk" id="sg-clearImg" type="button" hidden>Remove picture</button>
+        <label for="sg-caption">Picture caption <span>optional</span></label><input type="text" id="sg-caption" maxlength="200" autocomplete="off">
+        <label for="sg-note">Note to the producer <span>optional, not shown on the slide</span></label><input type="text" id="sg-note" maxlength="500" autocomplete="off" placeholder="e.g. for when we talk about the lottery">
+        <div class="mbtns"><button class="btn primary" id="sg-send" type="button">Send to the producer</button><button class="btn" id="sg-cancel" type="button">Close</button></div>
+        <div class="sgmsg" id="sg-msg" aria-live="polite"></div>
+      </div>
+      <div class="mside">
+        <div class="cap">Preview</div>
+        <div class="sgstage" id="sg-stage"><iframe id="sg-screen" src="display.html?preview=1" title="Slide preview" tabindex="-1"></iframe></div>
+        <div id="sg-mineBox" hidden><div class="cap" style="margin:8px 0 4px">Your suggestions</div><ul class="mine" id="sg-mine"></ul></div>
+      </div>
+    </div>
+  </div>
 
 <script src="vdoninja-sdk.min.js"></script>
 <script>
@@ -273,7 +333,7 @@
     setTimeout(fitScreen, 0);
   }
   document.querySelectorAll('.sec .shead').forEach(h => h.addEventListener('click', e => {
-    if (e.target.closest('a')) return;                       // the "Open page" link
+    if (e.target.closest('a, button')) return;              // the "Open page" link and the suggest button
     const n = h.parentElement.dataset.sec; secOpen[n] = !secOpen[n]; mem.set('open', secOpen); applySecs();
     if (n === 'web') tellWeb();
   }));
@@ -315,7 +375,7 @@
     try { $('screen').contentWindow.postMessage({ vclPreview: true, state }, '*'); } catch {}
   }
   addEventListener('message', e => {
-    if (e.data && e.data.vclPreviewReady === 'board') { screenReady = true; if (pendingScreen) { paintScreen(pendingScreen); pendingScreen = null; } }
+    if (e.source === $('screen').contentWindow && e.data && e.data.vclPreviewReady === 'board') { screenReady = true; if (pendingScreen) { paintScreen(pendingScreen); pendingScreen = null; } }
   });
 
   const titleOf = s => (s.title || s.caption || (s.body || '').split('\n').find(l => l.trim()) || 'Photo').replace(/\*\*/g, '').replace(/^\s*[-*•]\s+/, '');
@@ -341,7 +401,9 @@
         lastSeg = seg;
         if (seg) { const h = document.createElement('div'); h.className = 'seg'; h.textContent = seg.replace(/^segment\s+/i, 'Segment '); list.appendChild(h); }
       }
-      list.appendChild(row(String(i + 1).padStart(2, '0'), titleOf(s), i));
+      const r = row(String(i + 1).padStart(2, '0'), titleOf(s), i);
+      if (s.by) { const by = document.createElement('span'); by.className = 'by'; by.textContent = 'from ' + s.by; r.children[1].appendChild(by); }
+      list.appendChild(r);
     });
     function row(num, text, i) {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'row'; b.dataset.i = i;
@@ -468,7 +530,7 @@
       const prevLive = show ? show.liveIdx : null, prevLiveObj = show ? JSON.stringify(show.live) : null;
       const prevUrl = show && show.web ? show.web.url : null;
       show = { slides: d.slides || [], live: d.live || null, liveIdx: typeof d.liveIdx === 'number' ? d.liveIdx : -1,
-               visible: d.visible !== false, logo: d.logo || null, web: d.web || null, boardLive: !!d.boardLive };
+               visible: d.visible !== false, logo: d.logo || null, web: d.web || null, boardLive: !!d.boardLive, sugs: d.sugs || {} };
       if (prevUrl !== null && show.web && show.web.url !== prevUrl) $('webShot').removeAttribute('src');   // new page: drop the old picture
       const want = new Set();
       show.slides.forEach(s => { if (s.img && !images[s.img]) want.add(s.img); });
@@ -479,7 +541,7 @@
       if (sel >= show.slides.length) sel = show.slides.length - 1;
       if (sel === -1 && !(show.live && show.liveIdx < 0)) snapToLive();
       status('ok', 'Connected to the studio');
-      render();
+      render(); sugRenderMine();
     } else if (d.t === 'img') {
       (parts[d.h] = parts[d.h] || [])[d.i] = d.d;
       const p = parts[d.h];
@@ -525,6 +587,110 @@
     if (!studioUuid && sdk.state && sdk.state.connected) tryView();
   }, 4000);
 
+  // ---------- suggest a slide ----------
+  // Guests can send the producer a slide. It waits in the console until the producer adds it to the rundown or passes on it.
+  const myName = (() => {
+    let n = mem.get('name', '');
+    if (!n) { try { const j = new URL(params.get('join') || ''); n = (j.searchParams.get('label') || '').replace(/_/g, ' '); } catch {} }
+    return n;
+  })();
+  let mySugs = mem.get('sugs', []);                     // [{ id, title, at }] sent from this browser
+  let sugImage = null;
+  const sugDraft = () => ({ segment: $('sg-seg').value.trim(), title: $('sg-title').value.trim(), body: $('sg-body').value.replace(/\s+$/, ''),
+                            caption: $('sg-caption').value.trim() });
+  function sugPreview() {
+    if (!sugReady) return;
+    const st = Object.assign({ theme: 'light', layout: 'full', frame: 'plain', disclaimer: true, visible: true, sharedBg: false,
+                               logo: show && show.logo ? (images[show.logo] || null) : null }, sugDraft(), { image: sugImage });
+    try { $('sg-screen').contentWindow.postMessage({ vclPreview: true, state: st }, '*'); } catch {}
+    const w = $('sg-stage').clientWidth; if (w) $('sg-screen').style.transform = `scale(${w / 1920})`;
+  }
+  let sugReady = false;
+  addEventListener('message', e => { if (e.source === $('sg-screen').contentWindow && e.data && e.data.vclPreviewReady) { sugReady = true; sugPreview(); } });
+  function sugRenderMine() {
+    const st = (show && show.sugs) || {}, ul = $('sg-mine'); ul.innerHTML = '';
+    const list = mySugs.slice(-6).reverse();
+    $('sg-mineBox').hidden = !list.length;
+    list.forEach(x => {
+      const li = document.createElement('li'); const s = st[x.id];
+      li.innerHTML = '<span></span><em></em>'; li.children[0].textContent = x.title || 'Untitled slide';
+      li.children[1].textContent = s === 'added' ? 'Added to the rundown' : s === 'dismissed' ? 'Not used this time' : s === 'new' ? 'Waiting for the producer' : 'Sending…';
+      li.className = s || 'sending'; ul.appendChild(li);
+    });
+    const waiting = list.filter(x => (st[x.id] || 'new') === 'new').length;
+    $('sugOpen').textContent = waiting ? `+ Suggest a slide (${waiting} waiting)` : '+ Suggest a slide';
+  }
+  function sugOpen() {
+    $('sg-name').value = mem.get('name', '') || myName;
+    const segs = [...new Set((show ? show.slides : []).map(s => (s.segment || '').trim()).filter(Boolean))];
+    $('sg-segs').innerHTML = ''; segs.forEach(s => { const o = document.createElement('option'); o.value = s; $('sg-segs').appendChild(o); });
+    if (!$('sg-seg').value && show && show.live && show.live.segment) $('sg-seg').value = show.live.segment;
+    $('sg-msg').textContent = ''; $('sugModal').hidden = false; sugRenderMine();
+    setTimeout(() => { sugPreview(); ($('sg-name').value ? $('sg-title') : $('sg-name')).focus(); }, 30);
+  }
+  function sugClose() { $('sugModal').hidden = true; }
+  $('sugOpen').onclick = e => { e.stopPropagation(); sugOpen(); };
+  $('sg-cancel').onclick = sugClose;
+  $('sugModal').addEventListener('click', e => { if (e.target === $('sugModal')) sugClose(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !$('sugModal').hidden) sugClose(); }, true);
+  ['sg-seg', 'sg-title', 'sg-body', 'sg-caption'].forEach(id => $(id).addEventListener('input', sugPreview));
+  new ResizeObserver(sugPreview).observe($('sg-stage'));
+
+  function readImage(file) {
+    return new Promise((res, rej) => {
+      const fr = new FileReader();
+      fr.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const k = Math.min(1, 1600 / Math.max(img.width, img.height));
+          const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+          const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height);
+          res(c.toDataURL('image/jpeg', 0.86));
+        };
+        img.onerror = rej; img.src = fr.result;
+      };
+      fr.onerror = rej; fr.readAsDataURL(file);
+    });
+  }
+  async function sugTakeImage(file) {
+    if (!file || !/^image\//.test(file.type)) { $('sg-msg').textContent = 'That file isn’t a picture.'; return; }
+    try { sugImage = await readImage(file); } catch { $('sg-msg').textContent = 'Couldn’t read that picture.'; return; }
+    $('sg-thumb').src = sugImage; $('sg-thumb').hidden = false; $('sg-clearImg').hidden = false;
+    $('sg-dropText').textContent = 'Click, drop or paste to replace'; sugPreview();
+  }
+  $('sg-drop').onclick = () => $('sg-file').click();
+  $('sg-file').onchange = e => sugTakeImage(e.target.files[0]);
+  $('sg-drop').addEventListener('dragover', e => { e.preventDefault(); $('sg-drop').classList.add('over'); });
+  $('sg-drop').addEventListener('dragleave', () => $('sg-drop').classList.remove('over'));
+  $('sg-drop').addEventListener('drop', e => { e.preventDefault(); $('sg-drop').classList.remove('over'); sugTakeImage(e.dataTransfer.files[0]); });
+  document.addEventListener('paste', e => {
+    if ($('sugModal').hidden) return;
+    const it = [...(e.clipboardData?.items || [])].find(i => i.type.startsWith('image/'));
+    if (it) { e.preventDefault(); sugTakeImage(it.getAsFile()); }
+  });
+  $('sg-clearImg').onclick = () => { sugImage = null; $('sg-thumb').hidden = true; $('sg-thumb').removeAttribute('src'); $('sg-clearImg').hidden = true;
+                                     $('sg-dropText').textContent = 'Drop a picture or screenshot, click to choose, or press Ctrl+V'; $('sg-file').value = ''; sugPreview(); };
+
+  $('sg-send').onclick = () => {
+    const d = sugDraft(), name = $('sg-name').value.trim(), msg = $('sg-msg');
+    if (!name) { msg.textContent = 'Add your name so the producer knows who it’s from.'; $('sg-name').focus(); return; }
+    if (!d.title && !d.body && !sugImage) { msg.textContent = 'Add a title, some text or a picture first.'; $('sg-title').focus(); return; }
+    if (!studioUuid) { msg.textContent = 'The studio console isn’t connected right now. Try again in a moment; your slide is still here.'; return; }
+    mem.set('name', name);
+    const id = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    const CH = 32000, n = sugImage ? Math.ceil(sugImage.length / CH) : 0;
+    try {
+      sdk.sendData({ vclb: 1, t: 'sug', id, by: name, slide: d, note: $('sg-note').value.trim(), imgParts: n }, studioUuid);
+      for (let i = 0; i < n; i++) sdk.sendData({ vclb: 1, t: 'sugimg', id, i, n, d: sugImage.slice(i * CH, (i + 1) * CH) }, studioUuid);
+    } catch { msg.textContent = 'That didn’t send. Check your connection and try again.'; return; }
+    mySugs.push({ id, title: d.title || d.caption || 'Untitled slide', at: Date.now() }); mySugs = mySugs.slice(-20); mem.set('sugs', mySugs);
+    ['sg-title', 'sg-body', 'sg-caption', 'sg-note'].forEach(k => $(k).value = ''); $('sg-clearImg').click();
+    msg.textContent = 'Sent. The producer will see it and decide whether to add it.'; msg.className = 'sgmsg good';
+    setTimeout(() => { msg.className = 'sgmsg'; }, 4000);
+    sugRenderMine(); sugPreview();
+  };
+
+  sugRenderMine();
   render();
 })();
 </script>
