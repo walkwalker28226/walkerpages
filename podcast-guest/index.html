@@ -236,8 +236,11 @@
     if (!join) return;
     let u; try { u = new URL(join); } catch { return; }
     if (u.protocol !== 'https:' || !/(^|\.)vdo\.ninja$/i.test(u.hostname)) return;   // only ever embed VDO Ninja
+    // Show everyone's name on their video (each invite link already carries the guest's name as &label).
+    let src = u.toString();
+    if (!/[?&](showlabels?|sl)(=|&|$)/i.test(src)) src += (src.includes('?') ? '&' : '?') + 'showlabels';
     const f = document.createElement('iframe');
-    f.src = u.toString(); f.title = 'Your camera';
+    f.src = src; f.title = 'Your camera';
     f.allow = 'camera; microphone; autoplay; fullscreen; display-capture; speaker-selection; clipboard-write; picture-in-picture';
     $('cam').appendChild(f); $('wrap').classList.add('has-cam');
     let camW = +mem.get('camW', 36) || 36;
