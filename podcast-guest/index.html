@@ -4,16 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Studio Board · VA Cannabis Lawyers Podcast</title>
+<title>Studio Board · Canna-Chats</title>
 <style>
   @font-face { font-family: Newsreader; font-weight: 500; src: url(fonts/newsreader-latin-500-normal.woff2) format('woff2'); }
   @font-face { font-family: "Instrument Sans"; font-weight: 400; src: url(fonts/instrument-sans-latin-400-normal.woff2) format('woff2'); }
   @font-face { font-family: "Instrument Sans"; font-weight: 600; src: url(fonts/instrument-sans-latin-600-normal.woff2) format('woff2'); }
   @font-face { font-family: "Instrument Sans"; font-weight: 700; src: url(fonts/instrument-sans-latin-700-normal.woff2) format('woff2'); }
+  @font-face { font-family: "Archivo"; font-weight: 100 900; font-stretch: 62% 125%; src: url(fonts/archivo-latin-wdth-normal.woff2) format('woff2'); }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 500; src: url(fonts/jetbrains-mono-latin-500-normal.woff2) format('woff2'); }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url(fonts/jetbrains-mono-latin-700-normal.woff2) format('woff2'); }
   :root {
     --evergreen:#173B2F; --ink:#16201B; --brass:#C8963E; --limestone:#F2EFE6; --gold-light:#DDBF86; --gold-dark:#8A6424;
     --footer:#0F2A21; --muted:#55605A; --hair:#DDD8CA; --card:#FBFAF6; --live:#B4432C; --ok:#3E7D4F;
     --serif: Newsreader, Georgia, serif; --sans: "Instrument Sans", Arial, sans-serif;
+    /* Canna-Chats "Signal" banner */
+    --night:#0E0F0C; --volt:#C6F432; --smoke:#E9E9E4; --graphite:#2A2C27; --sig-muted:#A3A39C;
+    --display: "Archivo", "Arial Black", sans-serif; --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   }
   * { box-sizing:border-box; }
   html, body { height:100%; margin:0; }
@@ -24,16 +30,20 @@
   button { font-family:inherit; }
   [hidden] { display:none !important; }
 
-  /* top bar */
-  .top { flex:none; display:flex; align-items:center; gap:16px; padding:10px 20px; background:var(--evergreen); color:var(--limestone); }
-  .top .eyebrow { font:600 11px/1 var(--sans); letter-spacing:.3em; text-transform:uppercase; color:var(--gold-light); margin-bottom:5px; }
-  .top .name { font:500 22px/1 var(--serif); }
-  .top .what { margin-left:6px; padding-left:16px; border-left:1px solid rgba(242,239,230,.25); font:600 12px/1 var(--sans);
-               letter-spacing:.18em; text-transform:uppercase; color:#D5DDD7; }
-  .status { margin-left:auto; display:flex; align-items:center; gap:8px; font:600 12.5px/1 var(--sans); padding:7px 12px;
-            border-radius:999px; background:rgba(242,239,230,.1); color:#D5DDD7; white-space:nowrap; }
-  .status i { width:9px; height:9px; border-radius:50%; background:var(--gold-light); animation:blink 1.4s infinite; }
-  .status.ok i { background:#7BC48D; animation:none; }
+  /* top bar — Canna-Chats "Signal" */
+  .top { flex:none; display:flex; align-items:center; gap:16px; padding:10px 20px; background:var(--night); color:var(--smoke);
+         border-bottom:4px solid var(--volt); }
+  .top .brand { display:flex; align-items:center; gap:12px; }
+  .top .burst { width:34px; height:34px; flex:none; display:block; }
+  .top .name { font:900 24px/1 var(--display); font-stretch:125%; letter-spacing:-.5px; text-transform:uppercase; color:var(--smoke); }
+  .top .name span { color:var(--volt); }
+  .top .what { margin-left:6px; padding-left:16px; border-left:1px solid var(--graphite); font:500 12px/1 var(--mono);
+               letter-spacing:.14em; text-transform:uppercase; color:var(--volt); }
+  .status { margin-left:auto; display:flex; align-items:center; gap:8px; font:700 12px/1 var(--mono); letter-spacing:.04em; padding:8px 12px;
+            background:var(--graphite); color:var(--smoke); white-space:nowrap; }
+  .status i { width:9px; height:9px; border-radius:50%; background:var(--smoke); animation:blink 1.4s infinite; }
+  .status.ok { background:var(--volt); color:var(--night); }
+  .status.ok i { background:var(--night); animation:none; }
   .status.bad i { background:#E58A73; animation:none; }
   @keyframes blink { 50% { opacity:.3; } }
 
@@ -151,17 +161,19 @@
     .wrap.has-cam { grid-template-columns:1fr; grid-template-rows:45vh 1fr; }
     .wrap.has-cam #split { display:none; }
     .top .what { display:none; }
+    .top { gap:12px; padding:10px 14px; } .top .burst { width:26px; height:26px; } .top .brand { gap:8px; flex:none; }
+    .top .name { font-size:17px; } .status { min-width:0; } .status span { overflow:hidden; text-overflow:ellipsis; }
     #pane { overflow-y:auto; } .sec.open { flex:none; height:70vh; }
   }
 </style>
 </head>
 <body>
   <div class="top">
-    <div>
-      <div class="eyebrow">Virginia</div>
-      <div class="name">Cannabis Lawyers Podcast</div>
+    <div class="brand">
+      <svg class="burst" viewBox="10 2 180 180" aria-hidden="true"><path d="M100 142V20 M108.4 144.1L155.4 55.8 M91.6 144.1L44.6 55.8 M114.9 149.9L173 110.8 M85.1 149.9L27 110.8 M117.9 158.1L151.7 154.5 M82.1 158.1L48.3 154.5" stroke="#C6F432" stroke-width="18" stroke-linecap="round" fill="none"/></svg>
+      <div class="name" aria-label="Canna-Chats">Canna<span>/</span>Chats</div>
     </div>
-    <div class="what">Studio board</div>
+    <div class="what">// Studio board</div>
     <div class="status" id="status"><i></i><span id="statusText">Connecting…</span></div>
   </div>
 
