@@ -82,6 +82,29 @@
   .tag.dim { background:#A3A39C; color:#0E0F0C; }
   .shead .tag { font-size:10px; padding:5px 7px; }
 
+  /* links section (hosts only) */
+  #sec-links.open { flex:0 1 auto; max-height:46%; }
+  #sec-links .sbody { flex:0 1 auto; overflow-y:auto; background:#fff; }
+  .lrow { display:grid; grid-template-columns:minmax(110px, 190px) minmax(0, 1fr) auto; gap:12px; align-items:center; padding:8px 14px;
+          border-bottom:1px solid var(--hair); }
+  .lrow .ln { min-width:0; }
+  .lrow .ln small { display:block; font:700 10.5px/1.2 var(--mono); letter-spacing:1px; text-transform:uppercase; color:var(--muted); }
+  .lrow .ln b { display:block; font:600 14px/1.3 var(--sans); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .lrow .lu { min-width:0; font:500 12px/1.3 var(--mono); color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .lrow .la { display:flex; gap:6px; }
+  .btn.small { padding:6px 9px; font-size:12.5px; }
+  .btn.done { background:var(--night); border-color:var(--night); color:var(--volt); }
+  .lnone { padding:10px 14px; color:var(--muted); font-size:13px; border-bottom:1px solid var(--hair); }
+  .addg { display:flex; gap:8px; align-items:center; flex-wrap:wrap; padding:10px 14px 4px; }
+  .addg input { flex:1 1 180px; min-width:0; font:14px/1.3 var(--sans); padding:7px 10px; border:1px solid var(--hair); background:#fff; color:var(--ink); }
+  .addg select { font:13px/1.3 var(--sans); padding:7px 8px; border:1px solid var(--hair); background:#fff; color:var(--ink); border-radius:0; }
+  .addg input:focus, .addg select:focus { outline:2px solid var(--live); outline-offset:-1px; }
+  .lmsg { padding:2px 14px 10px; font-size:13px; min-height:1.4em; color:var(--muted); }
+  .lmsg.good { color:#2D6B1F; font-weight:600; } .lmsg.bad { color:var(--live); }
+  @container (max-width: 560px) {
+    .lrow { grid-template-columns:minmax(0, 1fr) auto; } .lrow .lu { grid-column:1 / -1; grid-row:2; }
+  }
+
   /* board section */
   .board { height:100%; display:grid; grid-template-columns:1fr; grid-template-rows:minmax(150px, 1fr) auto minmax(120px, 34%); gap:10px; padding:12px 14px; }
   @container (min-width: 640px) {
@@ -193,7 +216,7 @@
     .top { gap:12px; padding:10px 14px; } .top .burst { width:26px; height:26px; } .top .brand { gap:8px; flex:none; }
     .top .name { font-size:17px; } .status { min-width:0; } .status span { overflow:hidden; text-overflow:ellipsis; }
     #pane { overflow-y:auto; } .sec.open { flex:none; height:70vh; }
-    #pane { overflow-y:auto; } .sec.open { flex:none; height:70vh; }
+    #sec-links.open { flex:none; height:auto; max-height:70vh; }
   }
 </style>
 </head>
@@ -211,6 +234,21 @@
     <section id="cam"></section>
     <div id="split" title="Drag to resize"></div>
     <div id="pane">
+
+      <section class="sec" id="sec-links" data-sec="links" hidden>
+        <div class="shead" role="button" tabindex="0" title="Show or hide the guest links">
+          <span class="chev">▶</span><b>Links</b><span class="ssum" id="sum-links"></span><span class="tag next" title="Only the hosts see this section">Hosts only</span>
+        </div>
+        <div class="sbody">
+          <div id="linkList"><div class="lnone">Waiting for the studio…</div></div>
+          <div class="addg" id="addGuest">
+            <input type="text" id="ag-name" placeholder="New guest’s name" maxlength="40" autocomplete="off">
+            <select id="ag-seat" title="Which seat"><option value="">Next free seat</option></select>
+            <button class="btn small primary" id="ag-add" type="button">Add guest &amp; copy invite</button>
+          </div>
+          <div class="lmsg" id="ag-msg" aria-live="polite"></div>
+        </div>
+      </section>
 
       <section class="sec open" id="sec-board" data-sec="board">
         <div class="shead" role="button" tabindex="0" title="Show or hide the board">
@@ -263,7 +301,7 @@
     </div>
   </div>
 
-  <div class="foot"><span><b>Look only.</b> Nothing you click here changes the show. Slides you suggest go to the producer first.</span><span>Studio by WalkerOps</span></div>
+  <div class="foot"><span id="footText"><b>Look only.</b> Nothing you click here changes the show. Slides you suggest go to the producer first.</span><span>Studio by WalkerOps</span></div>
 
   <div class="modal" id="sugModal" hidden role="dialog" aria-modal="true" aria-labelledby="sg-h">
     <div class="mbox">
@@ -297,6 +335,7 @@
   const $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search);
   const KEY = (params.get('k') || '').replace(/[^A-Za-z0-9]/g, '');
+  const HOSTKEY = (params.get('h') || '').replace(/[^A-Za-z0-9]/g, '');      // only the hosts' invites carry this
   const mem = { get(k, d) { try { const v = localStorage.getItem('vclGuest.' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
                 set(k, v) { try { localStorage.setItem('vclGuest.' + k, JSON.stringify(v)); } catch {} } };
 
@@ -327,7 +366,7 @@
   })();
 
   // ---------- collapsible sections ----------
-  const secOpen = Object.assign({ board: true, web: true }, mem.get('open', {}));
+  const secOpen = Object.assign({ links: true, board: true, web: true }, mem.get('open', {}));
   function applySecs() {
     document.querySelectorAll('.sec').forEach(s => s.classList.toggle('open', !!secOpen[s.dataset.sec]));
     setTimeout(fitScreen, 0);
@@ -500,7 +539,7 @@
   $('toLive').onclick = () => { follow = true; snapToLive(); render(); };
   $('follow').onchange = () => { follow = $('follow').checked; if (follow) snapToLive(); render(); };
   addEventListener('keydown', e => {
-    if (e.target.closest && e.target.closest('input, textarea')) return;
+    if (e.target.closest && e.target.closest('input, textarea, select')) return;
     if (!secOpen.board) return;
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); $('next').click(); }
     if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); $('prev').click(); }
@@ -524,8 +563,11 @@
     if (!d || d.vclb !== 1) return;
     const fresh = studioUuid !== uuid;
     studioUuid = uuid; lastHeard = Date.now();
-    if (fresh) tellWeb();
-    if (d.t === 'beat') { if (!show) sdk.sendData({ vclb: 1, t: 'hello' }, uuid); else status('ok', 'Connected to the studio'); return; }
+    if (fresh) { tellWeb(); sayHost(uuid); }
+    if (d.t === 'beat') { if (!show) sdk.sendData({ vclb: 1, t: 'hello' }, uuid); else status('ok', 'Connected to the studio');
+                          if (HOSTKEY && !links) sayHost(uuid); return; }
+    if (d.t === 'links') { links = d.denied ? { denied: true } : d; renderLinks(); return; }
+    if (d.t === 'added') { addedReply(d); return; }
     if (d.t === 'state') {
       const prevLive = show ? show.liveIdx : null, prevLiveObj = show ? JSON.stringify(show.live) : null;
       const prevUrl = show && show.web ? show.web.url : null;
@@ -554,8 +596,8 @@
     }
   }
   sdk.addEventListener('dataReceived', e => onData(e.detail.data, e.detail.uuid));
-  sdk.addEventListener('dataChannelOpen', e => { sdk.sendData({ vclb: 1, t: 'hello' }, e.detail.uuid); sdk.sendData({ vclb: 1, t: 'web', on: !!secOpen.web }, e.detail.uuid); });
-  const lost = e => { if (e.detail && e.detail.uuid === studioUuid) { studioUuid = null; status('', 'The studio console is offline. Waiting for it…'); } };
+  sdk.addEventListener('dataChannelOpen', e => { sdk.sendData({ vclb: 1, t: 'hello' }, e.detail.uuid); sdk.sendData({ vclb: 1, t: 'web', on: !!secOpen.web }, e.detail.uuid); sayHost(e.detail.uuid); });
+  const lost = e => { if (e.detail && e.detail.uuid === studioUuid) { studioUuid = null; status('', 'The studio console is offline. Waiting for it…'); links = null; renderLinks(); } };
   sdk.addEventListener('dataChannelClose', lost);
   sdk.addEventListener('peerDisconnected', lost);
   let lastTry = 0;
@@ -586,6 +628,83 @@
     if (studioUuid && Date.now() - lastHeard > 75000) { studioUuid = null; status('', 'The studio console is offline. Waiting for it…'); }
     if (!studioUuid && sdk.state && sdk.state.connected) tryView();
   }, 4000);
+
+  // ---------- guest links (hosts only) ----------
+  // The hosts' invites carry a host key. The studio checks it, then sends the guest links here and accepts new guests.
+  // Without the key (every other guest), this section stays hidden and the page is look only.
+  let links = null;                                   // { seats, free, ready } from the studio, or { denied: true }
+  let addWait = null;                                 // { rid, timer } while the studio sets up a guest
+  function sayHost(uuid) {
+    if (!HOSTKEY || !uuid) return;
+    let name = mem.get('name', '');
+    if (!name) { try { name = (new URL(params.get('join') || '').searchParams.get('label') || '').replace(/_/g, ' '); } catch {} }
+    try { sdk.sendData({ vclb: 1, t: 'host', h: HOSTKEY, name }, uuid); } catch {}
+  }
+  async function copy(text, btn) {
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; }
+    catch { const t = document.createElement('textarea'); t.value = text; t.style.position = 'fixed'; t.style.opacity = '0'; document.body.appendChild(t); t.select();
+            try { ok = document.execCommand('copy'); } catch {} t.remove(); }
+    if (btn && ok) { const o = btn.textContent; btn.textContent = 'Copied'; btn.classList.add('done'); setTimeout(() => { btn.textContent = o; btn.classList.remove('done'); }, 1500); }
+    return ok;
+  }
+  function lmsg(cls, text) { $('ag-msg').className = 'lmsg ' + (cls || ''); $('ag-msg').textContent = text; }
+  function renderLinks() {
+    $('sec-links').hidden = !HOSTKEY;
+    if (!HOSTKEY) return;
+    const ok = !!(links && !links.denied && studioUuid);
+    $('footText').innerHTML = ok ? '<b>Board and web page are look only.</b> Guests you add under Links join the show right away.'
+                                 : '<b>Look only.</b> Nothing you click here changes the show. Slides you suggest go to the producer first.';
+    const box = $('linkList'); box.innerHTML = '';
+    const note = t => { const d = document.createElement('div'); d.className = 'lnone'; d.textContent = t; box.appendChild(d); };
+    $('addGuest').hidden = !ok || !links.ready;
+    if (links && links.denied) { $('sum-links').textContent = 'Link out of date'; note('This invite’s host key is out of date, so the guest links can’t be shown. Ask the producer for a fresh invite.'); return; }
+    if (!ok) { $('sum-links').textContent = ''; note(studioUuid ? 'Loading the guest links…' : 'The guest links show up here when the studio console is open.'); return; }
+    const seats = links.seats || [];
+    $('sum-links').textContent = `${seats.length} guest${seats.length === 1 ? '' : 's'}`;
+    if (!links.ready) note('The studio hasn’t set up its VDO Ninja room yet.');
+    else if (!seats.length) note('No guests yet.');
+    seats.forEach(g => {
+      const url = String(g.url || ''), r = document.createElement('div'); r.className = 'lrow';
+      r.innerHTML = '<div class="ln"><small></small><b></b></div><div class="lu"></div><div class="la"></div>';
+      r.querySelector('small').textContent = 'Seat ' + g.k; r.querySelector('b').textContent = g.name; r.querySelector('b').title = g.name;
+      r.querySelector('.lu').textContent = url; r.querySelector('.lu').title = url;
+      const mk = (t, tip, fn, cls) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn small' + (cls ? ' ' + cls : ''); b.textContent = t; b.title = tip; b.onclick = () => fn(b); return b; };
+      r.querySelector('.la').append(
+        mk('Copy invite', 'Copy a ready-to-send message with the link', b => copy(String(g.invite || url), b)),
+        mk('Copy', 'Copy just the link', b => copy(url, b)),
+        mk('Open', 'Open the link in a new tab (this joins as that guest)', () => { if (/^https:\/\//i.test(url)) open(url, '_blank', 'noopener'); }));
+      box.appendChild(r);
+    });
+    // Seat picker: free seats only. Keep the choice if the list redraws.
+    const sel = $('ag-seat'), keep = sel.value, free = (links.free || []).filter(k => k >= 1 && k <= 8);
+    sel.innerHTML = '';
+    const o0 = document.createElement('option'); o0.value = ''; o0.textContent = free.length ? `Next free seat (${free[0]})` : 'No free seats'; sel.appendChild(o0);
+    free.forEach(k => { const o = document.createElement('option'); o.value = String(k); o.textContent = 'Seat ' + k; sel.appendChild(o); });
+    sel.value = free.includes(+keep) ? keep : '';
+    $('ag-add').disabled = !!addWait || !free.length;
+  }
+  function addGuest() {
+    const name = $('ag-name').value.replace(/\s+/g, ' ').trim();
+    if (!name) { $('ag-name').focus(); return; }
+    if (!studioUuid || !links || links.denied) { lmsg('bad', 'The studio console isn’t connected right now. Try again in a moment.'); return; }
+    if (addWait) return;
+    const rid = 'a' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    try { sdk.sendData({ vclb: 1, t: 'addguest', rid, name, seat: +$('ag-seat').value || 0 }, studioUuid); }
+    catch { lmsg('bad', 'That didn’t send. Check your connection and try again.'); return; }
+    addWait = { rid, timer: setTimeout(() => { addWait = null; $('ag-add').disabled = false; lmsg('bad', 'No answer from the studio. Check the list above before trying again.'); }, 25000) };
+    $('ag-add').disabled = true; lmsg('', 'Setting up their seat…');
+  }
+  async function addedReply(d) {
+    if (!addWait || d.rid !== addWait.rid) return;
+    clearTimeout(addWait.timer); addWait = null; $('ag-add').disabled = false;
+    if (!d.ok) { lmsg('bad', d.text || 'The studio couldn’t add that guest.'); return; }
+    $('ag-name').value = ''; $('ag-seat').value = '';
+    const copied = d.invite ? await copy(String(d.invite)) : false;
+    lmsg('good', (copied ? 'Invite copied. ' : 'Click “Copy invite” next to their name to copy it. ') + (d.text || ''));
+  }
+  $('ag-add').onclick = addGuest;
+  $('ag-name').addEventListener('keydown', e => { if (e.key === 'Enter') addGuest(); });
 
   // ---------- suggest a slide ----------
   // Guests can send the producer a slide. It waits in the console until the producer adds it to the rundown or passes on it.
@@ -691,6 +810,7 @@
   };
 
   sugRenderMine();
+  renderLinks();
   render();
 })();
 </script>
