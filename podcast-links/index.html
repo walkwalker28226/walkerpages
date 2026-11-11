@@ -5,7 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Podcast Links · Canna-Chats</title>
-<script src="config.js"></script>
+<script>
+/* ════════════════════════════════════════════════════════════════════════════
+   PODCAST LINKS CONFIG — edit this section to update all links on the page.
+   Change the room name, seats, or extras here, then commit and push.
+   GitHub Pages will serve the update within ~60 seconds.
+   ════════════════════════════════════════════════════════════════════════════ */
+const PODCAST_CONFIG = {
+
+  // VDO Ninja room name — changing this updates every link on the page
+  room: "VACannabisLawyersPodcast",
+
+  // Room password — leave empty if none
+  roomPassword: "",
+
+  // VDO Ninja base URL (don't change unless self-hosting)
+  vdoBase: "https://vdo.ninja",
+
+  // Where the guest-room folder lives on walkerops.com
+  guestBoardBase: "https://walkerops.com/podcast-guest/",
+
+  // Producer info
+  producer: {
+    name: "Bill",
+    directorKey: "",   // set if you use a director key
+  },
+
+  // Seats — each one gets a row on the page.
+  // push_id: the VDO Ninja stream ID OBS uses for this seat's camera.
+  // is_host: true = full board + guest links + reactions section.
+  seats: [
+    { seat: 1, name: "Brian",   push_id: "brian1cc",  is_host: true  },
+    { seat: 2, name: "Tyson",   push_id: "tyson2cc",  is_host: true  },
+    { seat: 3, name: "Guest 3", push_id: "guest3cc",  is_host: false },
+    { seat: 4, name: "Guest 4", push_id: "guest4cc",  is_host: false },
+  ],
+
+  // Extra production links shown at the bottom
+  extras: [
+    { label: "YouTube Studio",    url: "https://studio.youtube.com/" },
+    { label: "YouTube Live Chat", url: "https://youtube.com/live_chat" },
+  ],
+
+};
+/* ══════════════════════════════════════════════════════════════════════════ */
+</script>
 <style>
   @font-face { font-family: Archivo; src: url(fonts/archivo-variable.woff2) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; }
   @font-face { font-family: "JetBrains Mono"; font-weight: 500; src: url(fonts/jetbrains-mono-latin-500-normal.woff2) format('woff2'); }
@@ -260,7 +304,7 @@
 <!-- ══ FOOTER ═══════════════════════════════════════════════════════════════ -->
 <footer>
   walkerops.com/podcast-links &nbsp;·&nbsp;
-  Links update automatically when <code>config.js</code> is changed.
+  Links update automatically when <code>index.html</code> config block is changed.
   &nbsp;·&nbsp;
   <a href="https://walkerops.com">WalkerOps</a>
 </footer>
@@ -275,7 +319,7 @@
   const C = window.PODCAST_CONFIG;
   if (!C) {
     document.getElementById('main').innerHTML =
-      '<p style="color:red">Error: config.js not loaded. Check the file exists next to index.html.</p>';
+      '<p style="color:red">Error: PODCAST_CONFIG not found. Check the inline config block at the top of index.html.</p>';
     return;
   }
 
