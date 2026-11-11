@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Rundown · Canna-Chats</title>
+<style>
+  @font-face { font-family: Archivo; src: url(../podcast-guest/fonts/archivo-variable.woff2) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 500; src: url(../podcast-guest/fonts/jetbrains-mono-latin-500-normal.woff2) format('woff2'); }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url(../podcast-guest/fonts/jetbrains-mono-latin-700-normal.woff2) format('woff2'); }
+  /* Canna-Chats "Signal": Night bars, Smoke page, Volt for the one thing to click, Ultraviolet for what's selected.
+     Layout: episode tree on the left third, the slide (editor + on-air preview) on the right two-thirds. */
+  :root {
+    --night:#0E0F0C; --graphite:#2A2C27; --smoke:#E9E9E4; --volt:#C6F432; --uv:#5A3FE0; --ash:#A3A39C; --card:#FFFFFF;
+    --hair:rgba(14,15,12,.16); --good:#2D6B1F;
+    --display: Archivo, "Arial Black", Helvetica, sans-serif; --sans: Archivo, Helvetica, Arial, sans-serif;
+    --mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+    color-scheme: light;
+  }
+  * { box-sizing:border-box; }
+  html, body { height:100%; margin:0; }
+  body { background:var(--smoke); color:var(--night); font:15px/1.4 var(--sans); display:flex; flex-direction:column; overflow:hidden; -webkit-font-smoothing:antialiased; }
+  button, input, textarea, select { font-family:inherit; }
+  [hidden] { display:none !important; }
+  :focus-visible { outline:2px solid var(--uv); outline-offset:1px; }
+
+  .top { flex:none; display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:10px 20px; background:var(--night); color:var(--smoke); border-bottom:4px solid var(--volt); }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .burst { width:34px; height:34px; flex:none; display:block; }
+  .name { font:900 24px/1 var(--display); font-stretch:125%; letter-spacing:-.5px; text-transform:uppercase; }
+  .name span { color:var(--volt); }
+  .what { padding-left:14px; border-left:1px solid var(--graphite); font:500 12px/1 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--volt); }
+  .saved { margin-left:auto; font:500 12px/1.2 var(--mono); color:var(--ash); }
+  .saved.bad { color:#fff; background:var(--uv); padding:6px 8px; }
+  .tbtn { border:1px solid var(--graphite); background:transparent; color:var(--smoke); padding:8px 12px; font:600 13px/1 var(--sans); cursor:pointer; }
+  .tbtn:hover { border-color:var(--volt); color:var(--volt); }
+
+  .wrap { flex:1; min-height:0; display:grid; grid-template-columns:minmax(260px, 30%) minmax(0, 1fr); }
+
+  /* left: Episodes > Segments > Slides */
+  nav { min-height:0; display:flex; flex-direction:column; background:var(--card); border-right:1px solid var(--hair); }
+  .navhead { flex:none; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; border-bottom:1px solid var(--hair); }
+  .navhead b { font:700 12px/1 var(--mono); letter-spacing:2px; text-transform:uppercase; }
+  .tree { flex:1; min-height:0; overflow-y:auto; padding:6px 0 20px; }
+  .node { display:flex; align-items:center; gap:6px; width:100%; border:0; background:none; text-align:left; cursor:pointer; color:var(--night);
+          padding:7px 12px 7px 0; border-left:3px solid transparent; font:400 14px/1.3 var(--sans); }
+  .node:hover { background:var(--smoke); }
+  .node.sel { background:var(--smoke); border-left-color:var(--uv); font-weight:600; }
+  .node .tw { flex:none; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; font-size:10px; color:var(--graphite); border:0; background:none; cursor:pointer; padding:0; }
+  .node .tw.open { transform:rotate(90deg); }
+  .node .lab { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .node .n { flex:none; font:700 12px/1 var(--mono); color:var(--graphite); }
+  .node .ct { flex:none; font:500 11px/1 var(--mono); color:var(--graphite); }
+  .node.ep { padding-left:6px; font-weight:700; }
+  .node.ep .n { background:var(--night); color:var(--volt); padding:4px 6px; }
+  .node.sg { padding-left:22px; font:700 11.5px/1.3 var(--mono); letter-spacing:1px; text-transform:uppercase; color:var(--uv); }
+  .node.sl { padding-left:52px; }
+  .add { display:block; width:calc(100% - 24px); margin:4px 12px 6px; border:1px dashed var(--hair); background:none; color:var(--graphite); padding:6px 8px; text-align:left;
+         font:600 12.5px/1 var(--sans); cursor:pointer; }
+  .add:hover { border-color:var(--night); color:var(--night); }
+  .add.l2 { width:calc(100% - 52px); margin-left:40px; } .add.l3 { width:calc(100% - 64px); margin-left:52px; }
+  .tree .none { padding:14px; color:var(--graphite); font-size:13.5px; }
+
+  /* right: what's selected */
+  main { min-height:0; min-width:0; overflow-y:auto; padding:14px 18px 28px; container-type:inline-size; }
+  .crumbs { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .crumbs .path { flex:1 1 200px; min-width:0; font:700 12px/1.3 var(--mono); letter-spacing:1px; text-transform:uppercase; color:var(--graphite); }
+  .btn { border:1px solid var(--hair); background:#fff; color:var(--night); padding:8px 12px; font:600 13px/1 var(--sans); cursor:pointer; white-space:nowrap; }
+  .btn:hover:not(:disabled) { border-color:var(--night); }
+  .btn:disabled { opacity:.45; cursor:default; }
+  .btn.primary { background:var(--volt); border-color:var(--night); }
+  .btn.sure { background:var(--uv); border-color:var(--uv); color:#fff; }
+  .btn.small { padding:6px 9px; font-size:12.5px; }
+  h1 { margin:0 0 4px; font:900 26px/1.05 var(--display); font-stretch:125%; letter-spacing:-.5px; text-transform:uppercase; text-wrap:balance; }
+  .lede { margin:0 0 14px; color:var(--graphite); font-size:14px; max-width:65ch; }
+
+  .slide { display:grid; grid-template-columns:minmax(0, 1fr); gap:16px; }
+  @container (min-width: 860px) { .slide { grid-template-columns:minmax(300px, 380px) minmax(0, 1fr); } .slide .pv { order:2; position:sticky; top:0; align-self:start; } }
+  .form label, .fld > span { display:block; font:700 11px/1 var(--mono); letter-spacing:1px; text-transform:uppercase; margin:12px 0 5px; }
+  .form label:first-child { margin-top:0; }
+  .form label small, .fld small { font:400 12px/1 var(--sans); letter-spacing:0; text-transform:none; color:var(--graphite); margin-left:6px; }
+  input[type=text], input[type=url], textarea, select { width:100%; font:14px/1.35 var(--sans); padding:8px 10px; border:1px solid var(--hair); background:#fff; color:var(--night); border-radius:0; }
+  textarea { min-height:190px; resize:vertical; }
+  .drop { border:1.5px dashed var(--hair); background:#fff; padding:12px; font-size:13px; color:var(--graphite); cursor:pointer; display:flex; gap:10px; align-items:center; justify-content:center; text-align:center; }
+  .drop.over { border-color:var(--uv); background:#F4F2FD; }
+  .drop img { max-height:54px; max-width:96px; border:1px solid var(--hair); }
+  .lnk { border:0; background:none; color:var(--graphite); text-decoration:underline; cursor:pointer; font-size:12.5px; padding:4px 0; }
+  .pvhead { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .pvhead b { font:700 11px/1 var(--mono); letter-spacing:1px; text-transform:uppercase; }
+  .pvhead span { flex:1; font-size:13px; color:var(--graphite); }
+  .seg2 { display:flex; border:1px solid var(--night); }
+  .seg2 button { border:0; background:#fff; color:var(--night); padding:6px 10px; font:600 12.5px/1 var(--sans); cursor:pointer; }
+  .seg2 button + button { border-left:1px solid var(--night); }
+  .seg2 button.on { background:var(--night); color:var(--volt); }
+  .stage { position:relative; width:100%; aspect-ratio:16 / 9; overflow:hidden; background:var(--card); border:1px solid var(--hair); box-shadow:0 8px 24px rgba(14,15,12,.07); }
+  .stage iframe { position:absolute; left:0; top:0; width:1920px; height:1080px; border:0; transform-origin:0 0; pointer-events:none; }
+  .pvnav { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .pvnav .pos { font:600 13px/1 var(--sans); color:var(--graphite); min-width:90px; text-align:center; }
+
+  .panel { background:#fff; border:1px solid var(--hair); padding:14px 16px; margin-bottom:14px; max-width:900px; }
+  .panel h2 { margin:0 0 10px; font:700 12px/1 var(--mono); letter-spacing:2px; text-transform:uppercase; }
+  .row3 { display:grid; grid-template-columns:110px minmax(0, 1fr) 170px; gap:10px; }
+  @container (max-width: 560px) { .row3 { grid-template-columns:1fr; } }
+  .acts { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .acts p { flex:1 1 100%; margin:6px 0 0; font-size:13px; color:var(--graphite); max-width:65ch; }
+  .outline { list-style:none; margin:0; padding:0; }
+  .outline .os { margin:12px 0 4px; font:700 11.5px/1.3 var(--mono); letter-spacing:1px; text-transform:uppercase; color:var(--uv); }
+  .outline .os:first-child { margin-top:0; }
+  .outline button { display:grid; grid-template-columns:30px 1fr; gap:8px; width:100%; border:0; background:none; text-align:left; padding:6px 4px; cursor:pointer; font:400 14px/1.3 var(--sans); color:var(--night); }
+  .outline button:hover { background:var(--smoke); }
+  .outline button span:first-child { font:700 12px/1.5 var(--mono); color:var(--graphite); }
+  .msg { min-height:18px; margin-top:8px; font-size:13px; color:var(--uv); }
+  .msg.good { color:var(--good); font-weight:600; }
+
+  .foot { flex:none; display:flex; justify-content:space-between; gap:12px; padding:7px 20px; background:var(--night); color:var(--ash); font:400 12px/1.2 var(--sans); }
+  .foot b { color:var(--volt); font-weight:600; }
+
+  @media (max-width: 820px) {
+    body { overflow:auto; display:block; height:auto; }
+    .wrap { display:block; }
+    nav { border-right:0; border-bottom:1px solid var(--hair); } .tree { max-height:38vh; }
+    main { overflow:visible; padding:12px; }
+    .what { display:none; } .name { font-size:18px; } .burst { width:26px; height:26px; }
+    .saved { flex:1 1 100%; margin-left:0; order:9; }
+    .foot span:last-child { display:none; }
+  }
+  @media (prefers-reduced-motion: no-preference) { .node .tw { transition:transform .12s; } }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="brand">
+      <svg class="burst" viewBox="10 2 180 180" aria-hidden="true"><path d="M100 142V20 M108.4 144.1L155.4 55.8 M91.6 144.1L44.6 55.8 M114.9 149.9L173 110.8 M85.1 149.9L27 110.8 M117.9 158.1L151.7 154.5 M82.1 158.1L48.3 154.5" stroke="#C6F432" stroke-width="18" stroke-linecap="round" fill="none"/></svg>
+      <div class="name" aria-label="Canna-Chats">Canna<span>/</span>Chats</div>
+    </div>
+    <div class="what">// Rundown</div>
+    <div class="saved" id="saved" aria-live="polite">Opening…</div>
+    <button class="tbtn" id="openFile" type="button" title="Open a show file or a copy someone sent you. It is added as a new episode.">Open a file</button>
+    <input type="file" id="filePick" accept=".md,.txt,.json,text/markdown,text/plain,application/json" hidden>
+  </div>
+
+  <div class="wrap">
+    <nav aria-label="Episodes">
+      <div class="navhead"><b>Episodes</b><button class="btn small primary" id="newEp" type="button">+ New episode</button></div>
+      <div class="tree" id="tree"></div>
+    </nav>
+    <main id="main"></main>
+  </div>
+
+  <div class="foot"><span><b>Drafts stay in this browser.</b> Nothing here goes on air. Download a show file to hand an episode to the studio.</span><span>Studio by WalkerOps</span></div>
+
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const uid = () => Math.random().toString(36).slice(2, 10);
+  const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const titleOf = s => (s.title || s.caption || (s.body || '').split('\n').find(l => l.trim()) || (s.img ? 'Photo' : 'Untitled slide')).replace(/\*\*/g, '').replace(/^\s*[-*•]\s+/, '');
+  const epName = e => e.title || 'Untitled episode';
+
+  // ---------- storage: this browser only (IndexedDB, so pictures fit) ----------
+  const store = {
+    db: null,
+    open() { return this.db ? Promise.resolve(this.db) : new Promise((res, rej) => { const r = indexedDB.open('ccRundown', 1);
+      r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => { this.db = r.result; res(this.db); }; r.onerror = () => rej(r.error); }); },
+    async get(k) { const d = await this.open(); return new Promise((res, rej) => { const q = d.transaction('kv').objectStore('kv').get(k); q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); }); },
+    async set(k, v) { const d = await this.open(); return new Promise((res, rej) => { const t = d.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = () => res(); t.onerror = () => rej(t.error); }); }
+  };
+  let data = { v: 1, episodes: [], theme: 'light', open: {} };
+  let sel = { ep: null, seg: null, slide: null };
+  let saveTimer = null;
+  function saved(text, bad) { $('saved').textContent = text; $('saved').className = 'saved' + (bad ? ' bad' : ''); }
+  function save() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(async () => {
+      try { data.sel = sel; await store.set('data', data);
+            saved('Saved in this browser · ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })); }
+      catch { saved('Couldn’t save in this browser. Download a copy of your episode so you don’t lose it.', true); }
+    }, 350);
+  }
+
+  // ---------- the example a first-time visitor sees ----------
+  function example() {
+    const sl = (title, body) => ({ id: uid(), title, body, caption: '', img: null, pic: '' });
+    return { id: uid(), num: '00', title: 'Example episode (safe to delete)', date: '', segments: [
+      { id: uid(), name: 'Segment 1 · How this page works', slides: [
+        sl('Build a rundown', '- An **episode** holds segments\n- A **segment** holds slides\n- Click any slide on the left to edit it\n  - The preview shows it the way it looks on air'),
+        sl('Writing a slide', '- Start a line with - for a bullet\n  - Indent two spaces for a sub-point\n- Wrap words in two asterisks for **bold**\n1. Numbered lists work too') ] },
+      { id: uid(), name: 'Segment 2 · Getting it to the studio', slides: [
+        sl('Hand it to the producer', '- Click the episode, then **Download show file**\n- Send that file to the producer\n- The producer loads it into the studio console\n  - Pictures are added in the console, so send those along too'),
+        sl('Where drafts live', '- Drafts are saved in **this browser only**\n- Use **Download a copy** to move an episode to another computer or share it with pictures\n- **Open a file** brings a show file or a copy back in') ] } ] };
+  }
+
+  // ---------- finding things ----------
+  const ep = () => data.episodes.find(e => e.id === sel.ep) || null;
+  const sg = () => { const e = ep(); return e ? e.segments.find(s => s.id === sel.seg) || null : null; };
+  const slideOf = () => { const s = sg(); return s ? s.slides.find(x => x.id === sel.slide) || null : null; };
+  const flat = e => e.segments.flatMap(s => s.slides.map(x => ({ seg: s, slide: x })));
+  function pick(e, s, x) { sel = { ep: e || null, seg: s || null, slide: x || null }; if (e) data.open[e] = true; if (s) data.open[s] = true; renderTree(); renderMain(); save(); }
+  function move(arr, item, d) { const i = arr.indexOf(item), j = i + d; if (i < 0 || j < 0 || j >= arr.length) return; arr.splice(i, 1); arr.splice(j, 0, item); }
+  // Buttons that delete ask twice: the first click arms the button, the second one does it.
+  function twice(btn, label, fn) {
+    btn.onclick = () => {
+      if (btn.classList.contains('sure')) { fn(); return; }
+      const o = btn.textContent; btn.textContent = label; btn.classList.add('sure');
+      setTimeout(() => { btn.textContent = o; btn.classList.remove('sure'); }, 3500);
+    };
+  }
+
+  // ---------- left: the tree ----------
+  function renderTree() {
+    const t = $('tree'); const keep = t.scrollTop; t.innerHTML = '';
+    if (!data.episodes.length) { t.innerHTML = '<div class="none">No episodes yet. Click <b>+ New episode</b> to start one.</div>'; return; }
+    const node = (cls, isSel, open, onToggle, inner, onPick, title) => {
+      const b = document.createElement('div'); b.className = 'node ' + cls + (isSel ? ' sel' : ''); b.setAttribute('role', 'button'); b.tabIndex = 0; b.title = title || '';
+      if (onToggle) { const tw = document.createElement('button'); tw.type = 'button'; tw.className = 'tw' + (open ? ' open' : ''); tw.textContent = '▶'; tw.setAttribute('aria-label', open ? 'Close' : 'Open');
+                      tw.onclick = ev => { ev.stopPropagation(); onToggle(); }; b.appendChild(tw); }
+      b.insertAdjacentHTML('beforeend', inner);
+      b.onclick = onPick; b.onkeydown = ev => { if (ev.target === b && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); onPick(); } };
+      t.appendChild(b); return b;
+    };
+    const add = (cls, label, fn) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'add ' + cls; b.textContent = label; b.onclick = fn; t.appendChild(b); };
+    data.episodes.forEach(e => {
+      const eOpen = !!data.open[e.id];
+      node('ep', sel.ep === e.id && !sel.seg, eOpen, () => { data.open[e.id] = !eOpen; renderTree(); save(); },
+           `${e.num ? `<span class="n">EP ${esc(e.num)}</span>` : ''}<span class="lab">${esc(epName(e))}</span><span class="ct">${flat(e).length}</span>`,
+           () => pick(e.id), epName(e));
+      if (!eOpen) return;
+      let n = 0;
+      e.segments.forEach(s => {
+        const sOpen = !!data.open[s.id];
+        node('sg', sel.seg === s.id && !sel.slide, sOpen, () => { data.open[s.id] = !sOpen; renderTree(); save(); },
+             `<span class="lab">${esc(s.name || 'Untitled segment')}</span><span class="ct">${s.slides.length}</span>`, () => pick(e.id, s.id), s.name);
+        s.slides.forEach(x => {
+          n++;
+          if (sOpen) node('sl', sel.slide === x.id, false, null, `<span class="n">${String(n).padStart(2, '0')}</span><span class="lab">${esc(titleOf(x))}</span>`, () => pick(e.id, s.id, x.id), titleOf(x));
+        });
+        if (sOpen) add('l3', '+ Add a slide', () => addSlide(e, s));
+      });
+      add('l2', '+ Add a segment', () => addSegment(e));
+    });
+    t.scrollTop = keep;
+  }
+  function addEpisode() {
+    const nums = data.episodes.map(e => parseInt(e.num, 10)).filter(n => n > 0);
+    const e = { id: uid(), num: nums.length ? String(Math.max(...nums) + 1).padStart(2, '0') : '', title: '', date: '', segments: [] };
+    const s = { id: uid(), name: 'Segment 1', slides: [{ id: uid(), title: '', body: '', caption: '', img: null, pic: '' }] };
+    e.segments.push(s); data.episodes.unshift(e); pick(e.id);
+    setTimeout(() => { const f = $('e-title'); if (f) f.focus(); }, 30);
+  }
+  function addSegment(e) { const s = { id: uid(), name: 'Segment ' + (e.segments.length + 1), slides: [] }; e.segments.push(s); pick(e.id, s.id); setTimeout(() => { const f = $('s-name'); if (f) { f.focus(); f.select(); } }, 30); }
+  function addSlide(e, s, after) {
+    const x = { id: uid(), title: '', body: '', caption: '', img: null, pic: '' };
+    const i = after ? s.slides.indexOf(after) : -1; if (i >= 0) s.slides.splice(i + 1, 0, x); else s.slides.push(x);
+    pick(e.id, s.id, x.id); setTimeout(() => { const f = $('x-title'); if (f) f.focus(); }, 30);
+  }
+  $('newEp').onclick = addEpisode;
+
+  // ---------- right: the selected thing ----------
+  function renderMain() {
+    const m = $('main'); const e = ep(), s = sg(), x = slideOf();
+    if (!e) { m.innerHTML = '<h1>Plan an episode</h1><p class="lede">Pick an episode on the left, or click <b>+ New episode</b>. Each episode is split into segments, and each segment holds the slides that go on the board.</p>'; return; }
+    if (x) return slideView(m, e, s, x);
+    if (s) return segmentView(m, e, s);
+    episodeView(m, e);
+  }
+  const bind = (id, obj, key, after) => { const f = $(id); f.value = obj[key] || ''; f.oninput = () => { obj[key] = f.value; renderTree(); if (after) after(); save(); }; };
+
+  function outline(e, only) {
+    let n = 0, h = '<ul class="outline">';
+    e.segments.forEach(s => {
+      if (!only) h += `<li class="os">${esc(s.name || 'Untitled segment')}</li>`;
+      s.slides.forEach(x => { n++; if (!only || only === s) h += `<li><button type="button" data-s="${s.id}" data-x="${x.id}"><span>${String(n).padStart(2, '0')}</span><span>${esc(titleOf(x))}</span></button></li>`; });
+      if (!s.slides.length && (!only || only === s)) h += '<li style="color:var(--graphite);font-size:13px;padding:4px">No slides in this segment yet.</li>';
+    });
+    return h + '</ul>';
+  }
+  const wireOutline = (m, e) => m.querySelectorAll('.outline button').forEach(b => b.onclick = () => pick(e.id, b.dataset.s, b.dataset.x));
+
+  function episodeView(m, e) {
+    const count = flat(e).length;
+    m.innerHTML = `
+      <div class="crumbs"><span class="path">Episode</span>
+        <button class="btn small" id="e-up" type="button" title="Move this episode up the list">Move up</button><button class="btn small" id="e-down" type="button" title="Move this episode down the list">Move down</button>
+        <button class="btn small" id="e-dup" type="button">Duplicate</button><button class="btn small" id="e-del" type="button">Delete episode</button></div>
+      <div class="panel"><h2>Episode details</h2>
+        <div class="row3">
+          <div class="fld"><span>Number</span><input type="text" id="e-num" maxlength="6" autocomplete="off" placeholder="12"></div>
+          <div class="fld"><span>Title</span><input type="text" id="e-title" maxlength="160" autocomplete="off" placeholder="What this episode is about"></div>
+          <div class="fld"><span>Date</span><input type="text" id="e-date" maxlength="40" autocomplete="off" placeholder="Nov 18, 2026"></div>
+        </div></div>
+      <div class="panel"><h2>Hand it to the studio</h2>
+        <div class="acts">
+          <button class="btn primary" id="e-show" type="button">Download show file</button>
+          <button class="btn" id="e-copy" type="button">Download a copy (with pictures)</button>
+          <p><b>Show file:</b> the text of every slide, for the producer to load into the studio console (Board, then Load slides from file). Pictures aren’t part of a show file. <b>Copy:</b> the whole episode with its pictures, to open on this page in another browser or send to a co-host.</p>
+        </div><div class="msg" id="e-msg" aria-live="polite"></div></div>
+      <div class="panel"><h2>Rundown · ${count} slide${count === 1 ? '' : 's'} in ${e.segments.length} segment${e.segments.length === 1 ? '' : 's'}</h2>${e.segments.length ? outline(e) : '<p class="lede" style="margin:0">No segments yet. Click <b>+ Add a segment</b> on the left.</p>'}</div>`;
+    bind('e-num', e, 'num'); bind('e-title', e, 'title'); bind('e-date', e, 'date');
+    wireOutline(m, e);
+    $('e-up').onclick = () => { move(data.episodes, e, -1); renderTree(); save(); };
+    $('e-down').onclick = () => { move(data.episodes, e, 1); renderTree(); save(); };
+    $('e-dup').onclick = () => { const c = JSON.parse(JSON.stringify(e)); reId(c); c.title = epName(e) + ' (copy)'; data.episodes.splice(data.episodes.indexOf(e) + 1, 0, c); pick(c.id); };
+    twice($('e-del'), 'Click again to delete', () => { data.episodes.splice(data.episodes.indexOf(e), 1); pick(data.episodes[0] ? data.episodes[0].id : null); });
+    $('e-show').onclick = () => { download(fileName(e) + '.md', showFile(e), 'text/markdown'); note('e-msg', 'Show file downloaded. Send it to the producer.'); };
+    $('e-copy').onclick = () => { download(fileName(e) + '.cannachats.json', JSON.stringify({ cannaChatsRundown: 1, episode: e }), 'application/json'); note('e-msg', 'Copy downloaded, pictures included.'); };
+  }
+  function note(id, text, bad) { const el = $(id); if (!el) return; el.textContent = text; el.className = 'msg' + (bad ? '' : ' good'); setTimeout(() => { if (el.textContent === text) el.textContent = ''; }, 5000); }
+  function reId(e) { e.id = uid(); e.segments.forEach(s => { s.id = uid(); s.slides.forEach(x => x.id = uid()); }); }
+
+  function segmentView(m, e, s) {
+    m.innerHTML = `
+      <div class="crumbs"><span class="path">${esc(e.num ? 'Ep ' + e.num : epName(e))} › Segment ${e.segments.indexOf(s) + 1} of ${e.segments.length}</span>
+        <button class="btn small" id="s-up" type="button" title="Move this segment earlier in the episode">Move up</button><button class="btn small" id="s-down" type="button" title="Move this segment later in the episode">Move down</button>
+        <button class="btn small" id="s-del" type="button">Delete segment</button></div>
+      <div class="panel"><h2>Segment</h2>
+        <div class="fld"><span>Name <small>shown in the top corner of every slide in this segment</small></span><input type="text" id="s-name" maxlength="120" autocomplete="off" placeholder="Segment 2 · Getting licensed"></div></div>
+      <div class="panel"><h2>Slides in this segment</h2>${outline(e, s)}
+        <div class="acts" style="margin-top:10px"><button class="btn primary" id="s-add" type="button">+ Add a slide</button></div></div>`;
+    bind('s-name', s, 'name'); wireOutline(m, e);
+    $('s-up').onclick = () => { move(e.segments, s, -1); renderTree(); renderMain(); save(); };
+    $('s-down').onclick = () => { move(e.segments, s, 1); renderTree(); renderMain(); save(); };
+    $('s-add').onclick = () => addSlide(e, s);
+    twice($('s-del'), s.slides.length ? `Click again to delete it and its ${s.slides.length} slide${s.slides.length === 1 ? '' : 's'}` : 'Click again to delete',
+          () => { e.segments.splice(e.segments.indexOf(s), 1); pick(e.id); });
+  }
+
+  // ---------- the slide: editor on the left, the on-air look on the right ----------
+  let pvReady = false;
+  addEventListener('message', ev => { const f = $('pv'); if (f && ev.source === f.contentWindow && ev.data && ev.data.vclPreviewReady) { pvReady = true; paint(); } });
+  function paint() {
+    const f = $('pv'), x = slideOf(), s = sg(); if (!f || !x || !pvReady) return;
+    const st = { theme: data.theme === 'dark' ? 'dark' : 'light', layout: 'full', frame: 'plain', disclaimer: true, visible: true, sharedBg: false, logo: null,
+                 segment: s.name || '', title: x.title || '', body: x.body || '', caption: x.caption || '', image: x.img || null };
+    try { f.contentWindow.postMessage({ vclPreview: true, state: st }, '*'); } catch {}
+    const w = $('stage').clientWidth; if (w) f.style.transform = `scale(${w / 1920})`;
+  }
+  function slideView(m, e, s, x) {
+    const all = flat(e), i = all.findIndex(a => a.slide === x);
+    m.innerHTML = `
+      <div class="crumbs"><span class="path">${esc(e.num ? 'Ep ' + e.num : epName(e))} › ${esc(s.name || 'Untitled segment')} › Slide ${i + 1} of ${all.length}</span>
+        <button class="btn small" id="x-up" type="button" title="Move this slide earlier">Move up</button><button class="btn small" id="x-down" type="button" title="Move this slide later">Move down</button>
+        <button class="btn small" id="x-dup" type="button">Duplicate</button><button class="btn small" id="x-del" type="button">Delete slide</button></div>
+      <div class="slide">
+        <div class="pv">
+          <div class="pvhead"><b>Preview</b><span>How it looks on air</span>
+            <div class="seg2" role="group" aria-label="Board look"><button type="button" id="th-light">Light</button><button type="button" id="th-dark">Dark</button></div></div>
+          <div class="stage" id="stage"><iframe id="pv" src="../podcast-guest/display.html?preview=1" title="Slide preview" tabindex="-1"></iframe></div>
+          <div class="pvnav"><button class="btn" id="x-prev" type="button">◀ Previous</button><span class="pos">Slide ${i + 1} of ${all.length}</span><button class="btn" id="x-next" type="button">Next ▶</button>
+            <button class="btn primary" id="x-new" type="button" style="margin-left:auto">+ New slide after this</button></div>
+        </div>
+        <div class="form">
+          <label for="x-seg">Segment</label><select id="x-seg"></select>
+          <label for="x-title">Title</label><input type="text" id="x-title" maxlength="200" autocomplete="off">
+          <label for="x-body">Text <small>start a line with - for a bullet; **bold** works</small></label>
+          <textarea id="x-body" maxlength="4000" placeholder="- First point&#10;- Second point&#10;  - A sub-point"></textarea>
+          <label>Picture or screenshot <small>optional</small></label>
+          <div class="drop" id="x-drop"><img id="x-thumb" alt="" hidden><span id="x-dropText"></span></div>
+          <input type="file" id="x-file" accept="image/*" hidden>
+          <button class="lnk" id="x-clear" type="button" hidden>Remove picture</button>
+          <label for="x-caption">Picture caption <small>optional</small></label><input type="text" id="x-caption" maxlength="200" autocomplete="off">
+          <label for="x-pic">Page to screenshot <small>optional link for the producer</small></label><input type="url" id="x-pic" maxlength="600" autocomplete="off" placeholder="https://">
+          <div class="msg" id="x-msg" aria-live="polite"></div>
+        </div>
+      </div>`;
+    pvReady = false;
+    bind('x-title', x, 'title', paint); bind('x-body', x, 'body', paint); bind('x-caption', x, 'caption', paint); bind('x-pic', x, 'pic');
+    const pickSeg = $('x-seg');
+    e.segments.forEach(g => { const o = document.createElement('option'); o.value = g.id; o.textContent = g.name || 'Untitled segment'; pickSeg.appendChild(o); });
+    pickSeg.value = s.id;
+    pickSeg.onchange = () => { const to = e.segments.find(g => g.id === pickSeg.value); if (!to || to === s) return; s.slides.splice(s.slides.indexOf(x), 1); to.slides.push(x); pick(e.id, to.id, x.id); };
+    const theme = () => { $('th-light').className = data.theme === 'dark' ? '' : 'on'; $('th-dark').className = data.theme === 'dark' ? 'on' : ''; };
+    $('th-light').onclick = () => { data.theme = 'light'; theme(); paint(); save(); };
+    $('th-dark').onclick = () => { data.theme = 'dark'; theme(); paint(); save(); };
+    theme();
+    const go = d => { const a = all[i + d]; if (a) pick(e.id, a.seg.id, a.slide.id); };
+    $('x-prev').disabled = i <= 0; $('x-next').disabled = i >= all.length - 1;
+    $('x-prev').onclick = () => go(-1); $('x-next').onclick = () => go(1);
+    $('x-new').onclick = () => addSlide(e, s, x);
+    // Moving a slide past the edge of its segment carries it into the next one.
+    const shift = d => {
+      const k = s.slides.indexOf(x), si = e.segments.indexOf(s);
+      if (k + d >= 0 && k + d < s.slides.length) { move(s.slides, x, d); pick(e.id, s.id, x.id); return; }
+      const to = e.segments[si + d]; if (!to) return;
+      s.slides.splice(k, 1); if (d < 0) to.slides.push(x); else to.slides.unshift(x); pick(e.id, to.id, x.id);
+    };
+    $('x-up').onclick = () => shift(-1); $('x-down').onclick = () => shift(1);
+    $('x-dup').onclick = () => { const c = Object.assign({}, x, { id: uid() }); s.slides.splice(s.slides.indexOf(x) + 1, 0, c); pick(e.id, s.id, c.id); };
+    twice($('x-del'), 'Click again to delete', () => { const a = all[i + 1] || all[i - 1]; s.slides.splice(s.slides.indexOf(x), 1); if (a) pick(e.id, a.seg.id, a.slide.id); else pick(e.id, s.id); });
+
+    const showImg = () => { const has = !!x.img; $('x-thumb').hidden = !has; if (has) $('x-thumb').src = x.img; $('x-clear').hidden = !has;
+      $('x-dropText').textContent = has ? 'Click, drop or paste to replace' : 'Drop a picture or screenshot, click to choose, or press Ctrl+V'; };
+    const take = async file => {
+      if (!file || !/^image\//.test(file.type)) { note('x-msg', 'That file isn’t a picture.', true); return; }
+      try { x.img = await readImage(file); } catch { note('x-msg', 'Couldn’t read that picture.', true); return; }
+      showImg(); renderTree(); paint(); save();
+    };
+    slideTake = take;
+    $('x-drop').onclick = () => $('x-file').click();
+    $('x-file').onchange = ev => take(ev.target.files[0]);
+    $('x-drop').ondragover = ev => { ev.preventDefault(); $('x-drop').classList.add('over'); };
+    $('x-drop').ondragleave = () => $('x-drop').classList.remove('over');
+    $('x-drop').ondrop = ev => { ev.preventDefault(); $('x-drop').classList.remove('over'); take(ev.dataTransfer.files[0]); };
+    $('x-clear').onclick = () => { x.img = null; $('x-file').value = ''; showImg(); renderTree(); paint(); save(); };
+    showImg();
+    new ResizeObserver(paint).observe($('stage'));
+  }
+  let slideTake = null;
+  document.addEventListener('paste', ev => {
+    if (!slideOf() || !slideTake) return;
+    const it = [...(ev.clipboardData?.items || [])].find(i => i.type.startsWith('image/'));
+    if (it) { ev.preventDefault(); slideTake(it.getAsFile()); }
+  });
+  function readImage(file) {
+    return new Promise((res, rej) => {
+      const fr = new FileReader();
+      fr.onload = () => { const img = new Image();
+        img.onload = () => { const k = Math.min(1, 1600 / Math.max(img.width, img.height));
+          const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+          const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+          res(c.toDataURL('image/jpeg', 0.86)); };
+        img.onerror = rej; img.src = fr.result; };
+      fr.onerror = rej; fr.readAsDataURL(file);
+    });
+  }
+
+  // ---------- files ----------
+  const fileName = e => ('Canna-Chats' + (e.num ? '-Ep' + e.num : '') + '-' + epName(e)).replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80);
+  function download(name, text, type) {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
+  // A show file: one fenced block per slide. First bold line is the segment, second is the title, the rest is what goes on the board.
+  function showFile(e) {
+    const out = ['# Canna-Chats' + (e.num ? ' · Ep ' + e.num : '') + ' · ' + epName(e) + (e.date ? ' · ' + e.date : ''), ''];
+    e.segments.forEach(s => s.slides.forEach(x => {
+      if (x.pic) out.push('Pic: ' + x.pic);
+      if (x.caption) out.push('Caption: ' + x.caption);
+      out.push('```', '**' + (s.name || 'Segment') + '**', '**' + titleOf(x) + '**');
+      if ((x.body || '').trim()) out.push(x.body.replace(/\s+$/, '').replace(/```/g, "'''"));
+      out.push('```', '');
+    }));
+    return out.join('\n');
+  }
+  function parseShowFile(text, name) {
+    const e = { id: uid(), num: '', title: '', date: '', segments: [] };
+    const head = /^#\s+(.+)$/m.exec(text);
+    if (head) { const parts = head[1].split(' · ').map(p => p.trim()).filter(p => !/^canna-?chats$/i.test(p));
+      const n = parts.findIndex(p => /^ep\.?\s*\d+/i.test(p)); if (n >= 0) e.num = parts.splice(n, 1)[0].replace(/\D+/g, '');
+      e.title = parts[0] || ''; e.date = parts[1] || ''; }
+    if (!e.title) e.title = String(name || 'Opened episode').replace(/\.(md|txt)$/i, '');
+    const re = /```[^\n]*\n([\s\S]*?)```/g; let m, last = 0, cur = null;
+    while ((m = re.exec(text.replace(/\r/g, '')))) {
+      const gap = text.replace(/\r/g, '').slice(last, m.index); last = re.lastIndex;
+      const lines = m[1].replace(/\s+$/, '').split('\n');
+      const bold = l => { const b = /^\s*\*\*(.+?)\*\*\s*$/.exec(l || ''); return b ? b[1].trim() : null; };
+      let segName = '', title = '';
+      if (bold(lines[0]) != null) { segName = bold(lines.shift()); if (bold(lines[0]) != null) title = bold(lines.shift()); }
+      const x = { id: uid(), title, body: lines.join('\n').replace(/^\n+/, ''), caption: (/^Caption:\s*(.+)$/mi.exec(gap) || [])[1] || '', img: null, pic: (/^Pic:\s*(\S+)/mi.exec(gap + '\n' + m[1]) || [])[1] || '' };
+      x.body = x.body.split('\n').filter(l => !/^Pic:\s*\S+/i.test(l)).join('\n');
+      if (!cur || cur.name !== segName) { cur = { id: uid(), name: segName || 'Segment ' + (e.segments.length + 1), slides: [] }; e.segments.push(cur); }
+      cur.slides.push(x);
+    }
+    return e.segments.length ? e : null;
+  }
+  $('openFile').onclick = () => $('filePick').click();
+  $('filePick').onchange = async ev => {
+    const f = ev.target.files[0]; ev.target.value = ''; if (!f) return;
+    let e = null;
+    try {
+      const text = await f.text();
+      if (/^\s*\{/.test(text)) { const j = JSON.parse(text); if (j && j.cannaChatsRundown && j.episode && Array.isArray(j.episode.segments)) { e = j.episode; reId(e); } }
+      else e = parseShowFile(text, f.name);
+    } catch {}
+    if (!e) { saved('That file didn’t have any slides this page can read.', true); return; }
+    e.segments.forEach(s => { s.slides = (s.slides || []).map(x => ({ id: x.id || uid(), title: String(x.title || ''), body: String(x.body || ''), caption: String(x.caption || ''), pic: String(x.pic || ''),
+                                                                   img: /^data:image\//.test(x.img || '') ? x.img : null })); s.name = String(s.name || ''); });
+    data.episodes.unshift(e); pick(e.id);
+  };
+
+  // ---------- start ----------
+  (async () => {
+    let fresh = false;
+    try { const d = await store.get('data'); if (d && Array.isArray(d.episodes)) data = Object.assign(data, d); else fresh = true; }
+    catch { fresh = true; saved('This browser won’t let the page save drafts. Download a copy of your work before you close the tab.', true); }
+    if (fresh && !data.episodes.length) { const e = example(); data.episodes.push(e); data.open[e.id] = true; e.segments.forEach(s => data.open[s.id] = true);
+                                          data.sel = { ep: e.id, seg: e.segments[0].id, slide: e.segments[0].slides[0].id }; }
+    if (data.sel && data.episodes.some(e => e.id === data.sel.ep)) sel = data.sel;
+    else if (data.episodes[0]) sel = { ep: data.episodes[0].id, seg: null, slide: null };
+    if (!$('saved').classList.contains('bad')) saved('Drafts are saved in this browser');
+    renderTree(); renderMain();
+  })();
+})();
+</script>
+</body>
+</html>
