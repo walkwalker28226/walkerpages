@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Podcast Links · Canna-Chats</title>
+<style>
+  @font-face { font-family: Archivo; src: url(../podcast-guest/fonts/archivo-variable.woff2) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 500; src: url(../podcast-guest/fonts/jetbrains-mono-latin-500-normal.woff2) format('woff2'); }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url(../podcast-guest/fonts/jetbrains-mono-latin-700-normal.woff2) format('woff2'); }
+
+  /* ── Signal palette ── */
+  :root {
+    --night:    #0E0F0C;
+    --volt:     #C6F432;
+    --smoke:    #E9E9E4;
+    --graphite: #2A2C27;
+    --muted:    #A3A39C;
+    --hair:     rgba(14,15,12,.14);
+    --ink:      #0E0F0C;
+    --card:     #FFFFFF;
+    --display:  Archivo, "Arial Black", sans-serif;
+    --sans:     Archivo, Helvetica, Arial, sans-serif;
+    --mono:     "JetBrains Mono", Consolas, "Courier New", monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--smoke);
+    color: var(--ink);
+    font: 15px/1.5 var(--sans);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Top bar ── */
+  .topbar {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 24px;
+    background: var(--night);
+    border-bottom: 4px solid var(--volt);
+  }
+  .topbar .burst { width: 32px; height: 32px; flex: none; }
+  .topbar .name {
+    font: 900 22px/1 var(--display);
+    font-stretch: 125%;
+    letter-spacing: -.4px;
+    text-transform: uppercase;
+    color: var(--smoke);
+  }
+  .topbar .name em { color: var(--volt); font-style: normal; }
+  .topbar .sub {
+    margin-left: 6px;
+    padding-left: 14px;
+    border-left: 1px solid var(--graphite);
+    font: 500 11px/1 var(--mono);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--volt);
+  }
+  .topbar .room-tag {
+    margin-left: auto;
+    font: 700 11px/1 var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--graphite);
+    padding: 7px 12px;
+    white-space: nowrap;
+  }
+  .topbar .room-tag span { color: var(--smoke); }
+
+  /* ── Main content ── */
+  main {
+    flex: 1;
+    max-width: 760px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 32px 20px 56px;
+  }
+
+  /* ── Section headers ── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 32px 0 10px;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+  .section-label h2 {
+    font: 700 11px/1 var(--mono);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--graphite);
+    margin: 0;
+  }
+  .section-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--hair);
+  }
+
+  /* ── Link cards ── */
+  .link-card {
+    background: var(--card);
+    border: 1px solid var(--hair);
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .link-card .lc-left { min-width: 0; }
+  .link-card .lc-name {
+    font: 700 15px/1.2 var(--sans);
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .link-card .lc-desc {
+    font: 500 12px/1.4 var(--mono);
+    color: var(--muted);
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .link-card .lc-url {
+    font: 500 11px/1.3 var(--mono);
+    color: var(--muted);
+    margin-top: 4px;
+    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── Buttons ── */
+  .lc-actions { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font: 700 11.5px/1 var(--mono);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    border: 1.5px solid var(--night);
+    background: var(--card);
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .1s, color .1s;
+    border-radius: 0;
+  }
+  .btn:hover { background: var(--night); color: var(--smoke); }
+  .btn.primary { background: var(--night); color: var(--smoke); border-color: var(--night); }
+  .btn.primary:hover { background: var(--graphite); }
+  .btn.volt { background: var(--volt); color: var(--night); border-color: var(--volt); }
+  .btn.volt:hover { background: #b2de1e; border-color: #b2de1e; }
+  .btn.copy-btn { border-color: var(--hair); color: var(--graphite); }
+  .btn.copy-btn:hover { border-color: var(--night); color: var(--night); background: var(--card); }
+  .btn.copy-btn.copied { background: var(--volt); border-color: var(--volt); color: var(--night); }
+
+  /* ── Host badge ── */
+  .host-badge {
+    display: inline-block;
+    font: 700 9.5px/1 var(--mono);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 3px 6px;
+    background: var(--volt);
+    color: var(--night);
+    margin-left: 8px;
+    vertical-align: 2px;
+  }
+
+  /* ── Helper note ── */
+  .note {
+    font: 500 12px/1.6 var(--mono);
+    color: var(--muted);
+    background: var(--night);
+    color: var(--muted);
+    border-left: 3px solid var(--volt);
+    padding: 10px 14px;
+    margin-bottom: 24px;
+  }
+  .note strong { color: var(--smoke); }
+
+  /* ── Permission checklist ── */
+  .perm-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 10px 0 0;
+  }
+  .perm-pill {
+    font: 600 11px/1 var(--mono);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 5px 9px;
+    border: 1.5px solid var(--volt);
+    color: var(--volt);
+  }
+
+  /* ── Footer ── */
+  footer {
+    flex: none;
+    padding: 16px 24px;
+    background: var(--night);
+    border-top: 1px solid var(--graphite);
+    font: 500 11px/1.4 var(--mono);
+    color: var(--muted);
+    text-align: center;
+  }
+  footer a { color: var(--muted); text-decoration: underline; }
+
+  /* ── Responsive ── */
+  @media (max-width: 540px) {
+    .link-card { grid-template-columns: 1fr; }
+    .lc-actions { flex-wrap: wrap; }
+    .topbar .room-tag { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ TOP BAR ══════════════════════════════════════════════════════════════ -->
+<header class="topbar">
+  <!-- Canna-Chats burst mark (inline SVG so no extra file needed) -->
+  <svg class="burst" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <polygon points="24,2 27,16 38,8 31,20 46,20 34,27 42,38 29,33 28,47 24,34 20,47 19,33 6,38 14,27 2,20 17,20 10,8 21,16" fill="#C6F432"/>
+  </svg>
+  <div>
+    <div class="name">CANNA<em>/</em>CHATS</div>
+  </div>
+  <div class="sub">Podcast Links</div>
+  <div class="room-tag" id="topbar-room">Room: <span id="topbar-room-name">—</span></div>
+</header>
+
+<!-- ══ MAIN ═════════════════════════════════════════════════════════════════ -->
+<main id="main">
+  <p style="color:var(--muted);font-size:13px;margin-top:0">Loading links…</p>
+</main>
+
+<!-- ══ FOOTER ═══════════════════════════════════════════════════════════════ -->
+<footer>
+  walkerops.com/podcast-links &nbsp;·&nbsp;
+  Links update automatically when <code>config.js</code> is changed.
+  &nbsp;·&nbsp;
+  <a href="https://walkerops.com">WalkerOps</a>
+</footer>
+
+<!-- Config must load first -->
+<script src="config.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   Podcast Links page — builds every URL from PODCAST_CONFIG (config.js)
+   No external dependencies. No console connection required.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+(function () {
+  const C = window.PODCAST_CONFIG;
+  if (!C) {
+    document.getElementById('main').innerHTML =
+      '<p style="color:red">Error: config.js not loaded. Check the file exists next to index.html.</p>';
+    return;
+  }
+
+  // ── URL builders ──────────────────────────────────────────────────────────
+  const base = C.vdoBase.replace(/\/$/, '');
+  const room = encodeURIComponent(C.room);
+  const pw   = C.roomPassword ? `&password=${encodeURIComponent(C.roomPassword)}` : '';
+
+  /** Guest invite: camera on, board visible, seat locked to push_id */
+  function guestURL(seat) {
+    const p = encodeURIComponent(seat.push_id);
+    const board = C.guestBoardBase.replace(/\/$/, '');
+    // The guest-room page at walkerops.com takes ?room=…&push=…&seat=…
+    // so the camera lands in the right OBS slot every time.
+    const params = new URLSearchParams({
+      room:  C.room,
+      push:  seat.push_id,
+      seat:  seat.seat,
+      ...(C.roomPassword ? { password: C.roomPassword } : {}),
+      ...(seat.is_host   ? { host: '1' } : {}),
+    });
+    return `${board}?${params.toString()}`;
+  }
+
+  /** Bare VDO Ninja guest link (camera-only fallback, no board) */
+  function vdoCameraURL(seat) {
+    const p = encodeURIComponent(seat.push_id);
+    return `${base}/?push=${p}&room=${room}${pw}&label=${encodeURIComponent(seat.name)}&webcam&autostart`;
+  }
+
+  /** Producer Control Room */
+  function producerURL() {
+    let url = `${base}/?director=${room}${pw}&label=${encodeURIComponent(C.producer.name)}&autostart`;
+    if (C.producer.directorKey) url += `&dkey=${encodeURIComponent(C.producer.directorKey)}`;
+    return url;
+  }
+
+  /** Watch-only link — whole room */
+  function watchRoomURL() {
+    return `${base}/?view=&scene&room=${room}${pw}&autostart&nospeaker`;
+  }
+
+  /** Watch-only link — single guest */
+  function watchGuestURL(seat) {
+    const v = encodeURIComponent(seat.push_id);
+    return `${base}/?view=${v}&room=${room}${pw}&autostart&nospeaker`;
+  }
+
+  // ── Copy-to-clipboard helper ──────────────────────────────────────────────
+  function copyBtn(text, label) {
+    const b = document.createElement('button');
+    b.className = 'btn copy-btn';
+    b.textContent = label || 'Copy';
+    b.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(text);
+        b.textContent = 'Copied!';
+        b.classList.add('copied');
+        setTimeout(() => { b.textContent = label || 'Copy'; b.classList.remove('copied'); }, 2000);
+      } catch {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        b.textContent = 'Copied!';
+        b.classList.add('copied');
+        setTimeout(() => { b.textContent = label || 'Copy'; b.classList.remove('copied'); }, 2000);
+      }
+    });
+    return b;
+  }
+
+  // ── Build invite message (same format as console's "Copy invite") ─────────
+  function inviteMessage(seat) {
+    const url = guestURL(seat);
+    return `Here's your link for the show — just click it and allow your camera and microphone when the browser asks.\n\n${url}\n\nHeadphones recommended so you don't echo. See you on air!`;
+  }
+
+  // ── Card builder ──────────────────────────────────────────────────────────
+  function card(name, desc, url, extraActions) {
+    const div = document.createElement('div');
+    div.className = 'link-card';
+
+    const left = document.createElement('div');
+    left.className = 'lc-left';
+
+    const nameEl = document.createElement('div');
+    nameEl.className = 'lc-name';
+    nameEl.innerHTML = name;
+    left.appendChild(nameEl);
+
+    if (desc) {
+      const d = document.createElement('div');
+      d.className = 'lc-desc';
+      d.textContent = desc;
+      left.appendChild(d);
+    }
+
+    if (url) {
+      const u = document.createElement('div');
+      u.className = 'lc-url';
+      u.textContent = url.length > 90 ? url.slice(0, 87) + '…' : url;
+      left.appendChild(u);
+    }
+
+    const actions = document.createElement('div');
+    actions.className = 'lc-actions';
+
+    if (url) {
+      const open = document.createElement('a');
+      open.className = 'btn primary';
+      open.href = url;
+      open.target = '_blank';
+      open.rel = 'noopener';
+      open.textContent = 'Open';
+      actions.appendChild(open);
+
+      actions.appendChild(copyBtn(url, 'Copy link'));
+    }
+
+    if (extraActions) extraActions(actions);
+
+    div.appendChild(left);
+    div.appendChild(actions);
+    return div;
+  }
+
+  // ── Section label builder ─────────────────────────────────────────────────
+  function sectionLabel(text) {
+    const div = document.createElement('div');
+    div.className = 'section-label';
+    const h2 = document.createElement('h2');
+    h2.textContent = text;
+    div.appendChild(h2);
+    return div;
+  }
+
+  // ── Render ────────────────────────────────────────────────────────────────
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+
+  // Update topbar room name
+  document.getElementById('topbar-room-name').textContent = C.room;
+
+  // ── Permissions note ──
+  const note = document.createElement('div');
+  note.className = 'note';
+  note.innerHTML = `<strong>Before you click your link</strong> — when your browser asks, allow these:<br>
+    <div class="perm-list">
+      <span class="perm-pill">📷 Camera</span>
+      <span class="perm-pill">🎤 Microphone</span>
+    </div>
+    <br>Use headphones. Chrome or Edge work best.`;
+  main.appendChild(note);
+
+  // ── Producer ──
+  main.appendChild(sectionLabel('Producer'));
+  main.appendChild(card(
+    `${C.producer.name} <span style="font:500 11px/1 var(--mono);color:var(--muted)">(Director / Control Room)</span>`,
+    'Full director controls — hear and see everyone, mute guests, switch seats',
+    producerURL(),
+  ));
+
+  // ── Hosts ──
+  const hosts = C.seats.filter(s => s.is_host);
+  if (hosts.length) {
+    main.appendChild(sectionLabel('Hosts'));
+    hosts.forEach(seat => {
+      main.appendChild(card(
+        `${seat.name} <span class="host-badge">Host</span>`,
+        `Seat ${seat.seat} · Camera + board + rundown + guest links + reactions`,
+        guestURL(seat),
+        (actions) => {
+          actions.appendChild(copyBtn(inviteMessage(seat), 'Copy invite'));
+        }
+      ));
+    });
+  }
+
+  // ── Guests ──
+  const guests = C.seats.filter(s => !s.is_host);
+  if (guests.length) {
+    main.appendChild(sectionLabel('Guests'));
+    guests.forEach(seat => {
+      main.appendChild(card(
+        seat.name,
+        `Seat ${seat.seat} · Camera + board + rundown`,
+        guestURL(seat),
+        (actions) => {
+          actions.appendChild(copyBtn(inviteMessage(seat), 'Copy invite'));
+        }
+      ));
+    });
+  }
+
+  // ── Camera-only fallback links ──
+  main.appendChild(sectionLabel('Camera-only fallback links'));
+  const fbNote = document.createElement('p');
+  fbNote.style.cssText = 'font:500 12px/1.6 var(--mono);color:var(--muted);margin:0 0 10px';
+  fbNote.textContent = 'Use these only if the main link has trouble. No board or rundown — camera only.';
+  main.appendChild(fbNote);
+  C.seats.forEach(seat => {
+    main.appendChild(card(
+      seat.name,
+      `Seat ${seat.seat} · Camera only (VDO Ninja direct)`,
+      vdoCameraURL(seat),
+    ));
+  });
+
+  // ── Watch-only ──
+  main.appendChild(sectionLabel('Watch only — no camera or mic'));
+  main.appendChild(card(
+    'Whole room',
+    'All guests visible — silent observer / team view',
+    watchRoomURL(),
+  ));
+  C.seats.forEach(seat => {
+    main.appendChild(card(
+      `${seat.name} only`,
+      `Watch ${seat.name}'s camera — silent observer`,
+      watchGuestURL(seat),
+    ));
+  });
+
+  // ── Extra links ──
+  if (C.extras && C.extras.length) {
+    main.appendChild(sectionLabel('Production links'));
+    C.extras.forEach(e => {
+      main.appendChild(card(e.label, null, e.url));
+    });
+  }
+
+  // ── Room info footer note ──
+  const roomNote = document.createElement('p');
+  roomNote.style.cssText = 'font:500 11px/1.6 var(--mono);color:var(--muted);margin:32px 0 0;border-top:1px solid var(--hair);padding-top:16px';
+  roomNote.innerHTML = `Room: <strong style="color:var(--ink)">${C.room}</strong> &nbsp;·&nbsp; ` +
+    `Base: <strong style="color:var(--ink)">${C.vdoBase}</strong> &nbsp;·&nbsp; ` +
+    `Page URL never changes — update <code>config.js</code> to change links.`;
+  main.appendChild(roomNote);
+
+})();
+</script>
+</body>
+</html>
