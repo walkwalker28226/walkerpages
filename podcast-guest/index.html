@@ -399,6 +399,42 @@
 (function () {
   const $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search);
+
+  // ---------- permanent links: podcast-guest/?who=brian ----------
+  // A person's own link never changes. It carries only their name; the studio publishes the rest
+  // (room, seat, board key, host key), and this looks it up and opens the page with the current details.
+  const WHO = (params.get('who') || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40);
+  if (WHO && !params.get('k')) {
+    const wall = document.createElement('div');
+    wall.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:#0E0F0C;color:#E9E9E4;font:500 18px/1.5 Archivo,system-ui,sans-serif';
+    const say = (title, text, retry) => {
+      wall.innerHTML = '';
+      const b = document.createElement('b'); b.style.cssText = 'font-size:26px'; b.textContent = title; wall.appendChild(b);
+      const p = document.createElement('div'); p.style.cssText = 'max-width:520px;opacity:.8'; p.textContent = text; wall.appendChild(p);
+      if (retry) { const r = document.createElement('button'); r.type = 'button'; r.textContent = 'Try again';
+        r.style.cssText = 'margin-top:8px;padding:12px 22px;border:0;border-radius:4px;background:#C6F432;color:#0E0F0C;font:700 16px/1 Archivo,system-ui,sans-serif;cursor:pointer';
+        r.onclick = () => location.reload(); wall.appendChild(r); }
+    };
+    say('Finding your seat…', 'One moment.');
+    (document.body || document.documentElement).appendChild(wall);
+    fetch('https://studio.walkerops.com/studio/get-key.php?who=' + encodeURIComponent(WHO), { cache: 'no-store' })
+      .then(r => { if (!r.ok) throw new Error('lookup'); return r.json(); })
+      .then(d => {
+        if (!d || !d.url) {
+          return d && d.reason === 'no_roster'
+            ? say('The studio isn’t set up yet', 'Your link is right, but the studio hasn’t opened since the links changed. Try again once the producer has the studio open.', true)
+            : say('We couldn’t find your seat', 'This link doesn’t match anyone in the studio right now. Check the link, or ask the producer for yours.', true);
+        }
+        const sp = new URL(d.url).searchParams;            // only the details are used; the page stays right here
+        if (!sp.get('k')) throw new Error('lookup');
+        sp.set('who', WHO);
+        location.replace(location.pathname + '?' + sp.toString());
+      })
+      .catch(() => say('Can’t reach the studio', 'The link lookup didn’t answer. Check your internet connection and try again in a minute.', true));
+    return;
+  }
+  // Arrived through a permanent link: put the short address back, so a bookmark or a refresh keeps working after things change.
+  if (WHO) { try { history.replaceState(null, '', location.pathname + '?who=' + WHO); } catch {} }
   const KEY = (params.get('k') || '').replace(/[^A-Za-z0-9]/g, '');
   const HOSTKEY = (params.get('h') || '').replace(/[^A-Za-z0-9]/g, '');      // only the hosts' invites carry this
   const mem = { get(k, d) { try { const v = localStorage.getItem('vclGuest.' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },

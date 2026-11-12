@@ -336,22 +336,16 @@ window.PODCAST_CONFIG = {
   // liveKey is set after fetchLiveKey() resolves; guestURL reads it at call time.
   let liveKey = null;
 
-  /** Guest invite: camera on, board visible, seat locked to push_id */
+  // The roster the studio console publishes: who is in which seat and who is a host.
+  // When it's there, the Hosts and Guests sections follow it and ignore the seat list above.
+  let roster = [];
+  const slug = s => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+  /** A person's permanent link. It never changes: the Studio Board looks up the current
+   *  room, seat, board key and host key each time it opens. */
   function guestURL(seat) {
-    const board = C.guestBoardBase.replace(/\/$/, '');
-    // Build the VDO Ninja camera URL — the guest board embeds this via ?join=
-    const vdoURL = vdoCameraURL(seat);
-    // Pass ?join= so the board page knows which VDO Ninja URL to open/embed.
-    const params = new URLSearchParams({
-      join:  vdoURL,
-      room:  C.room,
-      push:  seat.push_id,
-      seat:  seat.seat,
-      ...(C.roomPassword ? { password: C.roomPassword } : {}),
-      ...(seat.is_host   ? { host: '1' } : {}),
-    });
-    const boardURL = `${board}?${params.toString()}`;
-    return liveKey ? boardURL + '&k=' + encodeURIComponent(liveKey) : boardURL;
+    const board = C.guestBoardBase.replace(/[?#].*$/, '');
+    return board + '?who=' + encodeURIComponent(seat.who || slug(seat.name) || 'seat' + seat.seat);
   }
 
   /** Bare VDO Ninja guest link (camera-only fallback, no board) */
@@ -409,7 +403,7 @@ window.PODCAST_CONFIG = {
   // ── Build invite message (same format as console's "Copy invite") ─────────
   function inviteMessage(seat) {
     const url = guestURL(seat);
-    return `Here's your link for the show — just click it and allow your camera and microphone when the browser asks.\n\n${url}\n\nHeadphones recommended so you don't echo. See you on air!`;
+    return `Here's your link for the show. It's yours to keep: bookmark it and use the same link every time. Click it and allow your camera and microphone when the browser asks.\n\n${url}\n\nHeadphones recommended so you don't echo. See you on air!`;
   }
 
   // ── Card builder ──────────────────────────────────────────────────────────
@@ -478,11 +472,17 @@ window.PODCAST_CONFIG = {
       const r = await fetch('https://studio.walkerops.com/studio/get-key.php', { cache: 'no-store' });
       if (!r.ok) return null;
       const d = await r.json();
+      if (Array.isArray(d.seats)) roster = d.seats;
       return d.key || null;
     } catch { return null; }
   }
 
   liveKey = await fetchLiveKey();
+
+  // People shown under Hosts and Guests: the console's roster when it has published one, else the seat list above.
+  const people = roster.length
+    ? roster.map(r => ({ seat: r.k, name: r.name, who: r.alt || r.who, is_host: !!r.host }))
+    : C.seats.map(s => ({ seat: s.seat, name: s.name, who: slug(s.name), is_host: !!s.is_host }));
 
   // ── Render ────────────────────────────────────────────────────────────────
   const main = document.getElementById('main');
@@ -523,7 +523,7 @@ window.PODCAST_CONFIG = {
   ));
 
   // ── Hosts ──
-  const hosts = C.seats.filter(s => s.is_host);
+  const hosts = people.filter(s => s.is_host);
   if (hosts.length) {
     main.appendChild(sectionLabel('Hosts'));
     hosts.forEach(seat => {
@@ -539,7 +539,7 @@ window.PODCAST_CONFIG = {
   }
 
   // ── Guests ──
-  const guests = C.seats.filter(s => !s.is_host);
+  const guests = people.filter(s => !s.is_host);
   if (guests.length) {
     main.appendChild(sectionLabel('Guests'));
     guests.forEach(seat => {
