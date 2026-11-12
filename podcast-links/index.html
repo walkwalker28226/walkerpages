@@ -316,7 +316,7 @@ window.PODCAST_CONFIG = {
    No external dependencies. No console connection required.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-(function () {
+(async function () {
   const C = window.PODCAST_CONFIG;
   if (!C) {
     document.getElementById('main').innerHTML =
@@ -462,12 +462,44 @@ window.PODCAST_CONFIG = {
     return div;
   }
 
+  // ── Live board key: fetch from walkerops.com/studio/ so "Open" links
+  //    include ?k= and land on the full guest board, not the error screen. ───
+  async function fetchLiveKey() {
+    try {
+      const r = await fetch('https://walkerops.com/studio/get-key.php', { cache: 'no-store' });
+      if (!r.ok) return null;
+      const d = await r.json();
+      return d.key || null;
+    } catch { return null; }
+  }
+
+  // Replace the static guestURL builder with one that injects the live key
+  const _staticGuestURL = guestURL;
+  function guestURL(seat) {
+    const base = _staticGuestURL(seat); // room/push/seat params from config
+    return liveKey ? base + '&k=' + encodeURIComponent(liveKey) : base;
+  }
+
+  const liveKey = await fetchLiveKey();
+
   // ── Render ────────────────────────────────────────────────────────────────
   const main = document.getElementById('main');
   main.innerHTML = '';
 
   // Update topbar room name
   document.getElementById('topbar-room-name').textContent = C.room;
+
+  // ── Studio status pill ──
+  const statusPill = document.createElement('div');
+  statusPill.style.cssText = 'display:inline-flex;align-items:center;gap:7px;font:600 12px/1 var(--mono);padding:6px 12px;border-radius:4px;margin-bottom:16px;' +
+    (liveKey
+      ? 'background:#1a2a0e;color:#8fdb4a;border:1px solid #3a5a1a'
+      : 'background:#1a1a1a;color:#888;border:1px solid #333');
+  const dot = document.createElement('span');
+  dot.style.cssText = 'width:8px;height:8px;border-radius:50%;background:' + (liveKey ? '#8fdb4a' : '#555');
+  statusPill.appendChild(dot);
+  statusPill.appendChild(document.createTextNode(liveKey ? 'Studio is live — links connect to the board' : 'Studio offline — links will connect when the console starts'));
+  main.appendChild(statusPill);
 
   // ── Permissions note ──
   const note = document.createElement('div');
@@ -562,7 +594,7 @@ window.PODCAST_CONFIG = {
   roomNote.style.cssText = 'font:500 11px/1.6 var(--mono);color:var(--muted);margin:32px 0 0;border-top:1px solid var(--hair);padding-top:16px';
   roomNote.innerHTML = `Room: <strong style="color:var(--ink)">${C.room}</strong> &nbsp;·&nbsp; ` +
     `Base: <strong style="color:var(--ink)">${C.vdoBase}</strong> &nbsp;·&nbsp; ` +
-    `Page URL never changes — update <code>config.js</code> to change links.`;
+    `Board key: <strong style="color:var(--ink)">${liveKey ? '&#10003; live' : 'waiting for console'}</strong>`;
   main.appendChild(roomNote);
 
 })();
