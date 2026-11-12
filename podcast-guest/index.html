@@ -79,19 +79,12 @@
   .tag.dim { background:#A3A39C; color:#0E0F0C; }
   .shead .tag { font-size:10px; padding:5px 7px; }
 
-  /* host tools (hosts only): reactions and guest links */
+  /* host tools (hosts only): reactions and add a guest */
   .tools { height:100%; overflow-y:auto; display:flex; flex-direction:column; gap:10px; }
   .tcard { flex:none; background:#fff; border:1px solid var(--hair); container-type:inline-size; }
   .tcard h3 { margin:0; padding:12px 14px 10px; border-bottom:1px solid var(--hair); font:700 12px/1 var(--mono); letter-spacing:2px; text-transform:uppercase; }
   .tcard h3 span { margin-left:8px; font:400 13px/1 var(--sans); letter-spacing:0; text-transform:none; color:var(--muted); }
   .tcard .hint { margin:0; padding:10px 14px 0; font-size:13px; color:var(--muted); }
-  .lrow { display:grid; grid-template-columns:minmax(110px, 190px) minmax(0, 1fr) auto; gap:12px; align-items:center; padding:8px 14px;
-          border-bottom:1px solid var(--hair); }
-  .lrow .ln { min-width:0; }
-  .lrow .ln small { display:block; font:700 10.5px/1.2 var(--mono); letter-spacing:1px; text-transform:uppercase; color:var(--muted); }
-  .lrow .ln b { display:block; font:600 14px/1.3 var(--sans); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .lrow .lu { min-width:0; font:500 12px/1.3 var(--mono); color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .lrow .la { display:flex; gap:6px; }
   .btn.small { padding:6px 9px; font-size:12.5px; }
   .btn.done { background:var(--night); border-color:var(--night); color:var(--volt); }
   .lnone { padding:10px 14px; color:var(--muted); font-size:13px; border-bottom:1px solid var(--hair); }
@@ -100,10 +93,9 @@
   .addg select { font:13px/1.3 var(--sans); padding:7px 8px; border:1px solid var(--hair); background:#fff; color:var(--ink); border-radius:0; }
   .addg input:focus, .addg select:focus { outline:2px solid var(--live); outline-offset:-1px; }
   .lmsg { padding:2px 14px 10px; font-size:13px; min-height:1.4em; color:var(--muted); }
-  .lmsg.good { color:#2D6B1F; font-weight:600; } .lmsg.bad { color:var(--live); }
-  @container (max-width: 560px) {
-    .lrow { grid-template-columns:minmax(0, 1fr) auto; } .lrow .lu { grid-column:1 / -1; grid-row:2; }
-  }
+  .lmsg.good { color:#2D6B1F; font-weight:600; }
+  .agdone { display:flex; gap:10px; align-items:center; flex-wrap:wrap; padding:0 14px 12px; font-size:13px; }
+  .agdone b { font-weight:600; } .lmsg.bad { color:var(--live); }
 
   /* board section */
   .board { height:100%; display:grid; grid-template-columns:minmax(0, 1fr); grid-template-rows:minmax(150px, 1fr) auto minmax(140px, 36%); gap:10px; }
@@ -288,7 +280,7 @@
       <div class="bar">
         <div class="tabs" id="tabs" role="tablist" hidden>
           <button class="tab on" type="button" role="tab" data-tab="show" aria-selected="true" title="What's on the show, and the rundown">Show</button>
-          <button class="tab" type="button" role="tab" data-tab="tools" aria-selected="false" title="Sound pads and guest links. Only the hosts see this.">Host tools</button>
+          <button class="tab" type="button" role="tab" data-tab="tools" aria-selected="false" title="Sound pads and adding a guest. Only the hosts see this.">Host tools</button>
         </div>
         <span class="barlabel" id="barLabel">Follow the show</span>
         <button class="sugbtn" id="sugOpen" type="button" title="Send the producer a slide idea. It goes on the board only if they add it.">+ Suggest a slide</button>
@@ -348,14 +340,16 @@
             <div class="lmsg rmsg" id="rMsg" aria-live="polite"></div>
           </section>
           <section class="tcard" id="sec-links" hidden>
-            <h3>Guest links<span id="sum-links"></span></h3>
-            <div id="linkList"><div class="lnone">Waiting for the studio…</div></div>
+            <h3>Add a guest<span id="sum-links"></span></h3>
+            <p class="hint" id="ag-hint">Type their name and we’ll set up their seat, camera and name on screen, then copy an invite for you to send them.</p>
+            <div id="linkList"></div>
             <div class="addg" id="addGuest">
               <input type="text" id="ag-name" placeholder="New guest’s name" maxlength="40" autocomplete="off">
               <select id="ag-seat" title="Which seat"><option value="">Next free seat</option></select>
               <button class="btn small primary" id="ag-add" type="button">Add guest &amp; copy invite</button>
             </div>
             <div class="lmsg" id="ag-msg" aria-live="polite"></div>
+            <div class="agdone" id="ag-done" hidden><span>Invite for <b id="ag-done-name"></b></span><button class="btn small" id="ag-copy" type="button" title="Copy the ready-to-send invite again">Copy invite</button></div>
           </section>
         </div>
       </div>
@@ -767,10 +761,11 @@
     if (!studioUuid && sdk.state && sdk.state.connected) tryView();
   }, 4000);
 
-  // ---------- guest links (hosts only) ----------
-  // The hosts' invites carry a host key. The studio checks it, then sends the guest links here and accepts new guests.
+  // ---------- add a guest (hosts only) ----------
+  // The hosts' invites carry a host key. The studio checks it, then tells this page which seats are free and accepts new guests.
   // Without the key (every other guest), this section stays hidden and the page is look only.
   let links = null;                                   // { seats, free, ready } from the studio, or { denied: true }
+  let lastInvite = '';                                // invite for the guest this host just added, so it can be copied again
   let addWait = null;                                 // { rid, timer } while the studio sets up a guest
   function sayHost(uuid) {
     if (!HOSTKEY || !uuid) return;
@@ -797,24 +792,13 @@
     const box = $('linkList'); box.innerHTML = '';
     const note = t => { const d = document.createElement('div'); d.className = 'lnone'; d.textContent = t; box.appendChild(d); };
     $('addGuest').hidden = !ok || !links.ready;
-    if (links && links.denied) { $('sum-links').textContent = 'Link out of date'; note('This invite’s host key is out of date, so the guest links can’t be shown. Ask the producer for a fresh invite.'); return; }
-    if (!ok) { $('sum-links').textContent = ''; note(studioUuid ? 'Loading the guest links…' : 'The guest links show up here when the studio console is open.'); return; }
-    const seats = links.seats || [];
-    $('sum-links').textContent = `${seats.length} guest${seats.length === 1 ? '' : 's'}`;
+    $('ag-hint').hidden = $('addGuest').hidden;
+    if (links && links.denied) { $('sum-links').textContent = 'Link out of date'; note('This link’s host key is out of date, so you can’t add guests from here. Ask the producer for a fresh link.'); return; }
+    if (!ok) { $('sum-links').textContent = ''; note(studioUuid ? 'Checking with the studio…' : 'You can add a guest here when the studio console is open.'); return; }
+    const nfree = (links.free || []).filter(k => k >= 1 && k <= 8).length;
+    $('sum-links').textContent = !links.ready ? '' : nfree ? `${nfree} seat${nfree === 1 ? '' : 's'} free` : 'No free seats';
     if (!links.ready) note('The studio hasn’t set up its VDO Ninja room yet.');
-    else if (!seats.length) note('No guests yet.');
-    seats.forEach(g => {
-      const url = String(g.url || ''), r = document.createElement('div'); r.className = 'lrow';
-      r.innerHTML = '<div class="ln"><small></small><b></b></div><div class="lu"></div><div class="la"></div>';
-      r.querySelector('small').textContent = 'Seat ' + g.k; r.querySelector('b').textContent = g.name; r.querySelector('b').title = g.name;
-      r.querySelector('.lu').textContent = url; r.querySelector('.lu').title = url;
-      const mk = (t, tip, fn, cls) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn small' + (cls ? ' ' + cls : ''); b.textContent = t; b.title = tip; b.onclick = () => fn(b); return b; };
-      r.querySelector('.la').append(
-        mk('Copy invite', 'Copy a ready-to-send message with the link', b => copy(String(g.invite || url), b)),
-        mk('Copy', 'Copy just the link', b => copy(url, b)),
-        mk('Open', 'Open the link in a new tab (this joins as that guest)', () => { if (/^https:\/\//i.test(url)) open(url, '_blank', 'noopener'); }));
-      box.appendChild(r);
-    });
+    else if (!nfree) note('Every seat is taken. Ask the producer to free one up.');
     // Seat picker: free seats only. Keep the choice if the list redraws.
     const sel = $('ag-seat'), keep = sel.value, free = (links.free || []).filter(k => k >= 1 && k <= 8);
     sel.innerHTML = '';
@@ -831,18 +815,22 @@
     const rid = 'a' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
     try { sdk.sendData({ vclb: 1, t: 'addguest', rid, name, seat: +$('ag-seat').value || 0 }, studioUuid); }
     catch { lmsg('bad', 'That didn’t send. Check your connection and try again.'); return; }
-    addWait = { rid, timer: setTimeout(() => { addWait = null; $('ag-add').disabled = false; lmsg('bad', 'No answer from the studio. Check the list above before trying again.'); }, 25000) };
-    $('ag-add').disabled = true; lmsg('', 'Setting up their seat…');
+    addWait = { rid, timer: setTimeout(() => { addWait = null; $('ag-add').disabled = false; lmsg('bad', 'No answer from the studio. Check with the producer before trying again, so they aren’t added twice.'); }, 25000) };
+    $('ag-add').disabled = true; $('ag-done').hidden = true; lmsg('', 'Setting up their seat…');
   }
   async function addedReply(d) {
     if (!addWait || d.rid !== addWait.rid) return;
     clearTimeout(addWait.timer); addWait = null; $('ag-add').disabled = false;
     if (!d.ok) { lmsg('bad', d.text || 'The studio couldn’t add that guest.'); return; }
+    const who = $('ag-name').value.replace(/\s+/g, ' ').trim();
     $('ag-name').value = ''; $('ag-seat').value = '';
     const copied = d.invite ? await copy(String(d.invite)) : false;
-    lmsg('good', (copied ? 'Invite copied. ' : 'Click “Copy invite” next to their name to copy it. ') + (d.text || ''));
+    lastInvite = d.invite ? String(d.invite) : '';
+    $('ag-done-name').textContent = who || 'your guest'; $('ag-done').hidden = !lastInvite;
+    lmsg('good', (copied ? 'Invite copied. Paste it into a text or email to them. ' : lastInvite ? 'Added. Click “Copy invite” below to copy it. ' : 'Added. Ask the producer for their invite. ') + (d.text || ''));
   }
   $('ag-add').onclick = addGuest;
+  $('ag-copy').onclick = () => { if (lastInvite) copy(lastInvite, $('ag-copy')); };
   $('ag-name').addEventListener('keydown', e => { if (e.key === 'Enter') addGuest(); });
 
   // ---------- suggest a slide ----------
