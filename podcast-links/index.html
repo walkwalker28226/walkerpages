@@ -466,7 +466,7 @@ window.PODCAST_CONFIG = {
   //    include ?k= and land on the full guest board, not the error screen. ───
   async function fetchLiveKey() {
     try {
-      const r = await fetch('https://walkerops.com/studio/get-key.php', { cache: 'no-store' });
+      const r = await fetch('https://studio.walkerops.com/studio/get-key.php', { cache: 'no-store' });
       if (!r.ok) return null;
       const d = await r.json();
       return d.key || null;
