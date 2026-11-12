@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Board View · Canna-Chats</title>
+<style>
+  @font-face { font-family: Archivo; src: url(../podcast-guest/fonts/archivo-variable.woff2) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 500; src: url(../podcast-guest/fonts/jetbrains-mono-latin-500-normal.woff2) format('woff2'); }
+  :root {
+    --night:#0E0F0C; --volt:#C6F432; --smoke:#E9E9E4; --graphite:#2A2C27; --muted:#A3A39C;
+    --display: Archivo, "Arial Black", sans-serif;
+    --mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html, body { height:100%; background:var(--night); color:var(--smoke); font:15px/1.4 var(--display); display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .card { max-width:420px; width:100%; padding:40px 36px; text-align:center; }
+  .burst { margin:0 auto 24px; display:block; width:52px; height:52px; }
+  h1 { font:900 26px/1.1 var(--display); font-stretch:125%; text-transform:uppercase; letter-spacing:-.5px; color:var(--smoke); margin-bottom:4px; }
+  h1 span { color:var(--volt); }
+  .sub { font:700 11px/1 var(--mono); letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:32px; }
+  .status { font:600 14px/1.5 var(--mono); padding:14px 20px; border:1px solid var(--graphite); background:rgba(255,255,255,.04); margin-bottom:24px; min-height:48px; }
+  .status.ok { border-color:var(--volt); color:var(--volt); }
+  .status.err { border-color:#7B5CFF; color:#A89FFF; }
+  .btn { display:inline-block; padding:14px 28px; background:var(--volt); color:var(--night); font:700 12px/1 var(--mono); letter-spacing:.14em; text-transform:uppercase; text-decoration:none; cursor:pointer; border:0; width:100%; }
+  .btn:hover { background:#D8FF50; }
+  .btn:disabled { opacity:.4; cursor:default; }
+  .note { font:500 12px/1.6 var(--mono); color:var(--muted); margin-top:20px; }
+  .note a { color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- Signal burst mark -->
+  <svg class="burst" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M24 2l3.5 8.5L36 4l-1.5 9.5L44 10l-5 8 9 2-8 5 6 7-9-.5 2 9-7-5.5-3.5 8.5-3.5-8.5-7 5.5 2-9-9 .5 6-7-8-5 9-2-5-8 9.5 3.5L12 4l8.5 6.5L24 2z" fill="#C6F432"/>
+  </svg>
+
+  <h1>CANNA<span>/</span>CHATS</h1>
+  <div class="sub">Board View</div>
+
+  <div class="status" id="status">Looking up the live session…</div>
+  <button class="btn" id="btn" disabled>Open board</button>
+  <p class="note">This page fetches the current board key from the studio and opens a read&#8209;only view of the board — no camera or microphone needed. <a href="https://walkerops.com/podcast-links/" target="_blank">Producer links →</a></p>
+</div>
+
+<script>
+(async function () {
+  const statusEl = document.getElementById('status');
+  const btn      = document.getElementById('btn');
+  const KEY_API  = 'https://studio.walkerops.com/studio/get-key.php';
+  const BOARD_BASE = 'https://walkerops.com/podcast-guest/';
+
+  function setStatus(msg, cls) {
+    statusEl.textContent = msg;
+    statusEl.className = 'status' + (cls ? ' ' + cls : '');
+  }
+
+  async function fetchKey() {
+    try {
+      const r = await fetch(KEY_API, { cache: 'no-store' });
+      if (!r.ok) return null;
+      const d = await r.json();
+      return d.key || null;
+    } catch {
+      return null;
+    }
+  }
+
+  const key = await fetchKey();
+
+  if (!key) {
+    setStatus('Studio is offline — no active session found.', 'err');
+    btn.textContent = 'Retry';
+    btn.disabled = false;
+    btn.onclick = () => location.reload();
+    return;
+  }
+
+  const boardURL = BOARD_BASE + '?k=' + encodeURIComponent(key);
+  setStatus('Studio is live — board key received.', 'ok');
+  btn.textContent = 'Open board →';
+  btn.disabled = false;
+  btn.href = boardURL;
+  btn.onclick = () => { window.location.href = boardURL; };
+
+  // Auto-redirect after 1.5s so it's seamless but still visible
+  setTimeout(() => { window.location.href = boardURL; }, 1500);
+})();
+</script>
+</body>
+</html>
