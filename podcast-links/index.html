@@ -339,17 +339,19 @@ window.PODCAST_CONFIG = {
   /** Guest invite: camera on, board visible, seat locked to push_id */
   function guestURL(seat) {
     const board = C.guestBoardBase.replace(/\/$/, '');
-    // The guest-room page at walkerops.com takes ?room=…&push=…&seat=…
-    // so the camera lands in the right OBS slot every time.
+    // Build the VDO Ninja camera URL — the guest board embeds this via ?join=
+    const vdoURL = vdoCameraURL(seat);
+    // Pass ?join= so the board page knows which VDO Ninja URL to open/embed.
     const params = new URLSearchParams({
+      join:  vdoURL,
       room:  C.room,
       push:  seat.push_id,
       seat:  seat.seat,
       ...(C.roomPassword ? { password: C.roomPassword } : {}),
       ...(seat.is_host   ? { host: '1' } : {}),
     });
-    const base = `${board}?${params.toString()}`;
-    return liveKey ? base + '&k=' + encodeURIComponent(liveKey) : base;
+    const boardURL = `${board}?${params.toString()}`;
+    return liveKey ? boardURL + '&k=' + encodeURIComponent(liveKey) : boardURL;
   }
 
   /** Bare VDO Ninja guest link (camera-only fallback, no board) */
