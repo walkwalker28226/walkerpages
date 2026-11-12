@@ -795,12 +795,12 @@
     $('ag-hint').hidden = $('addGuest').hidden;
     if (links && links.denied) { $('sum-links').textContent = 'Link out of date'; note('This link’s host key is out of date, so you can’t add guests from here. Ask the producer for a fresh link.'); return; }
     if (!ok) { $('sum-links').textContent = ''; note(studioUuid ? 'Checking with the studio…' : 'You can add a guest here when the studio console is open.'); return; }
-    const nfree = (links.free || []).filter(k => k >= 1 && k <= 8).length;
+    const nfree = (links.free || []).filter(k => k >= 1 && k <= 10).length;
     $('sum-links').textContent = !links.ready ? '' : nfree ? `${nfree} seat${nfree === 1 ? '' : 's'} free` : 'No free seats';
     if (!links.ready) note('The studio hasn’t set up its VDO Ninja room yet.');
     else if (!nfree) note('Every seat is taken. Ask the producer to free one up.');
     // Seat picker: free seats only. Keep the choice if the list redraws.
-    const sel = $('ag-seat'), keep = sel.value, free = (links.free || []).filter(k => k >= 1 && k <= 8);
+    const sel = $('ag-seat'), keep = sel.value, free = (links.free || []).filter(k => k >= 1 && k <= 10);
     sel.innerHTML = '';
     const o0 = document.createElement('option'); o0.value = ''; o0.textContent = free.length ? `Next free seat (${free[0]})` : 'No free seats'; sel.appendChild(o0);
     free.forEach(k => { const o = document.createElement('option'); o.value = String(k); o.textContent = 'Seat ' + k; sel.appendChild(o); });
