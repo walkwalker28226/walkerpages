@@ -333,9 +333,11 @@ window.PODCAST_CONFIG = {
   const room = encodeURIComponent(C.room);
   const pw   = C.roomPassword ? `&password=${encodeURIComponent(C.roomPassword)}` : '';
 
+  // liveKey is set after fetchLiveKey() resolves; guestURL reads it at call time.
+  let liveKey = null;
+
   /** Guest invite: camera on, board visible, seat locked to push_id */
   function guestURL(seat) {
-    const p = encodeURIComponent(seat.push_id);
     const board = C.guestBoardBase.replace(/\/$/, '');
     // The guest-room page at walkerops.com takes ?room=…&push=…&seat=…
     // so the camera lands in the right OBS slot every time.
@@ -346,7 +348,8 @@ window.PODCAST_CONFIG = {
       ...(C.roomPassword ? { password: C.roomPassword } : {}),
       ...(seat.is_host   ? { host: '1' } : {}),
     });
-    return `${board}?${params.toString()}`;
+    const base = `${board}?${params.toString()}`;
+    return liveKey ? base + '&k=' + encodeURIComponent(liveKey) : base;
   }
 
   /** Bare VDO Ninja guest link (camera-only fallback, no board) */
@@ -477,14 +480,7 @@ window.PODCAST_CONFIG = {
     } catch { return null; }
   }
 
-  // Replace the static guestURL builder with one that injects the live key
-  const _staticGuestURL = guestURL;
-  function guestURL(seat) {
-    const base = _staticGuestURL(seat); // room/push/seat params from config
-    return liveKey ? base + '&k=' + encodeURIComponent(liveKey) : base;
-  }
-
-  const liveKey = await fetchLiveKey();
+  liveKey = await fetchLiveKey();
 
   // ── Render ────────────────────────────────────────────────────────────────
   const main = document.getElementById('main');
